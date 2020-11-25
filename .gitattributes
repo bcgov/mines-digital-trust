@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Autodetect text files and forces unix eols, so Windows does not break them
 * text=auto eol=lf
 
@@ -6,3 +7,16 @@
 *.jpeg binary
 *.gif binary
 *.png binary
+=======
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.conf text eol=lf
+**/s2i/bin/* text eol=lf
+**/root/**/* text eol=lf
+**/.scripts/**/* text eol=lf
+>>>>>>> Stashed changes
