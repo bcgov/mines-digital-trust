@@ -1,8 +1,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
-# Aries VCR - Issuer/Controller
+# Mines-Digital-Trust, Permit Issuer/Controller for Aries VCR 
 
-This repository is a template for creating an [Aries](https://www.hyperledger.org/use/ARIES) Verifiable Credential Registry (VCR) Issuer Agent. [Aries VCR](https://github.com/bcgov/aries-vcr) is the foundational technology upon which the Government of British Columbia's [OrgBookBC](https://orgabook.gov.bc.ca) was built. Aries VCR Issuer Controller is a starter kit for building an Aries agent that issues verifiable credentials to instances of an Aries VCR, such as OrgBookBC. This repo contains code for an issuer controller that works with [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACAPy) framework. The controller and an instance of ACA-Py can be deployed together to implement an Aries issuer agent.
+This repository is based on the template (https://github.com/bcgov/aries-vcr-issuer-controller) for creating an [Aries](https://www.hyperledger.org/use/ARIES) Verifiable Credential Registry (VCR) Issuer Agent. [Aries VCR](https://github.com/bcgov/aries-vcr) is the foundational technology upon which the Government of British Columbia's [OrgBookBC](https://orgabook.gov.bc.ca) was built. Aries VCR Issuer Controller is a starter kit for building an Aries agent that issues verifiable credentials to instances of an Aries VCR, such as OrgBookBC. This repo contains code for an issuer controller that works with [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACAPy) framework. The controller and an instance of ACA-Py can be deployed together to implement an Aries issuer agent.
 
 `aries-vcr-issuer-controller` was developed as part of the Verifiable Organizations Network (VON). For more information on VON, visit https://vonx.io.  Even better, join in with what we are doing and contribute to VON and the [Trust over IP](trustoverip.org) community.
 
@@ -36,16 +36,6 @@ Use this [Aries VCR Issuer Controller Getting Started Tutorial](GettingStartedTu
 
 Much of the work in configuring an Aries VCR Issuer Agent is in setting up the YAML files in the [issuer_controller/config](issuer_controller/config) folder. A [Configuration Guide](issuer_controller/config/README.md) documents those files.
 
-## Managing Your Controller Repo
-
-If you are creating an agent for a service organization that will become an Aries VCR Issuer/Verifier agent, most of the changes you will make in this repo will be for your own organization's use and will not be pushed back into the base repo. As such, we suggest you use one of following methods for managing this repo. We recommend the first method, but would welcome suggestions of other approaches that might have more upside and less downside. Please add an issue to tell us about a better way.
-
-1. Make a snapshot (not a fork or clone - a text copy) of this repo to use as the base repo for your organization's agent from there. The benefit of that approach is that your developers can fork the snapshot repo and manage everything through the common GitHub Pull Request (PR) model.  The downside is that periodically you should look for code updates to this ([aries-vcr-issuer-controller](https://github.com/bcgov/aries-vcr-issuer-controller)) repo and apply them to your copy. There are relatively easy ways to track such changes, such as keeping a fork of aries-vcr-issuer-controller, using GitHub's `compare` capability to find the differences and manually applying the relevant ones to your repo.
-
-2. Make a fork of this repo, and in that, create a branch that you will use as the deployment branch for your agent instance. The benefit of this approach is that you can stay up-to-date with the base repo by applying commits to your branch from the `master`. The downside is a much more complex branching model for your developers and a non-typical deployment model for your code.
-
-In theory, the two mechanisms above can be combined, and branches could be created in the main repo for the different agent instances. This might be an approach that, for example, the BC Gov could use&mdash;creating a branch for each OrgBookBC Issuer agent in BC Gov. However, we think that the benefits of such a scheme is not worth the complexity.
-
 ## Getting Help or Reporting an Issue
 
 To report bugs/issues/feature requests, please file an [issue](../../issues).
@@ -53,4 +43,3 @@ To report bugs/issues/feature requests, please file an [issue](../../issues).
 # How to Contribute
 
 If you find this project helpful, please contribute back to the project. If you would like to contribute, please see our [CONTRIBUTING](./CONTRIBUTING.md) guidelines. Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
->>>>>>> Stashed changes
