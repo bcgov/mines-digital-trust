@@ -73,7 +73,8 @@ services:
         sleep 15;
         ../docker-entrypoint.sh;"
     volumes:
-      - ../issuer_controller:/home/indy:Z
+      - ../issuer_controller/app:/home/indy/app:Z
+      - ../issuer_controller/test:/home/indy/test:Z
 
   myorg-agent:
     image: vcr-agent
