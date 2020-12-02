@@ -10,7 +10,7 @@ import random
 import requests
 from flask import jsonify, current_app
 
-import config
+from app import config
 
 AGENT_ADMIN_API_KEY = os.environ.get("AGENT_ADMIN_API_KEY")
 ADMIN_REQUEST_HEADERS = {"Content-Type": "application/json"}
@@ -825,7 +825,7 @@ def handle_send_credential(cred_input):
     # let's send a credential!
     cred_responses = []
     for credential in cred_input:
-        current_app.logger.warn(app_config['schemas'].keys())
+        #current_app.logger.warn(app_config['schemas'].keys())
         cred_def_key = "CRED_DEF_" + credential["schema"] + "_" + credential["version"]
         credential_definition_id = app_config["schemas"][cred_def_key]
         #TODO safe access and pretty error message

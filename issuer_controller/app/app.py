@@ -6,23 +6,22 @@ import json
 import os
 import time
 import yaml
-import config
-import issuer
 
 import signal
 
+from app import config, issuer 
 
 # Load application settings (environment)
-config_root = os.environ.get('CONFIG_ROOT', '../config')
+config_root = os.environ.get('CONFIG_ROOT', './config')
 ENV = config.load_settings(config_root=config_root)
 
 class Controller(Flask):
-    def __init__(self):
+    def __init__(self, conf):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
-        issuer.startup_init(ENV)
+        issuer.startup_init(conf)
 
-app = Controller()
+app = Controller(ENV)
 wsgi_app = app.wsgi_app
 
 signal.signal(signal.SIGINT, issuer.signal_issuer_shutdown)
