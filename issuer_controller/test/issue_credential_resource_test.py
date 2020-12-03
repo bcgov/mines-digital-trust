@@ -1,6 +1,9 @@
-import pytest
-from unittest.mock import MagicMock
-from app.issuer import SendCredentialThread, handle_send_credential
+import pytest,threading,json
+
+from time import sleep
+
+from unittest.mock import MagicMock, patch, PropertyMock
+from app import issuer, handle
 
 test_send_credential = [
     {
@@ -41,12 +44,29 @@ test_send_credential = [
 ]
 
 
-def test_handle_send_credential_success_spawns_thread(app):
-    mock = MagicMock()
-    SendCredentialThread.__init__ = mock
+def test_liveness_method(app):
+    val = issuer.issuer_liveness_check()
+    assert val
 
-    handle_send_credential(test_send_credential)
 
-    return
+def test_liveness_route(test_client):
+    print(test_client.__dict__)
+    get_resp = test_client.get(f'/liveness')
+    assert get_resp.status_code == 200
 
-    
+
+class MockSendCredentialThread(threading.Thread):
+    def __init__(self,*args):
+        threading.Thread.__init__(self)
+        self.cred_response = {"success": True, "result":"MOCK_RESPONSE"}
+        return
+
+    def run(self):
+        return    
+
+def test_issue_credential_spawns_thread(app):
+    #mock_SendCredentialThread_class()
+    with patch('app.handle.SendCredentialThread',new=MockSendCredentialThread) as mock:
+        res = handle.handle_send_credential(test_send_credential)
+        assert res.status_code == 200
+        assert len(json.loads(res.response[0])) == 2
