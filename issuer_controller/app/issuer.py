@@ -317,7 +317,7 @@ def tob_connection_active():
     """
     if not tob_connection_synced():
         return False
-    return (0 < len(list(cred.credential_requests.keys())))
+    return (0 < len(list(credential_requests.keys())))
 
 
 def issuer_liveness_check():
@@ -384,7 +384,7 @@ def handle_credentials(state, message):
     logging.log_timing_event(method, message, start_time, None, False)
 
     if "thread_id" in message:
-        cred.set_credential_thread_id(
+        set_credential_thread_id(
             message["credential_exchange_id"], message["thread_id"]
         )
     else:
@@ -395,7 +395,7 @@ def handle_credentials(state, message):
         if do_error <= ACK_ERROR_PCT:
             raise Exception("Fake exception to test error handling: " + message["thread_id"])
         response = {"success": True, "result": message["credential_exchange_id"]}
-        cred.add_credential_response(message["credential_exchange_id"], response)
+        add_credential_response(message["credential_exchange_id"], response)
 
     end_time = time.perf_counter()
     processing_time = end_time - start_time
@@ -429,7 +429,7 @@ def handle_problem_report(message):
 
     msg = message["~thread"]["thid"] + "::" + message["explain-ltxt"]
     response = {"success": False, "result": msg}
-    cred.add_credential_problem_report(message["~thread"]["thid"], response)
+    add_credential_problem_report(message["~thread"]["thid"], response)
 
     return jsonify({})
 
