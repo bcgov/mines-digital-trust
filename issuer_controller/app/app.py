@@ -11,14 +11,13 @@ import signal
 from app import config, issuer,routes
 
 class Controller(Flask):
-    def __init__(self, conf):
+    def __init__(self, ENV):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
-        issuer.startup_init(conf)
+        issuer.startup_init(ENV)
 
 
-
-def create_app(env):
+def create_app(ENV):
     app = Controller(ENV)
     routes.register_routes(app)
     wsgi_app = app.wsgi_app

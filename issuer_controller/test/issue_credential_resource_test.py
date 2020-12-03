@@ -1,9 +1,9 @@
-import pytest,threading,json
+import pytest,threading,json, random
 
 from time import sleep
 
 from unittest.mock import MagicMock, patch, PropertyMock
-from app import issuer, handle
+from app import issuer, credential
 
 test_send_credential = [
     {
@@ -50,11 +50,19 @@ def test_liveness_method(app):
 
 
 def test_liveness_route(test_client):
-    print(test_client.__dict__)
     get_resp = test_client.get(f'/liveness')
     assert get_resp.status_code == 200
 
+def test_health_method(app):
+    val = issuer.tob_connection_synced()
+    assert val
 
+def test_health_route(test_client):
+    get_resp = test_client.get(f'/health')
+    assert get_resp.status_code == 200
+
+
+##Issue-Credential
 class MockSendCredentialThread(threading.Thread):
     def __init__(self,*args):
         threading.Thread.__init__(self)
@@ -62,11 +70,15 @@ class MockSendCredentialThread(threading.Thread):
         return
 
     def run(self):
+        sleep(random.randint(1,1000)/1000)
         return    
 
 def test_issue_credential_spawns_thread(app):
     #mock_SendCredentialThread_class()
-    with patch('app.handle.SendCredentialThread',new=MockSendCredentialThread) as mock:
-        res = handle.handle_send_credential(test_send_credential)
+    with patch('app.issuer.SendCredentialThread',new=MockSendCredentialThread) as mock:
+        res = issuer.handle_send_credential(test_send_credential)
         assert res.status_code == 200
-        assert len(json.loads(res.response[0])) == 2
+        responses = json.loads(res.response[0])
+        assert 'MOCK' in responses[0]["result"] 
+        assert all(r['success'] == True for r in responses)
+        assert len(responses) == 2

@@ -2,7 +2,7 @@ from flask import Flask, jsonify, abort, request, make_response
 import time
 
 
-from app import issuer
+from app import issuer, logging
 
 def register_routes(app):
 
@@ -37,12 +37,12 @@ def register_routes(app):
 
     @app.route('/status/reset', methods=['GET'])
     def clear_status():
-        issuer.clear_stats()
+        logging.clear_stats()
         return make_response(jsonify({'success': True}), 200)
 
     @app.route('/status', methods=['GET'])
     def get_status():
-        return make_response(jsonify(issuer.get_stats()), 200)
+        return make_response(jsonify(logging.get_stats()), 200)
 
     @app.errorhandler(404)
     def not_found(error):
@@ -69,7 +69,7 @@ def register_routes(app):
         response = issuer.handle_send_credential(cred_input)
 
         end_time = time.perf_counter()
-        issuer.log_timing_method(method, start_time, end_time, True)
+        logging.log_timing_method(method, start_time, end_time, True)
 
         return response
 
@@ -88,7 +88,7 @@ def register_routes(app):
             abort(400)
 
         message = request.json
-        issuer.log_timing_event(method, message, start_time, None, False)
+        logging.log_timing_event(method, message, start_time, None, False)
 
         # dispatch based on the topic type
         if topic == issuer.TOPIC_CONNECTIONS:
@@ -130,12 +130,12 @@ def register_routes(app):
         else:
             print("Callback: topic=", topic, ", message=", message)
             end_time = time.perf_counter()
-            issuer.log_timing_method(method, start_time, end_time, False)
-            issuer.log_timing_event(method, message, start_time, end_time, False)
+            logging.log_timing_method(method, start_time, end_time, False)
+            logging.log_timing_event(method, message, start_time, end_time, False)
             abort(400, {'message': 'Invalid topic: ' + topic})
 
         end_time = time.perf_counter()
-        issuer.log_timing_method(method, start_time, end_time, True)
-        issuer.log_timing_event(method, message, start_time, end_time, True)
+        logging.log_timing_method(method, start_time, end_time, True)
+        logging.log_timing_event(method, message, start_time, end_time, True)
 
         return response
