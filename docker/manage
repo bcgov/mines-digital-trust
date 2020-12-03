@@ -68,13 +68,16 @@ configureEnvironment () {
   # bcreg-controller
   export CONTROLLER_PORT=5000
   export EXPOSED_CONTROLLER_PORT=5000
-  export WEB_HTTP_PORT=5001
   export WEB_HOST_PORT=8081
   export COMPOSE_PROJECT_NAME=myorg
   export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-"myorg"}
   export LEDGER_URL=${LEDGER_URL-http://$DOCKERHOST:9000}
-  export APPLICATION_URL=${APPLICATION_URL-http://localhost:${WEB_HTTP_PORT:-5001}}
-  export ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${WEB_HTTP_PORT:-5001}}
+  export APPLICATION_URL=${APPLICATION_URL-http://localhost:${EXPOSED_CONTROLLER_PORT:-5000}}
+  export ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${CONTROLLER_PORT:-5000}}
+
+  export TOB_API_URL=${TOB_API_URL-http://localhost:8081/api/v2}
+  export TOB_APP_URL=${TOB_APP_URL-http://localhost:8080}
+
 
   export RECORD_TIMINGS=${RECORD_TIMINGS:-false}
   export TRACE_EVENTS=${TRACE_EVENTS:-false}
@@ -91,7 +94,7 @@ configureEnvironment () {
   export AGENT_HTTP_IN_PORT=8031
   export AGENT_WS_IN_PORT=8033
   export WEBHOOK_HOST=http://myorg-controller:${WEBHOOK_PORT}
-  export AGENT_NAME="myorg-agent"
+  export AGENT_NAME="empr-agent"
   export AGENT_ENDPOINT=${AGENT_ENDPOINT:-http://$DOCKERHOST:$AGENT_HTTP_IN_PORT}
   export AGENT_ADMIN_API_KEY=${AGENT_ADMIN_API_KEY}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
@@ -117,19 +120,13 @@ configureEnvironment () {
   export POSTGRESQL_WALLET_PORT="5432"
   export POSTGRESQL_ADMIN_USER="postgres"
   export POSTGRESQL_ADMIN_PASSWORD="mysecretpassword"
-  export WALLET_SEED_VONX=${WALLET_SEED_VONX:-"myorg_issuer_0000000000000000001"}
-
-  # myorg-pipeline
-  export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-"vonx"}
-  export LEDGER_URL=${LEDGER_URL-http://$DOCKERHOST:9000}
-  export APPLICATION_URL=${APPLICATION_URL-http://localhost:${WEB_HTTP_PORT:-5000}}
-  export ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${WEB_HTTP_PORT:-5001}}
-  export VONX_API_URL=http://myorg-controller:${WEBHOOK_PORT}
+  export WALLET_SEED_VONX=${WALLET_SEED_VONX:-"empr_000000000000000000000000000"}
 
   # myorg-controller
-  export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}} 
-  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-vcr-agent} 
+  export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
+  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-vcr-agent}
   export TOB_ADMIN_API_KEY=${TOB_ADMIN_API_KEY:-R2D2HfPM5Zwd69IjclQiuFmcMV6}
+
 }
 
 getStartupParams() {
