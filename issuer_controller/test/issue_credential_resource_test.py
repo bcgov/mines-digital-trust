@@ -62,19 +62,18 @@ def test_health_route(test_client):
     assert get_resp.status_code == 200
 
 
-##Issue-Credential
+##-------------Issue-Credential--------------
 class MockSendCredentialThread(threading.Thread):
     def __init__(self,*args):
         threading.Thread.__init__(self)
-        self.cred_response = {"success": True, "result":"MOCK_RESPONSE"}
         return
 
     def run(self):
         sleep(random.randint(1,1000)/1000)
+        self.cred_response = {"success": True, "result":"MOCK_RESPONSE"}
         return    
 
 def test_issue_credential_spawns_thread(app):
-    #mock_SendCredentialThread_class()
     with patch('app.issuer.SendCredentialThread',new=MockSendCredentialThread) as mock:
         res = issuer.handle_send_credential(test_send_credential)
         assert res.status_code == 200

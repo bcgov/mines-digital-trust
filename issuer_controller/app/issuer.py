@@ -12,7 +12,7 @@ from flask import jsonify, current_app
 
 from app import config, logging
 
-from app.credential import SendCredentialThread, credential_requests, set_credential_thread_id, add_credential_response
+from app.credential import SendCredentialThread, credential_requests, set_credential_thread_id, add_credential_response,add_credential_problem_report
 
 AGENT_ADMIN_API_KEY = os.environ.get("AGENT_ADMIN_API_KEY")
 ADMIN_REQUEST_HEADERS = {"Content-Type": "application/json"}
