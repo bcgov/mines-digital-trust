@@ -482,7 +482,6 @@ def handle_send_credential(cred_input):
     # let's send a credential!
     cred_responses = []
     for credential in cred_input:
-        #current_app.logger.warn(app_config['schemas'].keys())
         cred_def_key = "CRED_DEF_" + credential["schema"] + "_" + credential["version"]
         credential_definition_id = app_config["schemas"][cred_def_key]
         #TODO safe access and pretty error message

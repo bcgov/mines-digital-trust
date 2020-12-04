@@ -26,7 +26,7 @@ def set_credential_thread_id(cred_exch_id, thread_id):
             credential_lock.release()
     processing_time = time.perf_counter() - start_time
     if processing_time > 0.001:
-        logging.LOGGER.warn(">>> lock time = %s", str(processing_time))
+        logging.LOGGER.warning(">>> lock time = %s", str(processing_time))
 
 
 def add_credential_request(cred_exch_id):
@@ -46,7 +46,7 @@ def add_credential_request(cred_exch_id):
             credential_lock.release()
     processing_time = time.perf_counter() - start_time
     if processing_time > 0.001:
-        logging.LOGGER.warn(">>> lock time = %s", str(processing_time))
+        logging.LOGGER.warning(">>> lock time = %s", str(processing_time))
 
 
 def add_credential_response(cred_exch_id, response):
@@ -64,7 +64,7 @@ def add_credential_response(cred_exch_id, response):
             credential_lock.release()
     processing_time = time.perf_counter() - start_time
     if processing_time > 0.001:
-        logging.LOGGER.warn(">>> lock time = %s", str(processing_time))
+        logging.LOGGER.warning(">>> lock time = %s", str(processing_time))
 
 
 def add_credential_problem_report(thread_id, response):
@@ -123,7 +123,7 @@ def get_credential_response(cred_exch_id):
             credential_lock.release()
     processing_time = time.perf_counter() - start_time
     if processing_time > 0.001:
-        logging.LOGGER.warn(">>> lock time = %s", str(processing_time))
+        logging.LOGGER.warning(">>> lock time = %s", str(processing_time))
 
 
 
