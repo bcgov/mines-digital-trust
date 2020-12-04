@@ -82,3 +82,21 @@ def test_issue_credential_spawns_thread(app):
         assert 'MOCK' in responses[0]["result"] 
         assert all(r['success'] == True for r in responses)
         assert len(responses) == 2
+
+
+def test_SendCredentialThread_posts_to_agent(app):
+    cred_def = "CRED_DEF_my-registration.empr_1.0.0"
+    cred_offer =  {"test":"tests","test2":"test2"}
+    agent_url = app.ENV.get("AGENT_ADMIN_URL") + "/issue-credential/send"
+    headers = {"Content-Type": "application/json"}
+
+    with patch('app.credential.requests.post') as mock:
+        thread = credential.SendCredentialThread(
+            cred_def,
+            cred_offer,
+            agent_url,
+            headers,
+        )
+        thread.start()
+        thread.join()
+        mock.assert_called_with(agent_url, json.dumps(cred_offer), headers=headers)
