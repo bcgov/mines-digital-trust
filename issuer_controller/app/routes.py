@@ -73,7 +73,6 @@ def register_routes(app):
 
         return response
 
-
     @app.route('/api/agentcb/topic/<topic>/', methods=['POST'])
     def agent_callback(topic):
         """

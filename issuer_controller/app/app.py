@@ -32,11 +32,3 @@ signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
 config_root = os.environ.get('CONFIG_ROOT', './config')
 ENV = config.load_settings(config_root=config_root)
 app = create_app(ENV)
-
-@app.errorhandler(Exception)
-def default_error_handler(error):
-    app.logger.error(str(error))
-    return {
-        'status': getattr(error, 'code', 500),
-        'message': str(error),
-    }, getattr(error, 'code', 500)
