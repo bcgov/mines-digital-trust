@@ -15,6 +15,7 @@ class Controller(Flask):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
         issuer.startup_init(ENV)
+        self.ENV = ENV
 
 
 def create_app(ENV):
