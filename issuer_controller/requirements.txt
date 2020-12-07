@@ -4,3 +4,4 @@ pyyaml
 gunicorn
 gevent
 pytest
+coverage
