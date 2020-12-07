@@ -33,11 +33,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-  
-      - name: Where are we?
-        run: ls issuer_controlller
       # Runs a set of commands using the runners shell
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.7.4
+        env:
+          CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
         with:
           coverageCommand:  coverage run --source=app -m pytest
