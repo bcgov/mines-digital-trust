@@ -1,0 +1,27 @@
+name: Code Climate Coverage Action
+on:
+  push:
+    branches: 
+      - main
+      - develop
+  pull_request:
+    paths: 
+      - '!.MD'
+jobs:
+  coverage:
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - run: npm install -g yarn
+    - run: yarn install
+    - run: yarn build
+    - uses: paambaati/codeclimate-action@v2.7.4
+      env:
+        CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
+      with:
+        coverageCommand:  coverage run --source=app -m pytest
+        workingDirectory: /home/indy
