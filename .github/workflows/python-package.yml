@@ -16,7 +16,9 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.5', '3.6', '3.7', '3.8']
-
+    defaults:
+      run:
+        working-directory: ./issuer_controller
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -27,9 +29,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      working-directory: ./issuer_controller
+        pip install -r requirements.txt
     - name: Test with pytest
       run: |
         pytest
-      working-directory: ./issuer_controller
