@@ -8,7 +8,7 @@ services:
       LEDGER_URL: ${LEDGER_URL}
       APPLICATION_URL: ${APPLICATION_URL:-http://localhost:5000}
       ENDPOINT_URL: ${ENDPOINT_URL:-http://localhost:5000}
-      CONFIG_ROOT: ../config
+      CONFIG_ROOT: ./config
       HOST_PORT: ${CONTROLLER_PORT}
       ENVIRONMENT: ${ENVIRONMENT:-default}
       ENABLE_GUNICORN: ${ENABLE_GUNICORN:-0}
@@ -49,7 +49,10 @@ services:
       /bin/bash -c "
         echo sleeping ...;
         sleep 15;
-        ../docker-entrypoint.sh;"
+        ./docker-entrypoint.sh;"
+    volumes:
+      - ../issuer_controller/app:/home/indy/app:Z
+      - ../issuer_controller/test:/home/indy/test:Z
 
   myorg-agent:
     image: vcr-agent
