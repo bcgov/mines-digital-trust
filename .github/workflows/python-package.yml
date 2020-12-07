@@ -30,6 +30,8 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install flake8 pytest
         pip install -r requirements.txt
+    - run: ls
+    - run: ls issuer_controller
     - name: Test with pytest
       run: |
         pytest
