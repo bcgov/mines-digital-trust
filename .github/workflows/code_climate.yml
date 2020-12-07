@@ -6,9 +6,9 @@ name: Code Climate
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
-    branches: [ develop ]
+    branches: [ test_actions ]
   pull_request:
-    branches: [ develop ]
+    branches: [ test_actions ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -33,10 +33,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      - name: Test with pytest
-        run: |
-          pytest
-
+  
+      - name: Where are we?
+        run: ls issuer_controlller
       # Runs a set of commands using the runners shell
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.7.4
