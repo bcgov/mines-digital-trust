@@ -1,6 +1,6 @@
 import pytest, os
-from app.app import create_app
 
+from app.app import create_app
 from app import config, issuer
 
 
