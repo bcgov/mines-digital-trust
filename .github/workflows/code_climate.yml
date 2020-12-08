@@ -37,7 +37,7 @@ jobs:
       - name: What is here?
         run: ls
       - name: Where is here?
-        run: ls
+        run: pwd
       - name: config?
         run: ls config
       - name: Code Climate Coverage Action
