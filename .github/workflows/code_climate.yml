@@ -34,6 +34,9 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       # Runs a set of commands using the runners shell
+      - name: What is here?
+        run: ls
+        
       - name: Code Climate Coverage Action
         uses: paambaati/codeclimate-action@v2.7.4
         env:
