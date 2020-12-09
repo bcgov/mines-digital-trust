@@ -361,6 +361,7 @@ def startup_init(ENV):
 
     thread = StartupProcessingThread(ENV)
     thread.start()
+    return thread
 
 
 TOPIC_CONNECTIONS = "connections"

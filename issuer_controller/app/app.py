@@ -14,12 +14,13 @@ class Controller(Flask):
     def __init__(self, ENV):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
-        issuer.startup_init(ENV)
+        self.startup_thread = issuer.startup_init(ENV)
         self.ENV = ENV
 
 
 def create_app(ENV):
     app = Controller(ENV)
+    app.startup_thread.join()
     routes.register_routes(app)
     wsgi_app = app.wsgi_app
     return app
