@@ -1,0 +1,157 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: ${NAME}-build-template
+objects:
+
+  - kind: NetworkSecurityPolicy
+    apiVersion: security.devops.gov.bc.ca/v1alpha1
+    metadata:
+      name: pods-to-k8s-api
+      labels:
+        name: pods-to-k8s-api
+        env: ${ENV_NAME}
+    spec:
+      description: |
+        Allow pods to talk to the internal k8s api so deployments work.
+        This only needs to be specified once per environment.
+      source:
+        - - $namespace=${NAMESPACE}-${ENV_NAME}
+      destination:
+        - - int:network=internal-cluster-api-endpoint
+
+  - kind: NetworkSecurityPolicy
+    apiVersion: security.devops.gov.bc.ca/v1alpha1
+    metadata:
+      name: pods-to-external-network
+      labels:
+        name: pods-to-external-network
+        env: ${ENV_NAME}
+    spec:
+      description: |
+        Allow the builds to access the internet.
+        This only needs to be specified once per environment.
+      source:
+        - - $namespace=${NAMESPACE}-${ENV_NAME}
+      destination:
+        - - ext:network=any
+
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        name: ${NAME}
+        app: ${APP_NAME}${SUFFIX}
+        app-group: ${APP_GROUP}
+
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: ${NAME}
+      labels:
+        name: ${NAME}
+        app: ${APP_NAME}${SUFFIX}
+        app-group: ${APP_GROUP}
+    spec:
+      runPolicy: Serial
+      source:
+        type: Git
+        git:
+          ref: ${GIT_REF}
+          uri: ${GIT_REPO_URL}
+        contextDir: ${SOURCE_CONTEXT_DIR}
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: ${DOCKER_FILE_PATH}
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${NAME}:${OUTPUT_IMAGE_TAG}
+      resources:
+        requests:
+          cpu: ${CPU_REQUEST}
+          memory: ${MEMORY_REQUEST}
+        limits:
+          cpu: ${CPU_LIMIT}
+          memory: ${MEMORY_LIMIT}
+      triggers:
+        - type: ConfigChange
+
+parameters:
+  - name: NAME
+    displayName: Name
+    description: The name assigned to all of the objects defined in this template.
+    required: true
+    value: agent
+  - name: NAMESPACE
+    displayName: The target namespace for the resources.
+    required: true
+    value: a3e512
+  - name: ENV_NAME
+    displayName: Environment Name
+    description: Environment name.  For the build environment this will typically be 'tools'
+    required: true
+    value: tools
+  - name: SUFFIX
+    displayName: Suffix
+    description: A name suffix used for all objects
+    required: false
+    value: -primary
+  - name: APP_NAME
+    displayName: App Name
+    description: Used to group components together in the OpenShift console.
+    required: true
+    value: EmprPermitAgent
+  - name: APP_GROUP
+    displayName: App Group
+    description: The name assigned to all of the deployments in this project.
+    required: true
+    value: primary-instance
+  - name: GIT_REPO_URL
+    displayName: Git Repo URL
+    description: The URL to your GIT repo.
+    required: true
+    value: https://github.com/bcgov/aries-vcr.git
+  - name: GIT_REF
+    displayName: Git Reference
+    description: The git reference or branch.
+    required: true
+    value: master
+  - name: SOURCE_CONTEXT_DIR
+    displayName: Source Context Directory
+    description: The source context directory.
+    required: false
+    value: docker/vcr-agent
+  - name: OUTPUT_IMAGE_TAG
+    displayName: Output Image Tag
+    description: The tag given to the built image.
+    required: true
+    value: latest
+  - name: DOCKER_FILE_PATH
+    displayName: Docker File Path
+    description: The path to the docker file.
+    required: true
+    value: Dockerfile
+  - name: CPU_REQUEST
+    displayName: Resources CPU Request
+    description: The resources CPU request (in cores) for this build.
+    required: true
+    value: 10m
+  - name: CPU_LIMIT
+    displayName: Resources CPU Limit
+    description: The resources CPU limit (in cores) for this build.
+    required: true
+    value: 250m
+  - name: MEMORY_REQUEST
+    displayName: Resources Memory Request
+    description: The resources Memory request (in Mi, Gi, etc) for this build.
+    required: true
+    value: 10Mi
+  - name: MEMORY_LIMIT
+    displayName: Resources Memory Limit
+    description: The resources Memory limit (in Mi, Gi, etc) for this build.
+    required: true
+    value: 500Mi

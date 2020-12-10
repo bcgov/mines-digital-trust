@@ -1,0 +1,20 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/agent/agent-build.yaml
+#=========================================================
+NAME=agent
+NAMESPACE=a3e512
+ENV_NAME=tools
+SUFFIX=-primary
+APP_NAME=EmprPermitAgent
+APP_GROUP=primary-instance
+GIT_REPO_URL=https://github.com/bcgov/aries-vcr.git
+GIT_REF=master
+SOURCE_CONTEXT_DIR=docker/vcr-agent
+OUTPUT_IMAGE_TAG=latest
+DOCKER_FILE_PATH=Dockerfile
+CPU_REQUEST=10m
+CPU_LIMIT=250m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=500Mi
