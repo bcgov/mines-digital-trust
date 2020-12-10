@@ -47,3 +47,4 @@ jobs:
           CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
         with:
           coverageCommand:  coverage run --source=app -m pytest
+          debug: true 
