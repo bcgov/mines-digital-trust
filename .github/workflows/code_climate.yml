@@ -49,6 +49,8 @@ jobs:
         run: ./cc-test-reporter before-build
       - name: run coverage manually
         run: coverage run --source=app -m pytest
+      - name: export coverage results
+        run: coverage xml -i
 #- name: Code Climate Coverage Action
 #         uses: paambaati/codeclimate-action@v2.7.4
 #         env:
