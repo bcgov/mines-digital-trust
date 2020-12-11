@@ -34,31 +34,31 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       # Runs a set of commands using the runners shell
-      # Get Code Climate binary
-      - name: Download Code Climate Binary
-        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#       # Get Code Climate binary
+#       - name: Download Code Climate Binary
+#         run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 
-      # Permissions applied to the Code Climate Executable
-      - name: Apply executable perms to Code Climate Binary
-        run: chmod +x ./cc-test-reporter
+#       # Permissions applied to the Code Climate Executable
+#       - name: Apply executable perms to Code Climate Binary
+#         run: chmod +x ./cc-test-reporter
         
-      - name: What is here?
-        run: ls
-      # Before build
-      - name: Before build
-        run: ./cc-test-reporter before-build
-      - name: run coverage manually
-        run: coverage run --source=app -m pytest
-      - name: export coverage results
-        run: coverage xml -i
-#- name: Code Climate Coverage Action
-#         uses: paambaati/codeclimate-action@v2.7.4
-#         env:
-#           CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
-#           CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
-#         with:
-#           coverageCommand:  coverage run --source=app -m pytest
-#           debug: true 
+#       - name: What is here?
+#         run: ls
+#       # Before build
+#       - name: Before build
+#         run: ./cc-test-reporter before-build
+#       - name: run coverage manually
+#         run: coverage run --source=app -m pytest
+#       - name: export coverage results
+#         run: coverage xml -i
+      - name: Code Climate Coverage Action
+        uses: paambaati/codeclimate-action@v2.7.4
+        env:
+          CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
+          CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
+        with:
+          coverageCommand:  coverage run --source=app -m pytest & coverage xml -i
+          debug: true 
       - name: What is here?
         run: ls -la
 
