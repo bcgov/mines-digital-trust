@@ -40,13 +40,16 @@ jobs:
         run: pwd
       - name: config?
         run: ls config
-      - name: Code Climate Coverage Action
-        uses: paambaati/codeclimate-action@v2.7.4
-        env:
-          CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
-          CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
-        with:
-          coverageCommand:  coverage run --source=app -m pytest
-          debug: true 
+      - name: run coverage manually
+        run: coverage run --source=app -m pytest
+
+#       - name: Code Climate Coverage Action
+#         uses: paambaati/codeclimate-action@v2.7.4
+#         env:
+#           CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
+#           CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
+#         with:
+#           coverageCommand:  coverage run --source=app -m pytest
+#           debug: true 
       - name: What is here?
         run: ls
