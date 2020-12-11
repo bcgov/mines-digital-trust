@@ -15,7 +15,29 @@ class Controller(Flask):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
         # self.startup_thread = issuer.startup_init(ENV)
-        issuer.app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
+        issuer.app_config = sample_app_config
+        issuer.synced = {'cee21dfa-cd60-479b-b096-9db9552fa948': True}
+        self.ENV = ENV
+
+
+def create_app(ENV):
+    app = Controller(ENV)
+    routes.register_routes(app)
+    wsgi_app = app.wsgi_app
+    return app
+
+signal.signal(signal.SIGINT, issuer.signal_issuer_shutdown)
+signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
+
+
+# Load application settings (environment)
+config_root = os.environ.get('CONFIG_ROOT', './config')
+ENV = config.load_settings(config_root=config_root)
+app = create_app(ENV)
+
+
+#####
+sample_app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
  'DID': 'XZxwKKqiKaV6yZQob1UZpq',
  'TOB_CONNECTION': 'cee21dfa-cd60-479b-b096-9db9552fa948',
  'running': True,
@@ -296,24 +318,3 @@ class Controller(Flask):
                                              'version': '1.0.0'},
              'SCHEMA_my-relationship.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:my-relationship.empr:1.0.0'}
         }
-        issuer.synced = {'cee21dfa-cd60-479b-b096-9db9552fa948': True}
-        self.ENV = ENV
-
-
-def create_app(ENV):
-    app = Controller(ENV)
-    # app.startup_thread.join()
-    # pprint.pprint(issuer.synced)
-    # raise
-    routes.register_routes(app)
-    wsgi_app = app.wsgi_app
-    return app
-
-signal.signal(signal.SIGINT, issuer.signal_issuer_shutdown)
-signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
-
-
-# Load application settings (environment)
-config_root = os.environ.get('CONFIG_ROOT', './config')
-ENV = config.load_settings(config_root=config_root)
-app = create_app(ENV)
