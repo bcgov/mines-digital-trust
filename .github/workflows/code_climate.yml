@@ -34,15 +34,21 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       # Runs a set of commands using the runners shell
+      # Get Code Climate binary
+      - name: Download Code Climate Binary
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
+      # Permissions applied to the Code Climate Executable
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
+        
       - name: What is here?
         run: ls
-      - name: Where is here?
-        run: pwd
-      - name: config?
-        run: ls config
       - name: run coverage manually
         run: coverage run --source=app -m pytest
-
+      # Before build
+      - name: Before build
+        run: ./cc-test-reporter before-build
 #       - name: Code Climate Coverage Action
 #         uses: paambaati/codeclimate-action@v2.7.4
 #         env:
