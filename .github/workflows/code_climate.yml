@@ -59,3 +59,5 @@ jobs:
 #           debug: true 
       - name: What is here?
         run: ls cc-test-reporter
+      - name: What is there?
+        run: ls cc-test-reporter/cc-test-reporter
