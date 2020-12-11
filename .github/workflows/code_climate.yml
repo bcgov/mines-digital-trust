@@ -60,5 +60,5 @@ jobs:
 #           coverageCommand:  coverage run --source=app -m pytest
 #           debug: true 
       - name: What is here?
-        run: ls -la cc-test-reporter
+        run: ls -la
 
