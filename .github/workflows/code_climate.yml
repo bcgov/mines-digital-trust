@@ -48,3 +48,5 @@ jobs:
         with:
           coverageCommand:  coverage run --source=app -m pytest
           debug: true 
+      - name: What is here?
+        run: ls
