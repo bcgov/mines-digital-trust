@@ -1,7 +1,7 @@
 FROM frolvlad/alpine-glibc:latest
 
 RUN apk update && apk upgrade && \
-    apk add --no-cache bash git curl jq tar
+    apk add --no-cache bash git curl jq tar openssl
 
 ARG OC_VERSION=4.6
 ARG BUILD_DEPS='tar gzip'
