@@ -54,5 +54,5 @@ jobs:
       - name: What is here?
         run: ls -la
       - name: format-coverage
-        run: ./cc-test-reporter/cc-test-reporter format-coverage -t lcov -o coverage/contoller-codeclimate.json ./coverage.json
+        run: ./cc-test-reporter format-coverage -t lcov -o coverage/contoller-codeclimate.json ./coverage.json
 
