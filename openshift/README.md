@@ -6,6 +6,20 @@
 1. install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools), configure for your particular Operating System
 1. clone this repo
 
+### Alternative
+Use the [Dockerfile](./Dockerfile) to run the openshift developer tools.  You will need Docker (obviously) and you will need to build the image, and mount your local cloned repository code.
+
+This assumes you are in a terminal/console at your cloned mines-digital-trust/openshift directory.
+
+```sh
+docker build --tag os-dev-tools:1.0 .
+docker run -it --rm --name odt -v /<yourpathto>/mines-digital-trust/openshift:/usr/src/app/openshift os-dev-tools:1.0
+
+bash-5.0# cd /usr/src/app/openshift
+bash-5.0# <run your oc login and openshift developer tool scripts>
+bash-5.0# exit
+```
+
 ## Project Namespace setup
 1. open terminal/console to this folder (mines-digital-trust/openshift)
 1. login to openshift web console, get your login token
