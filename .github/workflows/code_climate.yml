@@ -41,7 +41,12 @@ jobs:
       # Permissions applied to the Code Climate Executable
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
-        
+      - name: Set ENV for codeclimate (push)
+        run: |
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
       - name: Where is here?
         run: pwd
       # Before build
