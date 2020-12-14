@@ -61,7 +61,7 @@ def register_routes(app):
 
         if not request.json:
             end_time = time.perf_counter()
-            issuer.log_timing_method(method, start_time, end_time, False)
+            logging.log_timing_method(method, start_time, end_time, False)
             abort(400)
 
         cred_input = request.json
@@ -88,7 +88,6 @@ def register_routes(app):
 
         message = request.json
         logging.log_timing_event(method, message, start_time, None, False)
-
         # dispatch based on the topic type
         if topic == issuer.TOPIC_CONNECTIONS:
             if "state" in message:
