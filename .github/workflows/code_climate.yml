@@ -56,7 +56,9 @@ jobs:
       - name: What is here?
         run: ls -la
       - name: what is there?
-        run: ls /home/runner/work/mines-digital-trust
+        run: ls /home/runner/work/mines-digital-trust/mines-digital-trust   
+      - name: find it?
+        run: find / -name *.info
       - name: format-coverage
         run: ./cc-test-reporter format-coverage -t lcov -o coverage/contoller-codeclimate.json ./coverage.json
 
