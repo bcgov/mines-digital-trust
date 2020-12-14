@@ -41,19 +41,20 @@ jobs:
       # Permissions applied to the Code Climate Executable
       - name: Apply executable perms to Code Climate Binary
         run: chmod +x ./cc-test-reporter
+      # Before build
+      - name: Before build
+        run: ./cc-test-reporter before-build
       - name: Set ENV for codeclimate
         run: |
-          echo "GIT_BRANCH=$GITHUB_REF" >> GITHUB_ENV
-          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> GITHUB_ENV
-          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
-          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
+          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
       - name: show me the env
         run: printenv | grep GIT
       - name: Where is here?
         run: pwd
-      # Before build
-      - name: Before build
-        run: ./cc-test-reporter before-build
+
       - name: run coverage manually
         run: coverage run --source=app -m pytest
       - name: export coverage results
