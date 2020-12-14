@@ -43,10 +43,10 @@ jobs:
         run: chmod +x ./cc-test-reporter
       - name: Set ENV for codeclimate
         run: |
-          echo "GIT_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
-          echo "GIT_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
-          #echo "::set-env name=GIT_BRANCH::${{ github.event.pull_request.head.ref }}"
-          #echo "::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}"
+          echo "GIT_BRANCH=$GITHUB_REF" >> GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
       - name: show me the env
         run: printenv | grep GIT
       - name: Where is here?
