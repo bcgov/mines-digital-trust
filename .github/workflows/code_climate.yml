@@ -50,11 +50,13 @@ jobs:
       - name: run coverage manually
         run: coverage run --source=app -m pytest
       - name: export coverage results
-        run: coverage json -i
+        run: coverage json -i      
+      - name: export coverage results
+        run: coverage report -m
       - name: What is here?
         run: ls -la
       - name: what is there?
-        run: ls /home/runner
+        run: ls /home/runner/work/mines-digital-trust
       - name: format-coverage
         run: ./cc-test-reporter format-coverage -t lcov -o coverage/contoller-codeclimate.json ./coverage.json
 
