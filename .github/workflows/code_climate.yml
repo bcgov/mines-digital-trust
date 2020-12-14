@@ -17,6 +17,8 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    env:
+      CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     defaults:
@@ -34,22 +36,37 @@ jobs:
           pip install flake8 pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       # Runs a set of commands using the runners shell
-      - name: What is here?
-        run: ls
+      # Get Code Climate binary
+      - name: Download Code Climate Binary
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
+      # Permissions applied to the Code Climate Executable
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
+      # Before build
+      - name: Before build
+        run: ./cc-test-reporter before-build
+      # Set required Git env vars for a push to master
+      - name: Set ENV for codeclimate (push)
+        run: |
+          echo "GIT_BRANCH=$GITHUB_REF" >> GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> GITHUB_ENV
+          #echo "::set-env name=GIT_BRANCH::$GITHUB_REF"
+          #echo "::set-env name=GIT_COMMIT_SHA::$GITHUB_SHA"
+        if: github.event_name == 'push'
+      - name: show me the env
+        run: printenv | grep GIT
       - name: Where is here?
         run: pwd
-      - name: config?
-        run: ls config
+
       - name: run coverage manually
         run: coverage run --source=app -m pytest
-
-#       - name: Code Climate Coverage Action
-#         uses: paambaati/codeclimate-action@v2.7.4
-#         env:
-#           CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
-#           CONFIG_ROOT: ${{secrets.CONFIG_ROOT}}
-#         with:
-#           coverageCommand:  coverage run --source=app -m pytest
-#           debug: true 
+      - name: export coverage results
+        run: coverage json -i      
+      - name: export coverage results
+        run: coverage report -m
       - name: What is here?
-        run: ls
+        run: ls -la
+      - name: format-coverage
+        run: ./cc-test-reporter format-coverage --debug -t coverage.py -o ./controller-codeclimate.json ./coverage.json
+
