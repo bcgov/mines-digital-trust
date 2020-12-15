@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-
+![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)
 # Mines-Digital-Trust, Permit Issuer/Controller for Aries VCR
 
 This repository is based on the [Aries VCR Issuer Controller template](https://github.com/bcgov/aries-vcr-issuer-controller) for creating an [Aries](https://www.hyperledger.org/use/ARIES) Verifiable Credential Registry (VCR) Issuer Agent. [Aries VCR](https://github.com/bcgov/aries-vcr) is the foundational technology upon which the Government of British Columbia's [OrgBookBC](https://orgabook.gov.bc.ca) was built. Aries VCR Issuer Controller is a starter kit for building an Aries agent that issues verifiable credentials to instances of an Aries VCR, such as OrgBookBC. This repo contains code for an issuer controller that works with [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACAPy) framework. The controller and an instance of ACA-Py can be deployed together to implement an Aries issuer agent.
