@@ -58,7 +58,8 @@ jobs:
         run: printenv | grep GIT
       - name: Where is here?
         run: pwd
-
+      - name: pytest...?
+        run: py.test --cov=. --cov-report xml
       - name: run coverage manually
         run: coverage run --source=app -m pytest
       - name: export coverage results
