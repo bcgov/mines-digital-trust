@@ -19,6 +19,7 @@ jobs:
   build:
     env:
       CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
+      ACTION_DEBUG: True
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     defaults:
