@@ -69,5 +69,8 @@ jobs:
       - name: what is xml?
         run: cat ./coverage.xml
       - name: format-coverage
-        run: ./cc-test-reporter format-coverage --debug -t coverage.py ./coverage.xml
+        run: ./cc-test-reporter format-coverage --debug -o codeclimate.json -t coverage.py ./coverage.xml  
+        # Upload total coverage report to Code Climate
+      - name: Upload coverage report to Code Climate
+        run: ./cc-test-reporter upload-coverage -d -i ./codeclimate.json
 
