@@ -54,14 +54,10 @@ jobs:
           echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
           echo "GIT_COMMITTED_AT=$(date +%s)" >> $GITHUB_ENV
         if: github.event_name == 'push'
-      - name: WHAT is github_env
-        run: echo $GITHUB_ENV
       - name: show me the env
         run: printenv | grep GIT
       - name: Where is here?
         run: pwd
-      - name: pytest...?
-        run: py.test --cov=. --cov-report xml
       - name: run coverage manually
         run: coverage run --source=app -m pytest
       - name: export coverage results
