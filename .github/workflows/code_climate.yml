@@ -52,7 +52,7 @@ jobs:
         run: |
           echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
           echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
-          echo "GIT_COMMITTED_AT="$(date +%s)" >> $GITHUB_ENV
+          echo "GIT_COMMITTED_AT=$(date +%s)" >> $GITHUB_ENV
         if: github.event_name == 'push'
       - name: show me the env
         run: printenv | grep GIT
