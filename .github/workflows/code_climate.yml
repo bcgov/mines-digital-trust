@@ -6,9 +6,9 @@ name: Code Climate
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
-    branches: [ test_actions ]
+    branches: [ develop ]
   pull_request:
-    branches: [ test_actions ]
+    branches: [ develop ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -66,8 +66,6 @@ jobs:
         run: coverage report -m
       - name: What is here?
         run: ls -la
-      - name: what is xml?
-        run: cat ./coverage.xml
       - name: format-coverage
         run: ./cc-test-reporter format-coverage --debug -o codeclimate.json -t coverage.py ./coverage.xml  
         # Upload total coverage report to Code Climate
