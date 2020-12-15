@@ -2,12 +2,12 @@ default:
   APPLICATION_URL_VONX: $APPLICATION_URL/empr/bcgov-mines-act-permit
   TEMPLATE_PATH: ../templates
 
-  TOB_API_URL: http://localhost:8081/api/v2
-  TOB_APP_URL: http://localhost:8080
+  # TOB_API_URL: http://localhost:8081/api/v2
+  # TOB_APP_URL: http://localhost:8080
 
-  WALLET_SEED_VONX: empr_000000000000000000000000000
+  # WALLET_SEED_VONX: empr_000000000000000000000000000
 
-  INDY_GENESIS_URL: http://localhost:9000/genesis
+  # INDY_GENESIS_URL: http://localhost:9000/genesis
 
   LEDGER_PROTOCOL_VERSION: "1.6"
   AUTO_REGISTER_DID: false
