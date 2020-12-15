@@ -49,10 +49,10 @@ jobs:
         run: ./cc-test-reporter before-build
       # Set required Git env vars for a push to master
       - name: Set ENV for codeclimate (push)
-        run: printenv | grep ENV
-#         run: |
-#           echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
-#           echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
+        run: |
+          echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
+          echo "GIT_COMMITTED_AT =$GITHUB_SHA" >> $GITHUB_ENV
         if: github.event_name == 'push'
       - name: show me the env
         run: printenv | grep GIT
