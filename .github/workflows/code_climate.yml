@@ -61,11 +61,13 @@ jobs:
       - name: run coverage manually
         run: coverage run --source=app -m pytest
       - name: export coverage results
-        run: coverage json -i      
+        run: coverage xml -i      
       - name: export coverage results
         run: coverage report -m
       - name: What is here?
         run: ls -la
+      - name: what is xml?
+        run: cat ./coverage.xml
       - name: format-coverage
-        run: ./cc-test-reporter format-coverage --debug -t coverage.py ./coverage.json
+        run: ./cc-test-reporter format-coverage --debug -t coverage.py ./coverage.xml
 
