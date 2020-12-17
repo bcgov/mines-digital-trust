@@ -205,7 +205,7 @@ parameters:
     displayName: App Name
     description: Used to group components together in the OpenShift console.
     required: true
-    value: EmprPermitAgent
+    value: EmliPermitAgent
   - name: APP_GROUP
     displayName: App Group
     description: The name assigned to all of the deployments in this project.
@@ -240,13 +240,13 @@ parameters:
       to be basee64 encoded/
     required: true
     generate: expression
-    from: "[a-zA-Z_][a-zA-Z0-9_]{10}"
+    from: "[a-zA-Z0-9]{16}"
   - name: POSTGRESQL_PASSWORD
     displayName: PostgreSQL Connection Password
     description: Password for the PostgreSQL connection user.  Needs to be basee64 encoded/
     required: true
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9]{16}"
   - name: POSTGRESQL_ADMIN_PASSWORD
     displayName: PostgreSQL Admin Password
     description:
@@ -254,7 +254,7 @@ parameters:
       to be basee64 encoded.
     required: true
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9]{16}"
   - name: MOUNT_PATH
     displayName: Mount Path
     description: The path to mount the persistent volume.

@@ -1,0 +1,18 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/issuer-controller/issuer-controller-build.json
+#=========================================================
+NAME=issuer-controller
+SUFFIX=-primary
+APP_NAME=EmliPermitAgent
+APP_GROUP=primary-instance
+GIT_REPO_URL=https://github.com/bcgov/mines-digital-trust.git
+GIT_REF=init-openshift
+SOURCE_CONTEXT_DIR=issuer_controller
+OUTPUT_IMAGE_TAG=latest
+DOCKER_FILE_PATH=Dockerfile
+CPU_LIMIT=0
+MEMORY_LIMIT=0Mi
+CPU_REQUEST=0
+MEMORY_REQUEST=0Mi

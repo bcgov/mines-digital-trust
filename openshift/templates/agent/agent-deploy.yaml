@@ -5,72 +5,7 @@ metadata:
   name: ${NAME}${SUFFIX}
 objects:
 
-  - kind: NetworkSecurityPolicy
-    apiVersion: security.devops.gov.bc.ca/v1alpha1
-    metadata:
-      name: pods-to-k8s-api${SUFFIX}
-      labels:
-        name: pods-to-k8s-api${SUFFIX}
-        app: ${APP_NAME}${SUFFIX}
-        app-group: ${APP_GROUP}
-        env: ${TAG_NAME}
-    spec:
-      description: |
-        Allow pods to talk to the internal k8s api so deployments work.
-        This only needs to be specified once per environment.
-      source:
-        - - $namespace=${NAMESPACE}-${TAG_NAME}
-      destination:
-        - - int:network=internal-cluster-api-endpoint
 
-  - kind: ExternalNetwork
-    apiVersion: security.devops.gov.bc.ca/v1alpha1
-    metadata:
-      name: ${NAME}${SUFFIX}
-      network: ${NAME}${SUFFIX}
-      labels:
-        name: ${NAME}${SUFFIX}
-        network: ${NAME}${SUFFIX}
-        app: ${APP_NAME}${SUFFIX}
-        app-group: ${APP_GROUP}
-        env: ${TAG_NAME}
-    spec:
-      description: |
-        Define the network parameters for accessing remote agents.
-      entries:
-        - 0.0.0.0/0
-      servicePorts:
-        - tcp/9700:9799
-        - tcp/80
-        - tcp/443
-
-  - kind: NetworkSecurityPolicy
-    apiVersion: security.devops.gov.bc.ca/v1alpha1
-    metadata:
-      name: ${NAME}${SUFFIX}
-      labels:
-        name: ${NAME}${SUFFIX}
-        app: ${APP_NAME}${SUFFIX}
-        app-group: ${APP_GROUP}
-        env: ${TAG_NAME}
-    spec:
-      description: |
-        Allow the agent pods to communicate with external agents, internal controller pods, and the wallet.
-      source:
-        - - role=${ROLE}
-          - app=${APP_NAME}${SUFFIX}
-          - env=${TAG_NAME}
-          - $namespace=${NAMESPACE}-${TAG_NAME}
-      destination:
-        - - ext:name=${NAME}${SUFFIX}
-        - - role=${CONTROLLER_ROLE}
-          - app=${APP_NAME}${SUFFIX}
-          - env=${TAG_NAME}
-          - $namespace=${NAMESPACE}-${TAG_NAME}
-        - - role=${WALLET_ROLE}
-          - app=${APP_NAME}${SUFFIX}
-          - env=${TAG_NAME}
-          - $namespace=${NAMESPACE}-${TAG_NAME}
 
   - kind: Service
     apiVersion: v1
@@ -164,7 +99,7 @@ objects:
         role: ${ROLE}
         env: ${TAG_NAME}
     spec:
-      replicas: 1
+      replicas: 0
       selector:
         name: ${NAME}${SUFFIX}
       strategy:
@@ -396,7 +331,7 @@ parameters:
     displayName: App Name
     description: Used to group components together in the OpenShift console.
     required: true
-    value: EmprPermitAgent
+    value: EmliPermitAgent
   - name: APP_GROUP
     displayName: App Group
     description: Used to group components together.
@@ -406,7 +341,7 @@ parameters:
     displayName: Application Hostname
     description: The exposed hostname that will route to the service, if left blank a value will be defaulted.
     required: false
-    value: empr-permits-agent-primary-dev.apps.silver.devops.gov.bc.ca
+    value: agent-a3e512-dev.apps.silver.devops.gov.bc.ca
   - name: ROUTE_TIMEOUT
     displayName: Route Timeout
     description: The timeout for the application route.  When this timeout is exceeded the application's route will respond with a 504 Gateway Timeout error.
@@ -425,17 +360,17 @@ parameters:
     displayName: Agent Label/Name
     description: The label/name of the agent
     required: true
-    value: empr-permits-agent
+    value: emli-permit-agent
   - name: AGENT_BASE_URL
     displayName: Agent endpoint
     description: The endpoint of the agent
     required: true
-    value: https://empr-permits-agent-primary-dev.apps.silver.devops.gov.bc.ca
+    value: https://agent-a3e512-dev.apps.silver.devops.gov.bc.ca
   - name: WEBHOOK_URL
     displayName: Webhook URL
-    description: The webhook endpoint
-    required: true
-    value: http://empr-permits-controller-primary:8080/api/agentcb
+    description: The webhook endpoint (ex. http://issuer-controller-primary:8080/api/agentcb)
+    required: false
+    value:
   - name: AGENT_ADMIN_PORT
     displayName: Agent Admin Port
     description: The admin port on which the service will listen.
@@ -446,7 +381,7 @@ parameters:
     description: The key used to authenticate client requests to the admin api.
     required: true
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9_]{16}"
   - name: AGENT_HTTP_PORT
     displayName: Agent Http Port
     description: The http port on which the service will listen.
@@ -545,19 +480,19 @@ parameters:
     description: The encryption key to be used for the wallets.  Needs to be basee64 encoded.
     required: true
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9_]{16}"
   - name: AGENT_WALLET_SEED
     displayName: Wallet Seed
     description: The Seed used for the agent's wallet.  Needs to be basee64 encoded.
     required: true
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9_]{16}"
   - name: WALLET_DID
     displayName: Indy Wallet DID
     description: The DID associated to the indy wallet.  Needs to be basee64 encoded.
     required: false
     generate: expression
-    from: "[a-zA-Z0-9_~!@#$%^&*()-=<>,.?;:|]{16}"
+    from: "[a-zA-Z0-9_]{16}"
   # ===============================================================================
   - name: MIN_REPLICAS
     displayName: Minimum Replicas

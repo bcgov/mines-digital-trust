@@ -5,38 +5,6 @@ metadata:
   name: ${NAME}-build-template
 objects:
 
-  - kind: NetworkSecurityPolicy
-    apiVersion: security.devops.gov.bc.ca/v1alpha1
-    metadata:
-      name: pods-to-k8s-api
-      labels:
-        name: pods-to-k8s-api
-        env: ${ENV_NAME}
-    spec:
-      description: |
-        Allow pods to talk to the internal k8s api so deployments work.
-        This only needs to be specified once per environment.
-      source:
-        - - $namespace=${NAMESPACE}-${ENV_NAME}
-      destination:
-        - - int:network=internal-cluster-api-endpoint
-
-  - kind: NetworkSecurityPolicy
-    apiVersion: security.devops.gov.bc.ca/v1alpha1
-    metadata:
-      name: pods-to-external-network
-      labels:
-        name: pods-to-external-network
-        env: ${ENV_NAME}
-    spec:
-      description: |
-        Allow the builds to access the internet.
-        This only needs to be specified once per environment.
-      source:
-        - - $namespace=${NAMESPACE}-${ENV_NAME}
-      destination:
-        - - ext:network=any
-
   - kind: ImageStream
     apiVersion: v1
     metadata:
@@ -104,7 +72,7 @@ parameters:
     displayName: App Name
     description: Used to group components together in the OpenShift console.
     required: true
-    value: EmprPermitAgent
+    value: EmliPermitAgent
   - name: APP_GROUP
     displayName: App Group
     description: The name assigned to all of the deployments in this project.

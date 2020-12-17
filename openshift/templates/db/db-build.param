@@ -1,0 +1,16 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/db/db-build.yaml
+#=========================================================
+NAME=db
+SUFFIX=-primary
+APP_NAME=EmliPermitAgent
+APP_GROUP=primary-instance
+GIT_REPO_URL=https://github.com/WadeBarnes/von-bc-registries-agent-configurations.git
+GIT_REF=feature/ocp4
+SOURCE_CONTEXT_DIR=openshift/templates/db/config
+SOURCE_IMAGE_KIND=DockerImage
+SOURCE_IMAGE_NAME=registry.access.redhat.com/rhscl/postgresql-10-rhel7
+SOURCE_IMAGE_TAG=latest
+OUTPUT_IMAGE_TAG=latest
