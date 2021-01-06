@@ -7,14 +7,20 @@ import os
 import yaml
 
 import signal
-
+import pprint
 from app import config, issuer,routes
+
+
 
 class Controller(Flask):
     def __init__(self, ENV):
         print("Initializing " + __name__ + " ...")
         super().__init__(__name__)
-        issuer.startup_init(ENV)
+        if ENV.get('mode','') == 'TEST':
+            issuer.app_config = ENV['test_issuer_app_config']
+            issuer.synced = ENV['test_issuer_synced']
+        else: 
+            self.startup_thread = issuer.startup_init(ENV)
         self.ENV = ENV
 
 
@@ -32,3 +38,4 @@ signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
 config_root = os.environ.get('CONFIG_ROOT', './config')
 ENV = config.load_settings(config_root=config_root)
 app = create_app(ENV)
+
