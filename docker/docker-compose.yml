@@ -39,6 +39,7 @@ services:
       TRACE_TARGET: ${TRACE_TARGET}
       TRACE_MSG_PCT: ${TRACE_MSG_PCT}
       ACK_ERROR_PCT: ${ACK_ERROR_PCT}
+      REGISTER_TOB_CONNECTION: ${REGISTER_TOB_CONNECTION:-true}
     networks:
       - myorg
     ports:
