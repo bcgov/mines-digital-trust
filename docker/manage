@@ -94,7 +94,7 @@ configureEnvironment () {
   export AGENT_HTTP_IN_PORT=8031
   export AGENT_WS_IN_PORT=8033
   export WEBHOOK_HOST=http://myorg-controller:${WEBHOOK_PORT}
-  export AGENT_NAME="empr-agent"
+  export AGENT_NAME="emli-agent"
   export AGENT_ENDPOINT=${AGENT_ENDPOINT:-http://$DOCKERHOST:$AGENT_HTTP_IN_PORT}
   export AGENT_ADMIN_API_KEY=${AGENT_ADMIN_API_KEY}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
@@ -120,10 +120,14 @@ configureEnvironment () {
   export POSTGRESQL_WALLET_PORT="5432"
   export POSTGRESQL_ADMIN_USER="postgres"
   export POSTGRESQL_ADMIN_PASSWORD="mysecretpassword"
-  export WALLET_SEED_VONX=${WALLET_SEED_VONX:-"empr_000000000000000000000000000"}
+  export WALLET_SEED_VONX=${WALLET_SEED_VONX:-"emli_000000000000000000000000000"}
 
   # myorg-controller
-  export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
+  # specify this as anything other than "true" to force manual connection to the TOB agent
+  export REGISTER_TOB_CONNECTION=${REGISTER_TOB_CONNECTION:-true}
+  if [  "${REGISTER_TOB_CONNECTION}" = "true"  ]; then
+    export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
+  fi
   export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-vcr-agent}
   export TOB_ADMIN_API_KEY=${TOB_ADMIN_API_KEY:-R2D2HfPM5Zwd69IjclQiuFmcMV6}
 
