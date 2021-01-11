@@ -1,5 +1,3 @@
-# Documentation: https://github.com/bcgov/von-agent-template/tree/master/von-x-agent/config
-
 forms:
   emprmy-registration:
     path: /empr/my-registration
@@ -60,61 +58,6 @@ forms:
       - name: corp_num
         from: helper
         source: uuid
-  emprmy-relationship:
-    path: /empr/my-relationship
-    type: issue-credential
-    schema_name: my-relationship.empr
-    page_title: Title for my-relationship.empr
-    title: Title for my-relationship.empr
-    template: bcgov.index.html
-    description: The relationship between two organizations
-    explanation: Use the form below to issue a Credential.
-    proof_request:
-      id: greenlight_registration
-      connection_id: bctob
-    fields:
-    - name: corp_num
-      label: corp_num
-      type: text
-      required: true
-    - name: associated_corp_num
-      label: associated_corp_num
-      type: text
-      required: true
-    - name: associated_registration_name
-      label: associated_registration_name
-      type: text
-      required: false
-    - name: relationship
-      label: relationship
-      type: text
-      required: true
-    - name: relationship_description
-      label: relationship_description
-      type: text
-      required: true
-    - name: relationship_status
-      label: relationship_status
-      type: select
-      options:
-      - todo-1
-      - todo-2
-      - todo-3
-      required: true
-    - name: relationship_status_effective
-      label: relationship_status_effective
-      type: date
-      required: false
-    - name: effective_date
-      label: effective_date
-      type: date
-      required: true
-    - name: expiry_date
-      label: expiry_date
-      type: date
-      required: false
-    mapping:
-      attributes: []
   emprbcgov-mines-act-permit:
     path: /empr/bcgov-mines-act-permit
     type: issue-credential
@@ -136,28 +79,44 @@ forms:
       label: entity_name
       type: text
       required: true
-    - name: permit_type
-      label: permit_type
+    - name: permit_no
+      label: permit_no
+      type: text
+      required: true
+    - name: mine_no
+      label: mine_no
+      type: text
+      required: true
+    - name: mine_class
+      label: mine_class
       type: select
       options:
       - todo-1
       - todo-2
       - todo-3
       required: true
-    - name: permit_issued_date
-      label: permit_issued_date
+    - name: latitude
+      label: latitude
+      type: text
+      required: true
+    - name: longitude
+      label: longitude
+      type: text
+      required: true
+    - name: authorization_end_date
+      label: authorization_end_date
       type: date
       required: true
-    - name: permit_status
-      label: permit_status
-      type: select
-      options:
-      - todo-1
-      - todo-2
-      - todo-3
+    - name: inseptor_name
+      label: inseptor_name
+      type: text
       required: true
-    - name: effective_date
-      label: effective_date
+    - name: credential_issued_date
+      label: credential_issued_date
+      type: date
+      required: true
+    - name: credential_effective_date
+      label: credential_effective_date
       type: date
       required: true
     mapping:
@@ -165,5 +124,3 @@ forms:
       - name: permit_id
         from: helper
         source: uuid
-
-### eof ###

@@ -23,30 +23,20 @@
     },
     {
         "attributes": {
-            "associated_corp_num": "$Text",
-            "associated_registration_name": "$Text",
+            "authorization_end_date": "$Date",
             "corp_num": "$Text",
-            "effective_date": "$Date",
-            "expiry_date": "$Date",
-            "relationship": "$Text",
-            "relationship_description": "$Text",
-            "relationship_status": "$Select",
-            "relationship_status_effective": "$Date"
-        },
-        "schema": "my-relationship.empr",
-        "version": "1.0.0"
-    },
-    {
-        "attributes": {
-            "corp_num": "$Text",
-            "effective_date": "$Date",
+            "credential_effective_date": "$Date",
+            "credential_issued_date": "$Date",
             "entity_name": "$Name",
+            "inseptor_name": "$Text",
+            "latitude": "$Text",
+            "longitude": "$Text",
+            "mine_class": "$Select",
+            "mine_no": "$Text",
             "permit_id": "$UUID",
-            "permit_issued_date": "$Date",
-            "permit_status": "$Select",
-            "permit_type": "$Select"
+            "permit_no": "$Text"
         },
         "schema": "bcgov-mines-act-permit.empr",
-        "version": "1.0.0"
+        "version": "1.1.0"
     }
 ]
