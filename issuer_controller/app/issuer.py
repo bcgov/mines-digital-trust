@@ -400,6 +400,8 @@ def handle_connections(state, message):
         if state == "active":
             register_issuer_with_orgbook(message["connection_id"])
 
+    return jsonify({"message": state})
+
 
 def handle_credentials(state, message):
     start_time = time.perf_counter()

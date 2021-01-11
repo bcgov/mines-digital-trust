@@ -65,6 +65,7 @@ configureEnvironment () {
     esac
   done
 
+  export LOG_LEVEL=${LOG_LEVEL:-"warning"}
   # bcreg-controller
   export CONTROLLER_PORT=5000
   export EXPOSED_CONTROLLER_PORT=5000
@@ -128,7 +129,7 @@ configureEnvironment () {
   if [  "${REGISTER_TOB_CONNECTION}" = "true"  ]; then
     export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
   fi
-  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-vcr-agent}
+  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-avcr.agent}
   export TOB_ADMIN_API_KEY=${TOB_ADMIN_API_KEY:-R2D2HfPM5Zwd69IjclQiuFmcMV6}
 
 }
