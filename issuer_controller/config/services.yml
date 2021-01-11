@@ -337,7 +337,7 @@ issuers:
 verifiers:
   bctob:
     name: BC OrgBook
-    alias: vcr-agent
+    alias: $TOB_CONNECTION_NAME
     connection:
       type: TheOrgBook
       api_url: $TOB_API_URL
