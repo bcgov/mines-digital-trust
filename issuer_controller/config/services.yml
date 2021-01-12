@@ -30,7 +30,7 @@ issuers:
           input: corp_num
           from: claim
         type:
-          input: registration
+          input: my-registration.empr
           from: value
       mapping:
       - model: attribute
@@ -162,7 +162,7 @@ issuers:
           input: corp_num
           from: claim
         type:
-          input: registration
+          input: my-registration.empr
           from: value
       mapping:
       - model: attribute

@@ -91,9 +91,8 @@ forms:
       label: mine_class
       type: select
       options:
-      - todo-1
-      - todo-2
-      - todo-3
+      - regional
+      - major
       required: true
     - name: latitude
       label: latitude
