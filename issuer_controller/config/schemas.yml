@@ -125,17 +125,17 @@
       label_en: Authorization End Date
       data_type: ui_date
       required: true
-    inseptor_name:
+    inspector_name:
       description_en: Name of EMLI permitting Inspector
       label_en: Inspector Name
       data_type: ui_text
       required: true
-    credential_issued_date:
+    issued_date:
       description_en: Date Permit is issued
       label_en: Permit Issued Date
       data_type: ui_date
       required: true
-    credential_effective_date:
+    effective_date:
       description_en: Date permit is effective
       label_en: Credential Effective Date
       data_type: ui_date

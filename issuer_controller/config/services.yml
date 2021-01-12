@@ -243,32 +243,32 @@ issuers:
       - model: attribute
         fields:
           type:
-            input: inseptor_name
+            input: inspector_name
             from: value
           value:
-            input: inseptor_name
+            input: inspector_name
             from: claim
       - model: attribute
         fields:
           type:
-            input: credential_issued_date
+            input: issued_date
             from: value
           format:
             input: datetime
             from: value
           value:
-            input: credential_issued_date
+            input: issued_date
             from: claim
       - model: attribute
         fields:
           type:
-            input: credential_effective_date
+            input: effective_date
             from: value
           format:
             input: datetime
             from: value
           value:
-            input: credential_effective_date
+            input: effective_date
             from: claim
 
 verifiers:

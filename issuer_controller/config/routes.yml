@@ -107,16 +107,16 @@ forms:
       label: authorization_end_date
       type: date
       required: true
-    - name: inseptor_name
-      label: inseptor_name
+    - name: inspector_name
+      label: inspector_name
       type: text
       required: true
-    - name: credential_issued_date
-      label: credential_issued_date
+    - name: issued_date
+      label: issued_date
       type: date
       required: true
-    - name: credential_effective_date
-      label: credential_effective_date
+    - name: effective_date
+      label: effective_date
       type: date
       required: true
     mapping:
