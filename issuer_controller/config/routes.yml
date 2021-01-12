@@ -1,12 +1,12 @@
 forms:
   emprmy-registration:
-    path: /empr/my-registration
+    path: /bcgov-mines-permitting/my-registration
     type: issue-credential
-    schema_name: my-registration.empr
-    page_title: Title for my-registration.empr
-    title: Title for my-registration.empr
+    schema_name: my-registration.bcgov-mines-permitting
+    page_title: Title for my-registration.bcgov-mines-permitting
+    title: Title for my-registration.bcgov-mines-permitting
     template: bcgov.index.html
-    description: The my-registration credential issued by empr
+    description: The my-registration credential issued by bcgov-mines-permitting
     explanation: Use the form below to issue a Credential.
     fields:
     - name: registration_date
@@ -58,14 +58,14 @@ forms:
       - name: corp_num
         from: helper
         source: uuid
-  emprbcgov-mines-act-permit:
-    path: /empr/bcgov-mines-act-permit
+  bcgov-mines-permitting-bcgov-mines-act-permit:
+    path: /bcgov-mines-permitting/bcgov-mines-act-permit
     type: issue-credential
-    schema_name: bcgov-mines-act-permit.empr
-    page_title: Title for bcgov-mines-act-permit.empr
-    title: Title for bcgov-mines-act-permit.empr
+    schema_name: bcgov-mines-act-permit.bcgov-mines-permitting
+    page_title: Title for bcgov-mines-act-permit.bcgov-mines-permitting
+    title: Title for bcgov-mines-act-permit.bcgov-mines-permitting
     template: bcgov.index.html
-    description: The bcgov-mines-act-permit credential issued by empr
+    description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
     explanation: Use the form below to issue a Credential.
     proof_request:
       id: greenlight_registration

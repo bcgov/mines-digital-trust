@@ -1,6 +1,6 @@
-- name: my-registration.empr
+- name: my-registration.bcgov-mines-permitting
   version: 1.0.0
-  description: The my-registration credential issued by empr
+  description: The my-registration credential issued by bcgov-mines-permitting
   attributes:
     corp_num:
       description_en: Registration/Incorporation Number or Identifying Number
@@ -76,9 +76,9 @@
       label_en: Credential Expiry Date
       data_type: ui_date
       required: false
-- name: bcgov-mines-act-permit.empr
+- name: bcgov-mines-act-permit.bcgov-mines-permitting
   version: 1.1.0
-  description: The bcgov-mines-act-permit credential issued by empr
+  description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
   attributes:
     corp_num:
       description_en: Registration/Incorporation Number or Identifying Number

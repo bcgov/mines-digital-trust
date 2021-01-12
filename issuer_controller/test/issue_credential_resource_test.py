@@ -7,7 +7,7 @@ from app import issuer, credential
 
 test_send_credential = [
     {
-        "schema": "my-registration.empr",
+        "schema": "my-registration.bcgov-mines-permitting",
         "version": "1.0.0",
         "attributes": {
             "corp_num": "ABC12345",
@@ -29,7 +29,7 @@ test_send_credential = [
         }
     },
     {
-        "schema": "bcgov-mines-act-permit.empr",
+        "schema": "bcgov-mines-act-permit.bcgov-mines-permitting",
         "version": "1.0.0",
         "attributes": {
             "permit_id": "MYPERMIT12345",

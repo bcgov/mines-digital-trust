@@ -2,11 +2,11 @@
 
 issuers:
   myorg:
-    name: EMPR
-    abbreviation: empr
-    url: https://www.empr.ca/empr-info-page
-    email: info@empr.ca
-    logo_path: ../assets/img/empr-logo.jpg
+    name: Ministry of Energy, Mines and Low-carbon Innovation
+    abbreviation: bcgov-mines-permitting
+    url: https://www.bcgov-mines-permitting.ca/bcgov-mines-permitting-info-page
+    email: info@bcgov-mines-permitting.ca
+    logo_path: ../assets/img/bcgov-mines-permitting-logo.jpg
     endpoint: $ENDPOINT_URL
 
     connection:
@@ -15,9 +15,9 @@ issuers:
       sign_target: false
 
     credential_types:
-    - description: The my-registration credential issued by empr
-      schema: my-registration.empr
-      issuer_url: $ENDPOINT_URL/empr/my-registration
+    - description: The my-registration credential issued by bcgov-mines-permitting
+      schema: my-registration.bcgov-mines-permitting
+      issuer_url: $ENDPOINT_URL/bcgov-mines-permitting/my-registration
       credential:
         effective_date:
           input: effective_date
@@ -30,7 +30,7 @@ issuers:
           input: corp_num
           from: claim
         type:
-          input: my-registration.empr
+          input: my-registration.bcgov-mines-permitting
           from: value
       mapping:
       - model: attribute
@@ -148,9 +148,9 @@ issuers:
           value:
             input: expiry_date
             from: claim
-    - description: The bcgov-mines-act-permit credential issued by empr
-      schema: bcgov-mines-act-permit.empr
-      issuer_url: $ENDPOINT_URL/empr/bcgov-mines-act-permit
+    - description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
+      schema: bcgov-mines-act-permit.bcgov-mines-permitting
+      issuer_url: $ENDPOINT_URL/bcgov-mines-permitting/bcgov-mines-act-permit
       depends_on:
       - greenlight_registration
       credential:
@@ -162,7 +162,7 @@ issuers:
           input: corp_num
           from: claim
         type:
-          input: my-registration.empr
+          input: my-registration.bcgov-mines-permitting
           from: value
       mapping:
       - model: attribute

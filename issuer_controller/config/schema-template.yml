@@ -1,10 +1,10 @@
 # Documentation: https://github.com/bcgov/von-agent-template/tree/master/von-x-agent/config
 
-- name: my-registration.empr
+- name: my-registration.bcgov-mines-permitting
   version: '1.0.0'
-  description: The my-registration credential issued by empr
+  description: The my-registration credential issued by bcgov-mines-permitting
   endpoint: $ENDPOINT_URL
-  path: /empr/my-registration
+  path: /bcgov-mines-permitting/my-registration
   # identify the attribute which identify the owning organization
   topic: corp_num
   # optionally identify the credential attribute to map to the TOB credential effective date
@@ -81,9 +81,9 @@
       data_type: ui_date
       required: false
 
-- name: bcgov-mines-act-permit.empr
+- name: bcgov-mines-act-permit.bcgov-mines-permitting
   version: '1.1.0'
-  description: The bcgov-mines-act-permit credential issued by empr
+  description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
   endpoint: $ENDPOINT_URL
   # identify the attribute which identify the owning organization
   topic: corp_num
@@ -93,7 +93,7 @@
   #revoked_date: expiry_date
   # optionally identify a dependant proof request
   proof_request: greenlight_registration
-  path: /empr/bcgov-mines-act-permit
+  path: /bcgov-mines-permitting/bcgov-mines-act-permit
   attributes:
     corp_num:
       label_en: Registration ID

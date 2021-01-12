@@ -118,7 +118,7 @@ To submit credentials, use Postman (or similar, based on your local configuratio
 ```
 [
     {
-        "schema": "my-registration.empr",
+        "schema": "my-registration.bcgov-mines-permitting",
         "version": "1.0.0",
         "attributes": {
             "corp_num": "ABC12345",
@@ -140,7 +140,7 @@ To submit credentials, use Postman (or similar, based on your local configuratio
         }
     },
     {
-        "schema": "bcgov-mines-act-permit.empr",
+        "schema": "bcgov-mines-act-permit.bcgov-mines-permitting",
         "version": "1.0.0",
         "attributes": {
             "permit_id": "MYPERMIT12345",
