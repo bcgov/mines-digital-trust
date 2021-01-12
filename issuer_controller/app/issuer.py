@@ -394,6 +394,16 @@ def handle_connections(state, message):
     # what is the TOB connection name?
     config_services = app_config["config_services"]
     tob_connection_params = config_services["verifiers"]["bctob"]
+<<<<<<< HEAD
+=======
+
+    # check this is the TOB connection
+    if "alias" in message and message["alias"] == tob_connection_params["alias"]:
+        if state == "active":
+            register_issuer_with_orgbook(message["connection_id"])
+
+    return jsonify({"message": state})
+>>>>>>> develop
 
     # check this is the TOB connection
     if "alias" in message and message["alias"] == tob_connection_params["alias"]:
