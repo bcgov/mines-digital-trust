@@ -345,10 +345,10 @@ sample_app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
  'DID': 'XZxwKKqiKaV6yZQob1UZpq',
  'TOB_CONNECTION': 'cee21dfa-cd60-479b-b096-9db9552fa948',
  'running': True,
- 'schemas': {'CRED_DEF_bcgov-mines-act-permit.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:14:default',
-             'CRED_DEF_my-registration.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:10:default',
-             'CRED_DEF_my-relationship.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:12:default',
-             'SCHEMA_bcgov-mines-act-permit.empr': {'attributes': {'corp_num': {'data_type': 'ui_text',
+ 'schemas': {'CRED_DEF_bcgov-mines-act-permit.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:14:default',
+             'CRED_DEF_my-registration.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:10:default',
+             'CRED_DEF_my-relationship.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:3:CL:12:default',
+             'SCHEMA_bcgov-mines-act-permit.bcgov-mines-permitting': {'attributes': {'corp_num': {'data_type': 'ui_text',
                                                                                 'description_en': 'Registration/Incorporation '
                                                                                                   'Number '
                                                                                                   'or '
@@ -410,11 +410,11 @@ sample_app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
                                                                    'bcgov-mines-act-permit '
                                                                    'credential '
                                                                    'issued by '
-                                                                   'empr',
-                                                    'name': 'bcgov-mines-act-permit.empr',
+                                                                   'bcgov-mines-permitting',
+                                                    'name': 'bcgov-mines-act-permit.bcgov-mines-permitting',
                                                     'version': '1.0.0'},
-             'SCHEMA_bcgov-mines-act-permit.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:bcgov-mines-act-permit.empr:1.0.0',
-             'SCHEMA_my-registration.empr': {'attributes': {'address_line_1': {'data_type': 'ui_text',
+             'SCHEMA_bcgov-mines-act-permit.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:bcgov-mines-act-permit.bcgov-mines-permitting:1.0.0',
+             'SCHEMA_my-registration.bcgov-mines-permitting': {'attributes': {'address_line_1': {'data_type': 'ui_text',
                                                                                'description': 'address_line_1',
                                                                                'required': True},
                                                             'addressee': {'data_type': 'ui_text',
@@ -531,11 +531,11 @@ sample_app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
                                              'description': 'The '
                                                             'my-registration '
                                                             'credential issued '
-                                                            'by empr',
-                                             'name': 'my-registration.empr',
+                                                            'by bcgov-mines-permitting',
+                                             'name': 'my-registration.bcgov-mines-permitting',
                                              'version': '1.0.0'},
-             'SCHEMA_my-registration.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:my-registration.empr:1.0.0',
-             'SCHEMA_my-relationship.empr': {'attributes': {'associated_corp_num': {'data_type': 'ui_text',
+             'SCHEMA_my-registration.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:my-registration.bcgov-mines-permitting:1.0.0',
+             'SCHEMA_my-relationship.bcgov-mines-permitting': {'attributes': {'associated_corp_num': {'data_type': 'ui_text',
                                                                                     'description_en': 'Registry '
                                                                                                       'id(s) '
                                                                                                       'of '
@@ -620,7 +620,7 @@ sample_app_config = {'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
                                                             'organizations',
                                              'name': 'my-relationship.empr',
                                              'version': '1.0.0'},
-             'SCHEMA_my-relationship.empr_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:my-relationship.empr:1.0.0'}
+             'SCHEMA_my-relationship.bcgov-mines-permitting_1.0.0': 'XZxwKKqiKaV6yZQob1UZpq:2:my-relationship.bcgov-mines-permitting:1.0.0'}
         }
 
 
@@ -633,7 +633,7 @@ TestConfig = {
     'ACK_ERROR_PCT': '0',
     'AGENT_ADMIN_URL': 'http://myorg-agent:8034',
     'APPLICATION_URL': 'http://localhost:5000',
-    'APPLICATION_URL_VONX': 'http://localhost:5000/empr/bcgov-mines-act-permit',
+    'APPLICATION_URL_VONX': 'http://localhost:5000/bcgov-mines-permitting/bcgov-mines-act-permit',
     'AUTO_REGISTER_DID': False,
     'CONFIG_ROOT': './config',
     'DESCRIPTION': 'von-image provides a consistent base image for running VON '

@@ -84,7 +84,7 @@ def test_issue_credential_spawns_thread(app):
 
 
 def test_SendCredentialThread_posts_to_agent(app):
-    cred_def = "CRED_DEF_my-registration.empr_1.0.0"
+    cred_def = "CRED_DEF_my-registration.bcgov-mines-permitting_1.0.0"
     cred_offer =  {"test":"tests","test2":"test2"}
     agent_url = app.ENV.get("AGENT_ADMIN_URL") + "/issue-credential/send"
     headers = {"Content-Type": "application/json"}
