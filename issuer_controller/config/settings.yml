@@ -1,11 +1,11 @@
 default:
-  APPLICATION_URL_VONX: $APPLICATION_URL/empr/bcgov-mines-act-permit
+  APPLICATION_URL_VONX: $APPLICATION_URL/bcgov-mines-permitting/bcgov-mines-act-permit
   TEMPLATE_PATH: ../templates
 
   TOB_API_URL: http://localhost:8081/api/v2
   TOB_APP_URL: http://localhost:8080
 
-  WALLET_SEED_VONX: empr_000000000000000000000000000
+  WALLET_SEED_VONX: bcgov-mines-permitting_000000000000000000000000000
 
   INDY_GENESIS_URL: http://localhost:9000/genesis
 

@@ -53,6 +53,7 @@ services:
         ./docker-entrypoint.sh;"
     volumes:
       - ../issuer_controller/app:/home/indy/app:Z
+      - ../issuer_controller/config:/home/indy/config:Z
       - ../issuer_controller/test:/home/indy/test:Z
 
   myorg-agent:
