@@ -1,0 +1,74 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Code Climate
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the develop branch
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    env:
+      CC_TEST_REPORTER_ID: 1187687b3e1e671afc567dd6f6c8ca8c8e9b50522d985d84e3c26ec5b4b35ee8
+      ACTION_DEBUG: True
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./issuer_controller
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      # Runs a set of commands using the runners shell
+      # Get Code Climate binary
+      - name: Download Code Climate Binary
+        run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+
+      # Permissions applied to the Code Climate Executable
+      - name: Apply executable perms to Code Climate Binary
+        run: chmod +x ./cc-test-reporter
+      # Before build
+      - name: Before build
+        run: ./cc-test-reporter before-build
+      # Set required Git env vars for a push to master
+      - name: Set ENV for codeclimate (push)
+        run: |
+          echo "GIT_BRANCH=$GITHUB_REF" >> $GITHUB_ENV
+          echo "GIT_COMMIT_SHA=$GITHUB_SHA" >> $GITHUB_ENV
+          echo "GIT_COMMITTED_AT=$(date +%s)" >> $GITHUB_ENV
+        if: github.event_name == 'push'
+      - name: show me the env
+        run: printenv | grep GIT
+      - name: Where is here?
+        run: pwd
+      - name: run coverage manually
+        run: coverage run --source=app -m pytest
+      - name: export coverage results
+        run: coverage xml -i      
+      - name: export coverage results
+        run: coverage report -m
+      - name: What is here?
+        run: ls -la
+      - name: format-coverage
+        run: ./cc-test-reporter format-coverage --debug -o codeclimate.json -t coverage.py ./coverage.xml  
+        # Upload total coverage report to Code Climate
+      - name: Upload coverage report to Code Climate
+        run: ./cc-test-reporter upload-coverage -d -i ./codeclimate.json
+

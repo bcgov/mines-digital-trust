@@ -1,0 +1,42 @@
+[
+    {
+        "attributes": {
+            "address_line_1": "$Text",
+            "addressee": "$Text",
+            "city": "$Text",
+            "corp_num": "$UUID",
+            "country": "$Text",
+            "effective_date": "$Date",
+            "entity_name": "$Name",
+            "entity_name_effective": "$Date",
+            "entity_status": "$Select",
+            "entity_status_effective": "$Date",
+            "entity_type": "$Text",
+            "expiry_date": "$Date",
+            "postal_code": "$Text",
+            "province": "$Text",
+            "registered_jurisdiction": "$Text",
+            "registration_date": "$Date"
+        },
+        "schema": "my-registration.empr",
+        "version": "1.0.0"
+    },
+    {
+        "attributes": {
+            "authorization_end_date": "$Date",
+            "corp_num": "$Text",
+            "credential_effective_date": "$Date",
+            "credential_issued_date": "$Date",
+            "entity_name": "$Name",
+            "inseptor_name": "$Text",
+            "latitude": "$Text",
+            "longitude": "$Text",
+            "mine_class": "$Select",
+            "mine_no": "$Text",
+            "permit_id": "$UUID",
+            "permit_no": "$Text"
+        },
+        "schema": "bcgov-mines-act-permit.empr",
+        "version": "1.1.0"
+    }
+]
