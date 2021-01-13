@@ -1,10 +1,17 @@
-from flask import Flask, jsonify, abort, request, make_response
+from flask import Flask, jsonify, abort, request, make_response, current_app
 import time
 
 
 from app import issuer, logging
 
 def register_routes(app):
+
+    def check_for_auth_key(): 
+        #superlight weight auth for single tenant
+        # current_app.logger.warning(request.headers['SECRET_KEY'])
+        # current_app.logger.warning(app.ENV['SECRET_KEY'])
+        if request.headers['SECRET_KEY'] == app.ENV['SECRET_KEY']:
+            current_app.logger.warning("AUTHORIZED")
 
     @app.route('/health', methods=['GET'])
     def health_check():
@@ -26,6 +33,7 @@ def register_routes(app):
 
     @app.route('/liveness', methods=['GET'])
     def liveness_check():
+        check_for_auth_key()
         """
         A liveness probe checks if the container is still running.
         If the liveness probe fails, the container is killed.
