@@ -1,0 +1,18 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/mines-permitting-issuer/mines-permitting-issuer-build.json
+#=========================================================
+NAME=mines-permitting-issuer
+SUFFIX=-primary
+APP_NAME=MinesDigitalTrust
+APP_GROUP=mines-permitting
+GIT_REPO_URL=https://github.com/bcgov/mines-digital-trust.git
+GIT_REF=develop
+SOURCE_CONTEXT_DIR=issuer_controller
+OUTPUT_IMAGE_TAG=latest
+DOCKER_FILE_PATH=Dockerfile
+CPU_LIMIT=0
+MEMORY_LIMIT=0Mi
+CPU_REQUEST=0
+MEMORY_REQUEST=0Mi

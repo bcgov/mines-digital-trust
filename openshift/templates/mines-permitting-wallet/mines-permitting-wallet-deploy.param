@@ -1,0 +1,26 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/mines-permitting-wallet/mines-permitting-wallet-deploy.yaml
+#=========================================================
+NAME=mines-permitting-wallet
+ROLE=wallet
+NAMESPACE=a3e512
+SUFFIX=-primary
+APP_NAME=MinesDigitalTrust
+APP_GROUP=mines-permitting
+IMAGE_NAMESPACE=a3e512-tools
+SOURCE_IMAGE_NAME=db
+TAG_NAME=dev
+POSTGRESQL_DATABASE_NAME=default_wallet
+# POSTGRESQL_USER=[a-zA-Z0-9]{16}
+# POSTGRESQL_PASSWORD=[a-zA-Z0-9]{16}
+# POSTGRESQL_ADMIN_PASSWORD=[a-zA-Z0-9]{16}
+MOUNT_PATH=/var/lib/pgsql/data
+PERSISTENT_VOLUME_SIZE=5Gi
+PERSISTENT_VOLUME_CLASS=netapp-file-standard
+BACKUP=true
+CPU_REQUEST=10m
+CPU_LIMIT=1000m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=2000Mi
