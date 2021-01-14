@@ -44,7 +44,6 @@ def register_routes(app):
             abort(503, "Connection not ready to process requests")
 
     @app.route('/liveness', methods=['GET'])
-    @secret_key_required
     def liveness_check():
         """
         A liveness probe checks if the container is still running.
@@ -54,12 +53,14 @@ def register_routes(app):
             return make_response(jsonify({'success': True}), 200)
         else:
             abort(503, "Connection is not live")
-
+    
+    @secret_key_required
     @app.route('/status/reset', methods=['GET'])
     def clear_status():
         logging.clear_stats()
         return make_response(jsonify({'success': True}), 200)
 
+    @secret_key_required
     @app.route('/status', methods=['GET'])
     def get_status():
         return make_response(jsonify(logging.get_stats()), 200)
@@ -68,6 +69,7 @@ def register_routes(app):
     def not_found(error):
         return make_response(jsonify({'error': 'Not found'}), 404)
 
+    @secret_key_required
     @app.route('/issue-credential', methods=['POST'])
     def submit_credential():
         """
@@ -93,6 +95,7 @@ def register_routes(app):
 
         return response
 
+    #not protected, used by ACA-py... TODO enforce this. 
     @app.route('/api/agentcb/topic/<topic>/', methods=['POST'])
     def agent_callback(topic):
         """
