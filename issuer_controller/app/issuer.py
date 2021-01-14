@@ -402,7 +402,6 @@ def handle_connections(state, message):
 
     return jsonify({"message": state})
 
-
 def handle_credentials(state, message):
     start_time = time.perf_counter()
     method = "Handle callback:" + state

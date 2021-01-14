@@ -1,10 +1,10 @@
 # Documentation: https://github.com/bcgov/von-agent-template/tree/master/von-x-agent/config
 
-- name: my-registration.empr
+- name: my-registration.bcgov-mines-permitting
   version: '1.0.0'
-  description: The my-registration credential issued by empr
+  description: The my-registration credential issued by bcgov-mines-permitting
   endpoint: $ENDPOINT_URL
-  path: /empr/my-registration
+  path: /bcgov-mines-permitting/my-registration
   # identify the attribute which identify the owning organization
   topic: corp_num
   # optionally identify the credential attribute to map to the TOB credential effective date
@@ -81,9 +81,9 @@
       data_type: ui_date
       required: false
 
-- name: my-relationship.empr
-  version: '1.0.0'
-  description: The relationship between two organizations
+- name: bcgov-mines-act-permit.bcgov-mines-permitting
+  version: '1.1.0'
+  description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
   endpoint: $ENDPOINT_URL
   # identify the attribute which identify the owning organization
   topic: corp_num
@@ -93,76 +93,7 @@
   #revoked_date: expiry_date
   # optionally identify a dependant proof request
   proof_request: greenlight_registration
-  path: /empr/my-relationship
-  attributes:
-    corp_num:
-      label_en: Registration ID
-      description_en: Unique identifer assigned to entity by registrar
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_text
-      required: true
-    associated_corp_num:
-      label_en: Associated Registration ID
-      description_en: Registry id(s) of associated organizations/individuals
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_text
-      required: true
-    associated_registration_name:
-      label_en: Associated Registration Namwe
-      description_en: Registered name of associated organizations/individuals
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_text
-      required: false
-    relationship:
-      label_en: Relationship
-      description_en: Name of the relationship
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_text
-      required: true
-    relationship_description:
-      label_en: Relationship Description
-      description_en: Description of the relationship
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_text
-      required: true
-    relationship_status:
-      label_en: Relationship Status
-      description_en: Status of the relationship
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_select
-      required: true
-    relationship_status_effective:
-      label_en: Relationship Status Effective
-      description_en: Date the relationship became/becomes effective
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_date
-      required: false
-    effective_date:
-      label_en: Effective Date
-      description_en: Date Credential is effective
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_date
-      required: true
-    expiry_date:
-      label_en: Credential Expiry Date
-      description_en: Date Credential expires
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_date
-      required: false
-
-- name: bcgov-mines-act-permit.empr
-  version: '1.0.0'
-  description: The bcgov-mines-act-permit credential issued by empr
-  endpoint: $ENDPOINT_URL
-  # identify the attribute which identify the owning organization
-  topic: corp_num
-  # optionally identify the credential attribute to map to the TOB credential effective date
-  effective_date: effective_date
-  # optionally identify the credential attribute to map to the TOB credential revoked date
-  #revoked_date: expiry_date
-  # optionally identify a dependant proof request
-  proof_request: greenlight_registration
-  path: /empr/bcgov-mines-act-permit
+  path: /bcgov-mines-permitting/bcgov-mines-act-permit
   attributes:
     corp_num:
       label_en: Registration ID
@@ -179,31 +110,51 @@
     permit_id:
       label_en: Permit ID
       description_en: Permit Identifying Number
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
       data_type: helper_uuid
       required: true
-    permit_type:
-      label_en: Permit Type
-      description_en: Status of the permit
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
+    permit_no:
+      label_en: Permit Number
+      description_en: Permit Number
+      data_type: ui_text
+      required: true
+    mine_no:
+      label_en: Mine Number
+      description_en: Mine Number
+      data_type: ui_text
+      required: true
+    mine_class:
+      label_en: Mine Class
+      description_en: Mine Class, Regional or Major?
       data_type: ui_select
       required: true
-    permit_issued_date:
+    latitude:
+      label_en: Latitude
+      description_en: Approx Latitude of permitted actions 
+      data_type: ui_text
+      required: true    
+    longitude:
+      label_en: Longitude
+      description_en: Approx Longitude of permitted actions 
+      data_type: ui_text
+      required: true       
+    authorization_end_date:
+      label_en: Authorization End Date
+      description_en: the last day the permitted actions are authorized 
+      data_type: ui_date
+      required: true 
+    inspector_name:
+      label_en: Inspector Name
+      description_en: Name of EMLI permitting Inspector 
+      data_type: ui_text
+      required: true   
+    issued_date:
       label_en: Permit Issued Date
       description_en: Date Permit is issued
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
       data_type: ui_date
-      required: true
-    permit_status:
-      label_en: Permit Status
-      description_en: Status of the permit
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
-      data_type: ui_select
       required: true
     effective_date:
       label_en: Credential Effective Date
-      description_en: Date Credential is effective
-      # one of: ui_name, ui_address, ui_text, ui_date, ui_select, helper_uuid, helper_now_iso, helper_value
+      description_en: Date permit is effective
       data_type: ui_date
       required: true
 
