@@ -1,17 +1,29 @@
 from flask import Flask, jsonify, abort, request, make_response, current_app
 import time
-
-
+from functools import wraps
+from werkzeug.exceptions import Unauthorized
 from app import issuer, logging
 
-def register_routes(app):
 
-    def check_for_auth_key(): 
-        #superlight weight auth for single tenant
-        # current_app.logger.warning(request.headers['SECRET_KEY'])
-        # current_app.logger.warning(app.ENV['SECRET_KEY'])
-        if request.headers['SECRET_KEY'] == app.ENV['SECRET_KEY']:
-            current_app.logger.warning("AUTHORIZED")
+def register_routes(app):
+    
+    def secret_key_required(func): 
+        print('secret_key_required  called')        
+        def wrapper(*args, **kwds):
+            if 'SECRET_KEY' not in app.ENV:
+                print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
+            if 'SECRET_KEY' not in request.headers: 
+                print(func.__name__ +": NOT_AUTHORIZED")
+                raise Unauthorized('Must provide the SECRET_KEY to use this endpoint')
+            if request.headers['SECRET_KEY'] != app.ENV['SECRET_KEY']:
+                print(func.__name__ +": NOT_AUTHORIZED")
+                raise Unauthorized('Must know the correct SECRET_KEY to use this method')
+
+            print(func.__name__ +": AUTHORIZED")
+        
+            return func(*args,**kwds)
+        return wrapper
+
 
     @app.route('/health', methods=['GET'])
     def health_check():
@@ -32,8 +44,8 @@ def register_routes(app):
             abort(503, "Connection not ready to process requests")
 
     @app.route('/liveness', methods=['GET'])
+    @secret_key_required
     def liveness_check():
-        check_for_auth_key()
         """
         A liveness probe checks if the container is still running.
         If the liveness probe fails, the container is killed.
