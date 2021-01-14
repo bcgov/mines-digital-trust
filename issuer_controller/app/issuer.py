@@ -3,7 +3,7 @@ import os
 import threading
 import time
 import random
-
+import pprint
 import requests
 
 from flask import jsonify
@@ -107,9 +107,10 @@ def agent_schemas_cred_defs(agent_admin_url):
     return ret_schemas
 
 def register_issuer_with_orgbook(connection_id):
+    global app_config
     if connection_id in synced and synced[connection_id]:
         return
-
+    # pprint.pprint(app_config)
     app_config["TOB_CONNECTION"] = connection_id
     synced[connection_id] = False
     config_root = app_config["config_root"]
@@ -394,7 +395,7 @@ def handle_connections(state, message):
     # what is the TOB connection name?
     config_services = app_config["config_services"]
     tob_connection_params = config_services["verifiers"]["bctob"]
-
+    raise Exception()
     # check this is the TOB connection
     if "alias" in message and message["alias"] == tob_connection_params["alias"]:
         if state == "active":

@@ -1,6 +1,6 @@
 import pytest, os, pprint
 
-from app.app import create_app
+from app.app import init_app
 from app import config, issuer
 
 from unittest.mock import patch
@@ -9,7 +9,7 @@ from app.config import TestConfig
 
 @pytest.fixture(scope="session")
 def app(request):
-    app = create_app(TestConfig)
+    app = init_app(TestConfig)
     return app
 
 @pytest.fixture(scope='session')

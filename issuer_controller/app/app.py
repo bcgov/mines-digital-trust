@@ -8,7 +8,7 @@ import yaml
 
 import signal
 import pprint
-from app import config, issuer,routes
+from app import config, issuer, routes
 
 
 
@@ -24,18 +24,19 @@ class Controller(Flask):
         self.ENV = ENV
 
 
-def create_app(ENV):
+def init_app(ENV):
     app = Controller(ENV)
     routes.register_routes(app)
     wsgi_app = app.wsgi_app
     return app
 
-signal.signal(signal.SIGINT, issuer.signal_issuer_shutdown)
-signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
 
+def create_app():
+    signal.signal(signal.SIGINT, issuer.signal_issuer_shutdown)
+    signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
 
-# Load application settings (environment)
-config_root = os.environ.get('CONFIG_ROOT', './config')
-ENV = config.load_settings(config_root=config_root)
-app = create_app(ENV)
-
+    # Load application settings (environment)
+    config_root = os.environ.get('CONFIG_ROOT', './config')
+    ENV = config.load_settings(config_root=config_root)
+    app = init_app(ENV)
+    return app

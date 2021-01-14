@@ -2,29 +2,31 @@ from flask import Flask, jsonify, abort, request, make_response, current_app
 import time
 from functools import wraps
 from werkzeug.exceptions import Unauthorized
-from app import issuer, logging
+from app import issuer, logging,app as app_instance
+
+
+def secret_key_required(func): 
+    print('secret_key called')
+    @wraps(func)
+    def wrapper(*args, **kwds):
+        print('wrapper called')
+        if 'SECRET_KEY' not in app_instance.ENV:
+            print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
+        if 'SECRET_KEY' not in request.headers: 
+            print(func.__name__ +": NOT_AUTHORIZED")
+            raise Unauthorized('Must provide the SECRET_KEY to use this endpoint')
+        if request.headers['SECRET_KEY'] != app_instance.ENV['SECRET_KEY']:
+            print(func.__name__ +": NOT_AUTHORIZED")
+            raise Unauthorized('Must know the correct SECRET_KEY to use this method')
+
+        print(func.__name__ +": AUTHORIZED")
+    
+        return func(*args,**kwds)  
+    return wrapper
 
 
 def register_routes(app):
     
-    def secret_key_required(func): 
-        print('secret_key_required  called')        
-        def wrapper(*args, **kwds):
-            if 'SECRET_KEY' not in app.ENV:
-                print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
-            if 'SECRET_KEY' not in request.headers: 
-                print(func.__name__ +": NOT_AUTHORIZED")
-                raise Unauthorized('Must provide the SECRET_KEY to use this endpoint')
-            if request.headers['SECRET_KEY'] != app.ENV['SECRET_KEY']:
-                print(func.__name__ +": NOT_AUTHORIZED")
-                raise Unauthorized('Must know the correct SECRET_KEY to use this method')
-
-            print(func.__name__ +": AUTHORIZED")
-        
-            return func(*args,**kwds)
-        return wrapper
-
-
     @app.route('/health', methods=['GET'])
     def health_check():
         if issuer.tob_connection_synced():
@@ -42,7 +44,7 @@ def register_routes(app):
             return make_response(jsonify({'success': True}), 200)
         else:
             abort(503, "Connection not ready to process requests")
-
+   
     @app.route('/liveness', methods=['GET'])
     def liveness_check():
         """
@@ -54,14 +56,15 @@ def register_routes(app):
         else:
             abort(503, "Connection is not live")
     
-    @secret_key_required
     @app.route('/status/reset', methods=['GET'])
+    @secret_key_required
     def clear_status():
         logging.clear_stats()
         return make_response(jsonify({'success': True}), 200)
 
     @secret_key_required
     @app.route('/status', methods=['GET'])
+    @secret_key_required
     def get_status():
         return make_response(jsonify(logging.get_stats()), 200)
 
@@ -71,6 +74,7 @@ def register_routes(app):
 
     @secret_key_required
     @app.route('/issue-credential', methods=['POST'])
+    @secret_key_required
     def submit_credential():
         """
         Exposed method to proxy credential issuance requests.
