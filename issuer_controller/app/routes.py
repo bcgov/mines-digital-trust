@@ -6,10 +6,8 @@ from app import issuer, logging,app as app_instance
 
 
 def secret_key_required(func): 
-    print('secret_key called')
     @wraps(func)
     def wrapper(*args, **kwds):
-        print('wrapper called')
         if 'SECRET_KEY' not in app_instance.ENV:
             print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
         if 'SECRET_KEY' not in request.headers: 
