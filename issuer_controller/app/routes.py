@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, abort, request, make_response, current_app
-import time
+import time, pprint
 from functools import wraps
 from werkzeug.exceptions import Unauthorized
 from app import issuer, logging,app as app_instance
@@ -10,7 +10,7 @@ def secret_key_required(func):
     def wrapper(*args, **kwds):
         if 'SECRET_KEY' not in current_app.ENV:
             print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
-        elif request.headers.get(['SECRET_KEY'],None) != current_app.ENV['SECRET_KEY']:
+        if request.headers.get('SECRET_KEY',None) != current_app.ENV['SECRET_KEY']:
             print(func.__name__ +": NOT_AUTHORIZED")
             raise Unauthorized('Must know the correct SECRET_KEY to use this method')
 

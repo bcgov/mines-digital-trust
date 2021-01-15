@@ -12,10 +12,25 @@ def app(request):
     app = init_app(TestConfig)
     return app
 
+@pytest.fixture(scope="session")
+def secured_app(request):
+    conf = TestConfig.copy()
+    conf['SECRET_KEY'] = 'TEST_KEY'
+    app = init_app(conf)
+    return app
+
 @pytest.fixture(scope='session')
 def test_client(app):
     client = app.test_client()
     ctx = app.app_context()
+    ctx.push()
+    yield client
+    ctx.pop()
+
+@pytest.fixture(scope='session')
+def test_secured_client(secured_app):
+    client = secured_app.test_client()
+    ctx = secured_app.app_context()
     ctx.push()
     yield client
     ctx.pop()
