@@ -3,15 +3,15 @@
 [toc]
 
 ### Prerequisites
-1. you will need administrator permissions to your 4 project namespaces (*-dev, *-test, *-prod, *-tools)
+1. you will need administrator permissions to your four project namespaces (*-dev, *-test, *-prod, *-tools)
 1. install [openshift command-line interface](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) for your Operating System
 1. install [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools), configure for your particular Operating System (or see [Alternative Tools](#alternative-tools))
 1. clone this repo
 
 #### Alternative Tools
-Use the [Dockerfile](./Dockerfile) to run the openshift developer tools.  You will need Docker (obviously) and you will need to build the image, and mount your local cloned repository code. This may be a better alternative with Mac, some commands in the scripts do not work as expected (ex. `echo -n` and `export -a`)
+Use the [Dockerfile](./Dockerfile) to run the openshift developer tools.  You will need Docker (obviously), and you will need to build the image and mount your local cloned repository code. The Dockerfile may be a better alternative with Mac, some commands in the scripts do not work as expected (ex. `echo -n` and `export -a`)
 
-This assumes you are in a terminal/console at your cloned mines-digital-trust/openshift directory. The following will mount this directory at `/usr/src/app/openshift` and log you in there.
+This document assumes you are in a terminal at your cloned mines-digital-trust/openshift directory. The following will mount this directory at `/usr/src/app/openshift` and log you in there.
 
 ```sh
 docker build --tag os-dev-tools:1.0 .
@@ -23,9 +23,9 @@ bash-5.0# exit
 ```
 
 ### Assumptions
-The following will always assume you are in your terminal, logged in to `oc` and at `mines-digital-trust/openshift` directory (where this file is located).
+The following will always assume you are in your terminal, logged in to `oc` and at `mines-digital-trust/openshift` directory (this file's location).
 
-Namespaces as defaults in *-deploy.yamls and the following commands are for *__a3e512__*, change as necessary.
+Namespaces as defaults in *-deploy.yaml files and the following commands are for *__a3e512__*, change as necessary.
 
 We will use the `dev` environment and namespace for the following examples.
 
@@ -34,18 +34,18 @@ We will use the `dev` environment and namespace for the following examples.
 1. paste your login command to your terminal
 1. run your commands
 
-### Prelminary Housekeeping Tasks
-These tasks have been performed; they are documented here for reference purposes.
+### Preliminary Housekeeping Tasks
+These tasks are complete; they are documented here for reference purposes.
 
 #### Initialize Namespaces
-The 4 project namespaces need to have special service account permissions to allow image building and pulling.
+The four project namespaces need to have special service account permissions to allow image building and pulling.
 
 ```sh
 initOSProjects.sh
 ```
 
 #### Set Network Security Policies
-This is not the ideal setup of network security policies, please keep in mind that we will update our NSPs at a later time.
+The following is not the ideal setup of network security policies; please keep in mind that we will update our NSPs later.
 
 ```sh
 oc -n a3e512-tools process -f templates/nsp/nsp-deploy.yaml -p NAMESPACE=a3e512 -p TAG_NAME=tools | oc -n a3e512-tools create -f -
@@ -55,9 +55,13 @@ oc -n a3e512-prod process -f templates/nsp/nsp-deploy.yaml -p NAMESPACE=a3e512 -
 ```
 
 ### Configuration
-The *.param files in the repo have already been generated. However, you may find you need different values, or need to add more parameters to your templates.  When adding more parameters, you will need to re-generate.
+The *.param files in the repo are the result of generation and manual edit. However, you may find you need different values or add more parameters to your templates.  When adding more parameters, you will need to re-generate.
 
-**Note:** This is one operation that did not work on Mac Mojave (did not respect `export skip_git_overrides="agent-build.yaml db-build.yaml"` in `settings.sh`).
+**Important:** The [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) does do some internal mashing and generating, so the values in your templates may or may not end up in your *.param files as you expect or intend. 
+
+Pay particular attention to `APPLICATION_DOMAIN`. This is generated as `<component-name>-<namespace-licence-plate>-<env>-<domain-postfix>` (ex. mines-permitting-agent-a3e512-dev.apps.silver.devops.gov.bc.ca). In [settings.sh](settings.sh), we have overridden the default `APPLICATION_DOMAIN_POSTFIX` required for Openshift 4 domains. But just be aware that the value you enter for `APPLICATION_DOMAIN` in your templates will be changed on generate.
+
+**Note:** This is one operation that did not work on Mac Mojave (did not respect `export skip_git_overrides="mines-permitting-agent-build.yaml db-build.yaml"` in `settings.sh`).
 
 1. Review the generate params options
 
@@ -73,22 +77,22 @@ Example: force overwrite the db params.
 genParams.sh -c db -f
 ```
 
-Feel free to adjust the already generated param files if you are changing a parameter (i.e. uncommenting it for an environment or altering the value itself). Param files do nothing on their own, but are used for builds (`genBuilds.sh`) and deployments (`genDepls.sh`).
+Feel free to adjust the already generated param files if you are changing a parameter (i.e. uncommenting it for an environment or altering the value itself). Param files do nothing on their own but are used for builds (`genBuilds.sh`) and deployments (`genDepls.sh`).
 
 #### Important notes on param generation
-When the parameter files are generated, they must be reviewed to ensure the values are what you require. Of particular note values we wish to override (ex. generate passwords) using `*.overrides.sh` must be commented out.
+When we generate the parameter files, the output requires review to ensure the values are correct. Of particular note values we wish to override (ex. create passwords) using `*.overrides.sh` must be commented out.
 
 Please review and adjust as necessary:
 
-#####mines-permitting-agent (build)
-The image we are building does not come from our repository, the parameter generator assumes we are.  Ensure that we are using the correct value for `GIT_REPO_URL` and `GIT_REF`.
+##### mines-permitting-agent (build)
+The image we are building does not come from our repository; the parameter generator assumes we are.  Ensure that we are using the correct value for `GIT_REPO_URL` and `GIT_REF`.
 
 `GIT_REPO_URL=https://github.com/bcgov/aries-vcr.git`
 `GIT_REF=master`
 
 ##### mines-permitting-agent (deploy)
 
-Ensure that the `APPLICATION_DOMAIN` and `AGENT_BASE_URL` have matching domains.  The `AGENT_BASE_URL` is sent to Org Book agent as the callback endpoint to facilitate communication.  The `APPLICATION_DOMAIN` value is used to create the route.
+Ensure that the `APPLICATION_DOMAIN` and `AGENT_BASE_URL` have matching domains.  The Org. Book agent uses the`AGENT_BASE_URL` as the callback endpoint to facilitate communication.  Route creation uses the `APPLICATION_DOMAIN` value.
 
 `APPLICATION_DOMAIN=mines-permitting-agent-a3e512-dev.apps.silver.devops.gov.bc.ca`
 `AGENT_BASE_URL=https://mines-permitting-agent-a3e512-dev.apps.silver.devops.gov.bc.ca`
@@ -106,7 +110,7 @@ Comment out the values we want to fill using our overrides script.
 
 ##### mines-permitting-issuer (deploy)
 
-Comment out the values we want to fill using our overrides script.  Keep in mind, we may be changing the `CR_CONNECTION_NAME` per Org Book environment (this is the name/alias/label for the Org Book Agent).
+Comment out the values we want to fill using our overrides script.  Keep in mind; we may be changing the `CR_CONNECTION_NAME` per Org. Book environment (this is the name/alias/label for the Org. Book Agent).
 
 `# CR_AGENT_ADMIN_URL=`
 `# CR_ADMIN_API_KEY=`
@@ -126,13 +130,13 @@ Comment out the values we want to fill using our overrides script.
 
 ### Overview of build and deployment
 
-There are 3 components that need to be built and deployed:
+There are three components that need to be built and deployed:
 
 1. agent
 1. agent wallet (db)
 1. issuer/controller
 
-The agent's wallet requires registration with the ledger (Org Book BC); and the agent itself needs to request, receive and accept an invitation to Org. Book to connect with its agent.
+The agent's wallet requires registration with the ledger (Org. Book BC), and the agent itself needs to request, receive and accept an invitation to Org. Book to connect with its agent.
 
 The issuer/controller registers its schemas through its agent.
 
@@ -141,10 +145,10 @@ The agent requires a callback hook to the issuer/controller.
 We will use `dev` and `mines-permitting-*` for the following examples.
 
 #### First time build and deployment
-The first build and deployment into a namespace/environment requires some manual intervention and startup considerations.
+The first build and deployment into a namespace/environment require some manual intervention and startup considerations.
 
 ##### one time only tasks
-We only need to build these images once (unless security and bugfixes are made to the underlying code).
+We only need to build these images once (unless security and bug fixes are made to the underlying code).
 
 1. build db image
 1. build mines-permitting-agent image
@@ -153,14 +157,14 @@ We only need to build these images once (unless security and bugfixes are made t
 We only need to do these tasks one time.  Once everything is registered and stood up, we do not want to change the encryptions and registrations.
 
 1. generate agent secrets
-1. register did with Org Book ledger
+1. register did with Org. Book ledger
 1. tag db and mines-permitting-agent image
 1. deploy mines-permitting-wallet and mines-permitting-agent
-1. connect mines-permitting-agent to org book agent via invitations
+1. connect mines-permitting-agent to org. book agent via invitations
 
-Note the label/alias for the invitation from Org Book.  We will need to ensure our issuer uses for its `CR_CONNECTION_NAME` parameter.
+Note the label/alias for the invitation from Org. Book.  We will need to ensure our issuer uses its `CR_CONNECTION_NAME` parameter.
 
-Another note: since we have not stood up the issuer, there will be an error in the logs after the invitation is received, this is our agent attempting to call into our (non-existent) issuer.  Ignore.
+Another note: since we have not stood up the issuer, there will be an error in the logs after the invitation is received; this is our agent attempting to call into our (non-existent) issuer.  Ignore.
 
 #### Ongoing build and deployment (issuer)
 The issuer has the schemas for our verifiable credentials, so any updates to schemas will require builds and deploys.
@@ -174,13 +178,13 @@ The issuer has the schemas for our verifiable credentials, so any updates to sch
 #### Promotion from DEV to TEST
 When promoting from DEV to TEST (and TEST to PROD), we do **NOT** build the images.
 
-1. ensure the *.<env>.params files have the correct values
+1. ensure the *.<env>.param files have the correct values
 1. tag all the images required for the promotion
 1. deploy the required components
 
 
 ### Build and Deployment commands
-Again, remember the assumption that you are in your terminal at `mines-digital-trust/openshift` and logged into Openshift. We also assume that all the housekeeping tasks are done, and that the param files have been generated and verified for correctness.
+Again, remember the assumption that you are in your terminal at `mines-digital-trust/openshift` and logged into Openshift. We assume the housekeeping tasks complete and that the param files have been generated and verified for correctness.
 
 #### build db image
 
@@ -195,17 +199,17 @@ genBuilds.sh -c mines-permitting-agent
 ```
 
 #### generate agent secrets
-This will generate two secrets in the dev environment. You should be prompted for 4 values, just hit enter and let it generate valid values.
+This command generates two secrets in the dev environment. You should be prompted for four values, just hit enter and let it generate valid values.
 
 ```sh
 genDepls.sh -c mines-permitting-agent-secrets -e dev
 ```
 
-#### register did with Org Book ledger
+#### register did with Org. Book ledger
 Now that we have a wallet seed, we need to register it with the ledger.  We will use the Dev instance of Org. Book as an example.
 
 1. Go to http://dev.bcovrin.vonx.io
-2. see the Authenicate a New DID panel, select Register from Seed.
+2. see the Authenticate a New DID panel, select Register from Seed.
 3. Copy value for seed from `mines-permitting-agent-wallet-credentials-primary` secret
 4. set Wallet Seed = secret value for seed
 5. set Alias = mines-permitting-agent
@@ -213,7 +217,7 @@ Now that we have a wallet seed, we need to register it with the ledger.  We will
 7. Save the returned values
 
 #### tag db and mines-permitting-agent images
-Tagging the images for a namespace/environment (dev, test, prod) makes them available there for deployment. Using dev as an example.
+Tagging the images for a namespace/environment (dev, test, prod) makes them available for deployment. Using dev as an example.
 
 ```sh
 oc -n a3e512-tools tag db:latest db:dev
@@ -221,7 +225,7 @@ oc -n a3e512-tools tag mines-permitting-agent:latest mines-permitting-agent:dev
 ```
 
 #### deploy mines-permitting-wallet and mines-permitting-agent
-Deploy the wallet, once it is deployed, then deploy the agent.
+Deploy the wallet; on completion, deploy the agent.
 
 ```sh
 genDepls.sh -c mines-permitting-wallet -e dev
@@ -233,17 +237,16 @@ genDepls.sh -c mines-permitting-agent -e dev
 
 You can verify your agent is running by [checking agent connections](#-check-agent-connections)
 
-#### connect mines-permitting-agent to org book agent via invitations
-[Port forward your agent](#port-forward-to-agent) and we can set connections via curl.
+#### connect mines-permitting-agent to org. book agent via invitations
+[Port forward your agent](#port-forward-to-agent), and we can set connections via curl.
 
-
-1. Send a request to the VON Team [rocketchat #von-general](https://chat.pathfinder.gov.bc.ca/channel/von-general) for an inivitation to Org Book DEV.
+1. Send a request to the VON Team [rocketchat #von-general](https://chat.pathfinder.gov.bc.ca/channel/von-general) for an invitation to Org. Book DEV.
 1. Copy the JSON they provide
-1. In POSTMAN (or curl or other), POST the invitation with an alias to the Org Book agent (`icob-agent` - see the value for label in the invitation), remember to use your Admin API Key header. `/connections/receive-invitation?alias=icob-agent`
+1. In POSTMAN (or curl or other), POST the invitation with an alias to the Org. Book agent (`icob-agent` - see the label value in the invitation), remember to use your Admin API Key header. `/connections/receive-invitation?alias=icob-agent`
 1. Using the returned value, find the `connection-id`.  POST that to `/connections/<connid>/accept-invitation`.
 1. Check your connection to `icob-agent` is active.  GET `/connections/<connid>`
 
-Using curl, assume agent is port forwarded to 28024.
+Using curl, assume the agent is port forwarded to 28024.
 
 ```
 curl --location --request POST 'http://localhost:28024/connections/receive-invitation?alias=icob-agent' \
@@ -259,7 +262,7 @@ curl --location --request POST 'http://localhost:28024/connections/receive-invit
     "serviceEndpoint": "https://agent-dev.orgbook.gov.bc.ca"
   }'
 
-# check response for connection_id, then query your connections endpoint... want this connecttion to have a state of active
+# check response for connection_id, then query your connections endpoint. We want this connection to have a state of active
 
 curl --location --request GET 'http://localhost: 28024/connections/<connection_id>' \
 --header 'Content-Type: application/json' \
@@ -273,21 +276,21 @@ genBuilds.sh -c mines-permitting-issuer
 ```
 
 #### tag mines-permitting-issuer image
-Tagging the images for a namespace/environment (dev, test, prod) makes them available there for deployment. Using dev as an example.
+Tagging the images for a namespace/environment (dev, test, prod) makes them available for deployment. Using dev as an example.
 
 ```sh
 oc -n a3e512-tools tag mines-permitting-issuer:latest mines-permitting-issuer:dev
 ```
 
 #### deploy mines-permitting-issuer
-This will generate a secret to hold Credential Registry (Org Book) Administration configuration.  This is currently not used, so you can leave the prompts blank. You should be prompted for 3 more values related to the Org Book, just hit ensure they are correct for you target environment.  Of particular importance is the `CR_CONNECTION_NAME`, that should match the alias used when [receiving the invitation to Org. Book](#connect-mines-permitting-agent-to-org-book-agent-via-invitations).
+This command generates a secret to hold Credential Registry (Org. Book) Administration configuration.  These are currently not used. Therefore, you can leave the prompts blank. You should be prompted for three more values related to the Org. Book, just hit ensure they are correct for your target environment.  Of particular importance is the `CR_CONNECTION_NAME`, which should match the alias used when [receiving the invitation to Org. Book](#connect-mines-permitting-agent-to-org-book-agent-via-invitations).
 
 ```sh
 genDepls.sh -c mines-permitting-issuer -e dev
 ```
 
 #### mines-permitting-issuer self-registers its schemas with the mines-permitting-agent
-Since we have already connected our agent to Org. Book, in the logs you should see something like the following, indicating that the connection to our agent (and it to Org Book) is synchronized, and our issuer has been registered. We can now [issue credentials](#issue-credentials) through our agent.
+Since we have already connected our agent to Org. Book, in the logs, you should see something like the following, indicating that the connection to our agent (and it to Org. Book) is synchronized, and our issuer is registered. We can now [issue credentials](#issue-credentials) through our agent.
 
 ```sh
 Starting server ...
@@ -313,7 +316,7 @@ Connection cd402639-124c-481e-8028-7720ab7884df is synchronized
 ### Port forward to agent
 We can verify the agent by hitting its admin port. We do not want to create a public route to the admin port, so we can use port-forwarding to connect through our local machine.
 
-The following is an example on Mac, you may need to adjust to your particular machine.
+The following is an example on Mac; you may need to adjust to your particular machine.
 
 ```sh
 # get a pod name
@@ -333,7 +336,7 @@ kill -9 $AGENT_ADMIN_PORT_FORWARD_PID
 ### Check agent connections
 Assume that we have a [port-forward](#port-forward-to-agent) open to our agent on 28024.
 
-1. From the `mines-permitting-agent-primary` secret, copy the value for `admin-api-key`
+1. From the `mines-permitting-agent-primary` secret, copy the value for `admin-API-key`
 2. check the agent connections
 
 ```sh
@@ -401,4 +404,4 @@ You should expect a result like this:
 ]
 ```
 
-Go to the [Org Book](https://dev.orgbook.gov.bc.ca/en/home) and search for your entity (`Ima Regional Mining Corp`)
+Go to the [Org. Book](https://dev.orgbook.gov.bc.ca/en/home) and search for your entity (`Ima Regional Mining Corp`)
