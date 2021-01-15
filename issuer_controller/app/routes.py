@@ -8,12 +8,9 @@ from app import issuer, logging,app as app_instance
 def secret_key_required(func): 
     @wraps(func)
     def wrapper(*args, **kwds):
-        if 'SECRET_KEY' not in app_instance.ENV:
+        if 'SECRET_KEY' not in current_app.ENV:
             print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
-        if 'SECRET_KEY' not in request.headers: 
-            print(func.__name__ +": NOT_AUTHORIZED")
-            raise Unauthorized('Must provide the SECRET_KEY to use this endpoint')
-        if request.headers['SECRET_KEY'] != app_instance.ENV['SECRET_KEY']:
+        elif request.headers.get(['SECRET_KEY'],None) != current_app.ENV['SECRET_KEY']:
             print(func.__name__ +": NOT_AUTHORIZED")
             raise Unauthorized('Must know the correct SECRET_KEY to use this method')
 
