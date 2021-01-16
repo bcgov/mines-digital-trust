@@ -1,0 +1,46 @@
+---
+kind: Template
+apiVersion: v1
+labels:
+  template: networksecuritypolicy-template
+objects:
+  - apiVersion: security.devops.gov.bc.ca/v1alpha1
+    kind: NetworkSecurityPolicy
+    metadata:
+      name: egress-internet
+    spec:
+      description: Allow ${NAMESPACE} -${TAG_NAME}namespace to talk to the internet.
+      source:
+        - - "$namespace=${NAMESPACE}-${TAG_NAME}"
+      destination:
+        - - ext:network=any
+  - apiVersion: security.devops.gov.bc.ca/v1alpha1
+    kind: NetworkSecurityPolicy
+    metadata:
+      name: intra-namespace-comms
+    spec:
+      description: Allow ${NAMESPACE}-${TAG_NAME} namespace to talk to itself
+      source:
+        - - "$namespace=${NAMESPACE}-${TAG_NAME}"
+      destination:
+        - - "$namespace=${NAMESPACE}-${TAG_NAME}"
+  - apiVersion: security.devops.gov.bc.ca/v1alpha1
+    kind: NetworkSecurityPolicy
+    metadata:
+      name: int-cluster-k8s-api-comms
+    spec:
+      description: Allow ${NAMESPACE}-${TAG_NAME} pods to talk to the k8s api
+      source:
+        - - "$namespace=${NAMESPACE}-${TAG_NAME}"
+      destination:
+        - - int:network=internal-cluster-api-endpoint
+parameters:
+  - name: NAMESPACE
+    description: OpenShift namespace containing our image to deploy (ex. idcqvl-dev)
+    required: true
+    value: a3e512-dev
+  - name: TAG_NAME
+    displayName: Environment TAG name
+    description: The TAG name for this environment, e.g., dev, test, prod.
+    required: true
+    value: dev
