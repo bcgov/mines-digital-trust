@@ -1,0 +1,44 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/mines-permitting-agent/mines-permitting-agent-deploy.yaml
+#=========================================================
+# NAME=mines-permitting-agent
+# ROLE=agent
+# ISSUER_ROLE=issuer
+# WALLET_ROLE=wallet
+# NAMESPACE=a3e512
+# SUFFIX=-primary
+# APP_NAME=MinesDigitalTrust
+# APP_GROUP=mines-permitting
+APPLICATION_DOMAIN=mines-permitting-agent-a3e512-test.apps.silver.devops.gov.bc.ca
+# ROUTE_TIMEOUT=120s
+# IMAGE_NAMESPACE=a3e512-tools
+TAG_NAME=test
+# AGENT_LABEL_NAME=mines-permitting-agent
+AGENT_BASE_URL=https://mines-permitting-agent-a3e512-test.apps.silver.devops.gov.bc.ca
+# WEBHOOK_URL=http://mines-permitting-issuer-primary:8080/api/agentcb
+# AGENT_ADMIN_PORT=8024
+# ADMIN_CREDENTIAL_STORE_NAME=mines-permitting-agent
+# AGENT_HTTP_PORT=8021
+# AGENT_WS_PORT=8023
+GENESIS_FILE_URL=http://test.bcovrin.vonx.io/genesis
+# LOG_LEVEL=WARNING
+# AGENT_TIMING=
+# AGENT_READ_ONLY_LEDGER=
+# AGENT_TRACING=
+# AGENT_TRACE_TARGET=
+# AGENT_TRACE_TAG=
+# AGENT_TRACE_LABEL='${HOSTNAME}'
+# WALLET_STORAGE_TYPE=postgres_storage
+# WALLET_HOST=mines-permitting-wallet
+# WALLET_HOST_PORT=5432
+# WALLET_STORAGE_CONFIG={\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}
+# WALLET_STORAGE_CREDS={\"account\":\"${POSTGRESQL_WALLET_USER}\",\"password\":\"${POSTGRESQL_WALLET_PASSWORD}\",\"admin_account\":\"postgres\",\"admin_password\":\"${POSTGRESQL_WALLET_ADMIN_PASSWORD}\"}
+# WALLET_CREDENTIAL_STORE_NAME=mines-permitting-agent-wallet-credentials
+# MIN_REPLICAS=2
+# MAX_REPLICAS=2
+# CPU_REQUEST=10m
+# CPU_LIMIT=750m
+# MEMORY_REQUEST=10Mi
+# MEMORY_LIMIT=512Mi
