@@ -57,7 +57,7 @@ oc -n a3e512-prod process -f templates/nsp/nsp-deploy.yaml -p NAMESPACE=a3e512 -
 ### Configuration
 The *.param files in the repo are the result of generation and manual edit. However, you may find you need different values or add more parameters to your templates.  When adding more parameters, you will need to re-generate.
 
-**Important:** The [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) does do some internal mashing and generating, so the values in your templates may or may not end up in your *.param files as you expect or intend. 
+**Important:** The [openshift-developer-tools](https://github.com/BCDevOps/openshift-developer-tools) does do some internal mashing and generating, so the values in your templates may or may not end up in your *.param files as you expect or intend.
 
 Pay particular attention to `APPLICATION_DOMAIN`. This is generated as `<component-name>-<namespace-licence-plate>-<env>-<domain-postfix>` (ex. mines-permitting-agent-a3e512-dev.apps.silver.devops.gov.bc.ca). In [settings.sh](settings.sh), we have overridden the default `APPLICATION_DOMAIN_POSTFIX` required for Openshift 4 domains. But just be aware that the value you enter for `APPLICATION_DOMAIN` in your templates will be changed on generate.
 
@@ -107,16 +107,13 @@ Comment out the values we want to fill using our overrides script.
 `# AGENT_WALLET_SEED=[a-zA-Z0-9_]{16}`
 `# WALLET_DID=[a-zA-Z0-9_]{16}`
 
+**NOTE:** We have separated the secrets for the agent/wallet from the agent deployment script because we can use these values __BEFORE__ deployment. This will allow us to do registration with the Org. Book ledger before the actual deployment; reducing the number of deployments and configuration changes to start up without error.
 
 ##### mines-permitting-issuer (deploy)
 
-Comment out the values we want to fill using our overrides script.  Keep in mind; we may be changing the `CR_CONNECTION_NAME` per Org. Book environment (this is the name/alias/label for the Org. Book Agent).
+Comment out the values we want to fill using our overrides script.
 
-`# CR_AGENT_ADMIN_URL=`
-`# CR_ADMIN_API_KEY=`
-`# CR_CONNECTION_NAME=icob-agent`
-`# CR_API_URL=https://agent-dev.orgbook.gov.bc.ca`
-`# CR_APP_URL=https://dev.orgbook.gov.bc.ca`
+`# ISSUER_SECRET_KEY=[a-zA-Z0-9_]{16}`
 
 
 ##### mines-permitting-wallet (deploy)
@@ -310,7 +307,6 @@ Connection cd402639-124c-481e-8028-7720ab7884df is synchronized
  acapy.events {"msg_id": "N/A", "thread_id": "N/A", "traced_type": "agent_callback.issuer_registration", "timestamp": 1610665251.3978395, "str_time": "2021-01-14 23:00:51.397840", "handler": "bcreg.controller", "ellapsed_milli": 0, "outcome": "agent_callback.issuer_registration.SUCCESS"}
 ```
 
-
 ## Code Examples
 
 ### Port forward to agent
@@ -336,7 +332,7 @@ kill -9 $AGENT_ADMIN_PORT_FORWARD_PID
 ### Check agent connections
 Assume that we have a [port-forward](#port-forward-to-agent) open to our agent on 28024.
 
-1. From the `mines-permitting-agent-primary` secret, copy the value for `admin-API-key`
+1. From the `mines-permitting-agent-primary` secret, copy the value for `admin-api-key`
 2. check the agent connections
 
 ```sh
@@ -348,9 +344,13 @@ curl --location --request GET 'http://localhost:28024/connections' \
 
 ### Issue Credentials
 
+1. From the `mines-permitting-issuer-primary` secret, copy the value for `issuer-secret-key`
+2. issue credentials
+
 ```sh
 curl --location --request POST 'https://mines-permitting-issuer-a3e512-dev.apps.silver.devops.gov.bc.ca/issue-credential' \
 --header 'Content-Type: application/json' \
+--header 'SECRET_KEY: <your issuer-secret-key value>' \
 --data-raw '[
     {
         "schema": "my-registration.bcgov-mines-permitting",
@@ -405,3 +405,21 @@ You should expect a result like this:
 ```
 
 Go to the [Org. Book](https://dev.orgbook.gov.bc.ca/en/home) and search for your entity (`Ima Regional Mining Corp`)
+
+
+### Manual Cleanup scripts
+
+Use the following carefully, and only when required (i.e. you are testing out scripts on a clean environment that is not in use).
+
+```sh
+oc -n a3e512-dev delete all,pods,services,secrets,routes,dc,pvc,hpa,nsp -l="name=mines-permitting-wallet-primary"
+oc -n a3e512-dev delete all,pods,services,routes,dc,pvc,hpa,nsp -l="name=mines-permitting-agent-primary"
+oc -n a3e512-dev delete secrets -l="name=mines-permitting-agent-secrets-primary"
+oc -n a3e512-dev delete all,pods,services,secrets,routes,dc,pvc,hpa,nsp -l="name=mines-permitting-issuer-primary"
+```
+
+```sh
+oc -n a3e512-tools delete bc,build,is,imagestreamtag -l="name=db"
+oc -n a3e512-tools delete bc,build,is,imagestreamtag -l="name=mines-permitting-agent"
+oc -n a3e512-tools delete bc,build,is,imagestreamtag -l="name=mines-permitting-issuer"
+```
