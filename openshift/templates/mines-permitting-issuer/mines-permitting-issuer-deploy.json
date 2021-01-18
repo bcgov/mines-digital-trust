@@ -210,7 +210,7 @@
                     "value": "${CR_APP_URL}"
                   },
                   {
-                    "name": "SECRET_KEY",
+                    "name": "ISSUER_SECRET_KEY",
                     "valueFrom": {
                       "secretKeyRef": {
                         "name": "${NAME}${SUFFIX}",

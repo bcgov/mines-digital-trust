@@ -350,7 +350,7 @@ curl --location --request GET 'http://localhost:28024/connections' \
 ```sh
 curl --location --request POST 'https://mines-permitting-issuer-a3e512-dev.apps.silver.devops.gov.bc.ca/issue-credential' \
 --header 'Content-Type: application/json' \
---header 'SECRET_KEY: <your issuer-secret-key value>' \
+--header 'Issuer-Secret-Key: <your issuer-secret-key value>' \
 --data-raw '[
     {
         "schema": "my-registration.bcgov-mines-permitting",

@@ -12,5 +12,5 @@ def test_auth_blocked(secured_app,test_secured_client):
     assert get_resp.status_code == 401
 
 def test_auth_allowed(secured_app,test_secured_client):
-    get_resp = test_secured_client.get(f'/status/reset', headers={"Secret-Key":"TEST_KEY"})
+    get_resp = test_secured_client.get(f'/status/reset', headers={"Issuer-Secret-Key":"TEST_KEY"})
     assert get_resp.status_code == 200
