@@ -1,11 +1,27 @@
-from flask import Flask, jsonify, abort, request, make_response
-import time
+from flask import Flask, jsonify, abort, request, make_response, current_app
+import time, pprint
+from functools import wraps
+from werkzeug.exceptions import Unauthorized
+from app import issuer, logging,app as app_instance
 
 
-from app import issuer, logging
+def secret_key_required(func): 
+    @wraps(func)
+    def wrapper(*args, **kwds):
+        if 'SECRET_KEY' not in current_app.ENV:
+            print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
+        if request.headers.get('SECRET_KEY',None) != current_app.ENV['SECRET_KEY']:
+            print(func.__name__ +": NOT_AUTHORIZED")
+            raise Unauthorized('Must know the correct SECRET_KEY to use this method')
+
+        print(func.__name__ +": AUTHORIZED")
+    
+        return func(*args,**kwds)  
+    return wrapper
+
 
 def register_routes(app):
-
+    
     @app.route('/health', methods=['GET'])
     def health_check():
         if issuer.tob_connection_synced():
@@ -23,7 +39,7 @@ def register_routes(app):
             return make_response(jsonify({'success': True}), 200)
         else:
             abort(503, "Connection not ready to process requests")
-
+   
     @app.route('/liveness', methods=['GET'])
     def liveness_check():
         """
@@ -34,13 +50,16 @@ def register_routes(app):
             return make_response(jsonify({'success': True}), 200)
         else:
             abort(503, "Connection is not live")
-
+    
     @app.route('/status/reset', methods=['GET'])
+    @secret_key_required
     def clear_status():
         logging.clear_stats()
         return make_response(jsonify({'success': True}), 200)
 
+    @secret_key_required
     @app.route('/status', methods=['GET'])
+    @secret_key_required
     def get_status():
         return make_response(jsonify(logging.get_stats()), 200)
 
@@ -48,7 +67,9 @@ def register_routes(app):
     def not_found(error):
         return make_response(jsonify({'error': 'Not found'}), 404)
 
+    @secret_key_required
     @app.route('/issue-credential', methods=['POST'])
+    @secret_key_required
     def submit_credential():
         """
         Exposed method to proxy credential issuance requests.
@@ -73,6 +94,7 @@ def register_routes(app):
 
         return response
 
+    #not protected, used by ACA-py... TODO enforce this. 
     @app.route('/api/agentcb/topic/<topic>/', methods=['POST'])
     def agent_callback(topic):
         """

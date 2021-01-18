@@ -11,5 +11,5 @@ default:
 
   LEDGER_PROTOCOL_VERSION: "1.6"
   AUTO_REGISTER_DID: false
-
+  SECRET_KEY: super_secret_key
 ### eof ###
