@@ -25,6 +25,7 @@ APPLICATION_DOMAIN=mines-permitting-issuer-a3e512-prod.apps.silver.devops.gov.bc
 # CR_CONNECTION_NAME=icob-agent
 # CR_API_URL=https://agent-dev.orgbook.gov.bc.ca
 # CR_APP_URL=https://dev.orgbook.gov.bc.ca
+# ISSUER_SECRET_KEY=[a-zA-Z0-9_]{16}
 # WEB_CONCURRENCY=1
 # WORKER_THREADS=160
 # MAX_CRED_RESPONSE_TIMEOUT=90

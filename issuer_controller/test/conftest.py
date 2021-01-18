@@ -15,7 +15,7 @@ def app(request):
 @pytest.fixture(scope="session")
 def secured_app(request):
     conf = TestConfig.copy()
-    conf['SECRET_KEY'] = 'TEST_KEY'
+    conf['ISSUER_SECRET_KEY'] = 'TEST_KEY'
     app = init_app(conf)
     return app
 

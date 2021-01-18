@@ -80,7 +80,8 @@
       },
       "stringData": {
         "cr-agent-admin-api-url": "${CR_AGENT_ADMIN_URL}",
-        "cr-agent-admin-api-key": "${CR_ADMIN_API_KEY}"
+        "cr-agent-admin-api-key": "${CR_ADMIN_API_KEY}",
+        "issuer-secret-key": "${ISSUER_SECRET_KEY}"
       },
       "type": "Opaque"
     },
@@ -207,6 +208,15 @@
                   {
                     "name": "TOB_APP_URL",
                     "value": "${CR_APP_URL}"
+                  },
+                  {
+                    "name": "ISSUER_SECRET_KEY",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "${NAME}${SUFFIX}",
+                        "key": "issuer-secret-key"
+                      }
+                    }
                   },
                   {
                     "name": "WEB_CONCURRENCY",
@@ -427,6 +437,14 @@
       "description": "Credential Application URL",
       "required": true,
       "value": "https://dev.orgbook.gov.bc.ca"
+    },
+    {
+      "name": "ISSUER_SECRET_KEY",
+      "displayName": "Issuer Protected API Key",
+      "description": "The key used to authenticate client requests to the issuer protected api.",
+      "required": true,
+      "generate": "expression",
+      "from": "[a-zA-Z0-9_]{16}"
     },
     {
       "name": "WEB_CONCURRENCY",
