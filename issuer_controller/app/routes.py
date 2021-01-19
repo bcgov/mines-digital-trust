@@ -21,7 +21,6 @@ def secret_key_required(func):
 
 
 def register_routes(app):
-    
     @app.route('/health', methods=['GET'])
     def health_check():
         if issuer.tob_connection_synced():
@@ -57,7 +56,6 @@ def register_routes(app):
         logging.clear_stats()
         return make_response(jsonify({'success': True}), 200)
 
-    @secret_key_required
     @app.route('/status', methods=['GET'])
     @secret_key_required
     def get_status():
@@ -67,7 +65,6 @@ def register_routes(app):
     def not_found(error):
         return make_response(jsonify({'error': 'Not found'}), 404)
 
-    @secret_key_required
     @app.route('/issue-credential', methods=['POST'])
     @secret_key_required
     def submit_credential():

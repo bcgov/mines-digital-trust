@@ -1,7 +1,7 @@
 # Documentation: https://github.com/bcgov/von-agent-template/tree/master/von-x-agent/config
 
 issuers:
-  myorg:
+  mines-permitting:
     name: Ministry of Energy, Mines and Low-carbon Innovation
     abbreviation: bcgov-mines-permitting
     url: https://www.bcgov-mines-permitting.ca/bcgov-mines-permitting-info-page
@@ -9,6 +9,11 @@ issuers:
     logo_path: ../assets/img/bcgov-mines-permitting-logo.jpg
     endpoint: $ENDPOINT_URL
 
+    details: 
+      label_en: BC Mines Permitting
+      abbreviation_en: Mines Permitting
+      endpoint: $ENDPOINT_URL 
+      
     connection:
       type: TheOrgBook
       api_url: $TOB_API_URL
