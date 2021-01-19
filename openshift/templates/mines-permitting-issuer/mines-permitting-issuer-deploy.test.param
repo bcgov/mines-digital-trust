@@ -13,7 +13,7 @@
 # APP_GROUP=mines-permitting
 # IMAGE_NAMESPACE=a3e512-tools
 TAG_NAME=test
-# CONFIG_ROOT=./config
+CONFIG_ROOT=./config/openshift
 # HOST_PORT=8080
 # ENVIRONMENT=default
 # AGENT_SERVICE_NAME=mines-permitting-agent

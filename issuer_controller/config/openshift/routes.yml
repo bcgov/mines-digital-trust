@@ -1,0 +1,62 @@
+forms:
+  bcgov-mines-permitting-bcgov-mines-act-permit:
+    path: /bcgov-mines-permitting/bcgov-mines-act-permit
+    type: issue-credential
+    schema_name: bcgov-mines-act-permit.bcgov-mines-permitting
+    page_title: Title for bcgov-mines-act-permit.bcgov-mines-permitting
+    title: Title for bcgov-mines-act-permit.bcgov-mines-permitting
+    template: bcgov.index.html
+    description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
+    explanation: Use the form below to issue a Credential.
+    proof_request:
+      id: greenlight_registration
+      connection_id: bctob
+    fields:
+    - name: registration_id
+      label: registration_id
+      type: text
+      required: true
+    - name: permit_no
+      label: permit_no
+      type: text
+      required: true
+    - name: mine_no
+      label: mine_no
+      type: text
+      required: true
+    - name: mine_class
+      label: mine_class
+      type: select
+      options:
+      - regional
+      - major
+      required: true
+    - name: latitude
+      label: latitude
+      type: text
+      required: true
+    - name: longitude
+      label: longitude
+      type: text
+      required: true
+    - name: authorization_end_date
+      label: authorization_end_date
+      type: date
+      required: true
+    - name: inspector_name
+      label: inspector_name
+      type: text
+      required: true
+    - name: issued_date
+      label: issued_date
+      type: date
+      required: true
+    - name: effective_date
+      label: effective_date
+      type: date
+      required: true
+    mapping:
+      attributes:
+      - name: permit_id
+        from: helper
+        source: uuid

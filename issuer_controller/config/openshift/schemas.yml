@@ -1,0 +1,59 @@
+- name: bcgov-mines-act-permit.bcgov-mines-permitting
+  version: 0.1.0
+  description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
+  attributes:
+    registration_id:
+      description_en: BC Registries Identifying Number
+      label_en: Registration ID
+      data_type: ui_text
+      required: true
+    permit_id:
+      description_en: Permit Identifying Number
+      label_en: Permit ID
+      data_type: helper_uuid
+      required: true
+    permit_no:
+      description_en: Permit Number
+      label_en: Permit Number
+      data_type: ui_text
+      required: true
+    mine_no:
+      description_en: Mine Number
+      label_en: Mine Number
+      data_type: ui_text
+      required: true
+    mine_class:
+      description_en: Mine Class, Regional or Major?
+      label_en: Mine Class
+      data_type: ui_select
+      required: true
+    latitude:
+      description_en: Approx Latitude of permitted actions
+      label_en: Latitude
+      data_type: ui_text
+      required: true
+    longitude:
+      description_en: Approx Longitude of permitted actions
+      label_en: Longitude
+      data_type: ui_text
+      required: true
+    authorization_end_date:
+      description_en: the last day the permitted actions are authorized
+      label_en: Authorization End Date
+      data_type: ui_date
+      required: true
+    inspector_name:
+      description_en: Name of EMLI permitting Inspector
+      label_en: Inspector Name
+      data_type: ui_text
+      required: true
+    issued_date:
+      description_en: Date Permit is issued
+      label_en: Permit Issued Date
+      data_type: ui_date
+      required: true
+    effective_date:
+      description_en: Date permit is effective
+      label_en: Credential Effective Date
+      data_type: ui_date
+      required: true
