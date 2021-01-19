@@ -5,18 +5,18 @@ from werkzeug.exceptions import Unauthorized
 from app import issuer, logging,app as app_instance
 
 
-def secret_key_required(func): 
+def secret_key_required(func):
     @wraps(func)
     def wrapper(*args, **kwds):
-        if 'SECRET_KEY' not in current_app.ENV:
-            print("NO SECRET KEY SET, ALLOWING ALL REQUESTS")
-        if request.headers.get('SECRET_KEY',None) != current_app.ENV['SECRET_KEY']:
+        if 'ISSUER_SECRET_KEY' not in current_app.ENV:
+            print("NO ISSUER SECRET KEY SET, ALLOWING ALL REQUESTS")
+        if request.headers.get('Issuer-Secret-Key',None) != current_app.ENV['ISSUER_SECRET_KEY']:
             print(func.__name__ +": NOT_AUTHORIZED")
-            raise Unauthorized('Must know the correct SECRET_KEY to use this method')
+            raise Unauthorized('Must know the correct ISSUER_SECRET_KEY to use this method')
 
         print(func.__name__ +": AUTHORIZED")
-    
-        return func(*args,**kwds)  
+
+        return func(*args,**kwds)
     return wrapper
 
 
@@ -94,7 +94,7 @@ def register_routes(app):
 
         return response
 
-    #not protected, used by ACA-py... TODO enforce this. 
+    #not protected, used by ACA-py... TODO enforce this.
     @app.route('/api/agentcb/topic/<topic>/', methods=['POST'])
     def agent_callback(topic):
         """
@@ -144,7 +144,7 @@ def register_routes(app):
 
         elif topic == issuer.TOPIC_ISSUER_REGISTRATION:
             response = issuer.handle_register_issuer(message)
-        
+
         elif topic == issuer.TOPIC_PROBLEM_REPORT:
             response = issuer.handle_problem_report(message)
 
