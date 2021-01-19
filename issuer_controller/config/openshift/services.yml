@@ -9,11 +9,6 @@ issuers:
     logo_path: ../assets/img/bcgov-mines-permitting-logo.jpg
     endpoint: $ENDPOINT_URL
 
-    details: 
-      label_en: BC Mines Permitting
-      abbreviation_en: Mines Permitting
-      endpoint: $ENDPOINT_URL 
-      
     connection:
       type: TheOrgBook
       api_url: $TOB_API_URL
@@ -23,6 +18,8 @@ issuers:
     - description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
       schema: bcgov-mines-act-permit.bcgov-mines-permitting
       issuer_url: $ENDPOINT_URL/bcgov-mines-permitting/bcgov-mines-act-permit
+      label_en: BC Mines Act Permit
+      abbreviation_en: Mines Permit
       depends_on:
       - greenlight_registration
       credential:

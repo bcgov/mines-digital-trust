@@ -8,11 +8,6 @@ issuers:
     email: info@bcgov-mines-permitting.ca
     logo_path: ../assets/img/bcgov-mines-permitting-logo.jpg
     endpoint: $ENDPOINT_URL
-
-    details: 
-      label_en: BC Mines Permitting
-      abbreviation_en: Mines Permitting
-      endpoint: $ENDPOINT_URL 
       
     connection:
       type: TheOrgBook
@@ -23,6 +18,8 @@ issuers:
     - description: The my-registration credential issued by bcgov-mines-permitting
       schema: my-registration.bcgov-mines-permitting
       issuer_url: $ENDPOINT_URL/bcgov-mines-permitting/my-registration
+      label_en: BC Mines Act Permit
+      abbreviation_en: Mines Permit
       credential:
         effective_date:
           input: effective_date
