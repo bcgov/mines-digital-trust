@@ -77,7 +77,7 @@
       data_type: ui_date
       required: false
 - name: bcgov-mines-act-permit.bcgov-mines-permitting
-  version: 0.1.0
+  version: 0.2.0
   description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
   attributes:
     corp_num:

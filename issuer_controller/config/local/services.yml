@@ -142,6 +142,8 @@ issuers:
     - description: The my-registration credential issued by bcgov-mines-permitting
       schema: my-registration.bcgov-mines-permitting
       issuer_url: $ENDPOINT_URL/bcgov-mines-permitting/my-registration
+      label_en: TEST Registration
+      abbreviation_en: Registration
       credential:
         effective_date:
           input: effective_date
