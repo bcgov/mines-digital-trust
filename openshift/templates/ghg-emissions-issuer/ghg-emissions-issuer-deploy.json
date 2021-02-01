@@ -359,7 +359,7 @@
       "displayName": "Config Root",
       "description": "The root directory containing the application configuration.",
       "required": true,
-      "value": "./config"
+      "value": "./config/openshift"
     },
     {
       "name": "HOST_PORT",
