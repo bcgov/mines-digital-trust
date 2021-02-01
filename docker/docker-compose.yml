@@ -1,18 +1,18 @@
 version: "3"
 services:
-  myorg-controller:
+  mp-controller:
     build:
       context: ../issuer_controller
       dockerfile: Dockerfile
     environment:
       LEDGER_URL: ${LEDGER_URL}
-      APPLICATION_URL: ${APPLICATION_URL:-http://localhost:5000}
-      ENDPOINT_URL: ${ENDPOINT_URL:-http://localhost:5000}
+      APPLICATION_URL: ${MP_APPLICATION_URL}
+      ENDPOINT_URL: ${MP_ENDPOINT_URL}
       CONFIG_ROOT: ./config/local
       HOST_PORT: ${CONTROLLER_PORT}
       ENVIRONMENT: ${ENVIRONMENT:-default}
       ENABLE_GUNICORN: ${ENABLE_GUNICORN:-0}
-      INDY_LEDGER_URL: ${LEDGER_URL:-http://localhost:9000}
+      INDY_LEDGER_URL: ${LEDGER_URL}
       FORMS: ${FORMS}
       ISSUERS: ${ISSUERS}
       LOG_LEVEL: ${LOG_LEVEL}
@@ -20,18 +20,18 @@ services:
       TOB_API_URL: ${TOB_API_URL}
       TOB_APP_URL: ${TOB_APP_URL}
       WALLET_TYPE: ${WALLET_TYPE}
-      POSTGRESQL_WALLET_HOST: ${POSTGRESQL_WALLET_HOST}
-      POSTGRESQL_WALLET_PORT: ${POSTGRESQL_WALLET_PORT}
+      POSTGRESQL_WALLET_HOST: ${MP_WALLET_HOST}
+      POSTGRESQL_WALLET_PORT: ${MP_EXPOSED_WALLET_PORT}
       POSTGRESQL_WALLET_USER: ${POSTGRESQL_USER}
       POSTGRESQL_WALLET_PASSWORD: ${POSTGRESQL_PASSWORD}
       POSTGRESQL_WALLET_ADMIN_PASSWORD: ${POSTGRESQL_ADMIN_PASSWORD}
       WALLET_ENCRYPTION_KEY: ${WALLET_ENCRYPTION_KEY}
-      WALLET_SEED_VONX: ${WALLET_SEED_VONX}
+      WALLET_SEED_VONX: ${MP_WALLET_SEED_VONX}
       ISSUER_WALLET_DID: ${ISSUER_WALLET_DID}
       HTTP_FORCE_CLOSE_CONNECTIONS: "true"
-      AGENT_ADMIN_URL: http://myorg-agent:${AGENT_ADMIN_PORT}
+      AGENT_ADMIN_URL: ${MP_AGENT_ADMIN_URL}
       AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
-      WEBHOOK_PORT: ${WEBHOOK_PORT}
+      WEBHOOK_PORT: ${MP_EXPOSED_CONTROLLER_PORT}
       TOB_CONNECTION_NAME: ${TOB_CONNECTION_NAME}
       TOB_AGENT_ADMIN_URL: ${TOB_AGENT_ADMIN_URL}
       TOB_ADMIN_API_KEY: ${TOB_ADMIN_API_KEY}
@@ -41,57 +41,57 @@ services:
       ACK_ERROR_PCT: ${ACK_ERROR_PCT}
       REGISTER_TOB_CONNECTION: ${REGISTER_TOB_CONNECTION:-true}
     networks:
-      - myorg
+      - mp
     ports:
-      - ${EXPOSED_CONTROLLER_PORT}:${CONTROLLER_PORT}
+      - ${MP_EXPOSED_CONTROLLER_PORT}:${INTERNAL_CONTROLLER_PORT}
     depends_on:
-      - myorg-agent
+      - mp-agent
     entrypoint: >
       /bin/bash -c "
         echo sleeping ...;
-        sleep 15;
+        sleep 30;
         ./docker-entrypoint.sh;"
     volumes:
       - ../issuer_controller/app:/home/indy/app:Z
       - ../issuer_controller/config:/home/indy/config:Z
       - ../issuer_controller/test:/home/indy/test:Z
 
-  myorg-agent:
+  mp-agent:
     image: vcr-agent
     environment:
       - LEDGER_URL=${LEDGER_URL}
       - WALLET_TYPE=${WALLET_TYPE}
-      - POSTGRESQL_WALLET_HOST=${POSTGRESQL_WALLET_HOST}
-      - POSTGRESQL_WALLET_PORT=${POSTGRESQL_WALLET_PORT}
+      - POSTGRESQL_WALLET_HOST=${MP_WALLET_HOST}
+      - POSTGRESQL_WALLET_PORT=${INTERNAL_WALLET_PORT}
       - POSTGRESQL_WALLET_USER=${POSTGRESQL_USER}
       - POSTGRESQL_WALLET_PASSWORD=${POSTGRESQL_PASSWORD}
       - POSTGRESQL_WALLET_ADMIN_PASSWORD=${POSTGRESQL_ADMIN_PASSWORD}
       - WALLET_ENCRYPTION_KEY=${WALLET_ENCRYPTION_KEY}
-      - WALLET_SEED_VONX=${WALLET_SEED_VONX}
+      - WALLET_SEED_VONX=${MP_WALLET_SEED_VONX}
       - ISSUER_WALLET_DID=${ISSUER_WALLET_DID}
-      - WEBHOOK_URL=${WEBHOOK_HOST}/api/agentcb
-      - AGENT_HTTP_IN_PORT=${AGENT_HTTP_IN_PORT}
-      - AGENT_WS_IN_PORT=${AGENT_WS_IN_PORT}
-      - AGENT_ADMIN_PORT=${AGENT_ADMIN_PORT}
-      - AGENT_NAME=${AGENT_NAME}
+      - WEBHOOK_URL=${MP_WEBHOOK_HOST}/api/agentcb
+      - AGENT_HTTP_IN_PORT=${MP_EXPOSED_AGENT_HTTP_IN_PORT}
+      - AGENT_WS_IN_PORT=${MP_EXPOSED_AGENT_WS_IN_PORT}
+      - AGENT_ADMIN_PORT=${MP_EXPOSED_AGENT_ADMIN_PORT}
+      - AGENT_NAME=${MP_AGENT_NAME}
     networks:
       - orgbook
-      - myorg
+      - mp
     ports:
-      - ${AGENT_HTTP_IN_PORT}:${AGENT_HTTP_IN_PORT}
-      - ${AGENT_WS_IN_PORT}:${AGENT_WS_IN_PORT}
-      - ${AGENT_ADMIN_PORT}:${AGENT_ADMIN_PORT}
+      - ${MP_EXPOSED_AGENT_HTTP_IN_PORT}:${INTERNAL_AGENT_HTTP_IN_PORT}
+      - ${MP_EXPOSED_AGENT_WS_IN_PORT}:${INTERNAL_AGENT_WS_IN_PORT}
+      - ${MP_EXPOSED_AGENT_ADMIN_PORT}:${INTERNAL_AGENT_ADMIN_PORT}
     depends_on:
-      - myorg-wallet-db
+      - mp-wallet-db
     entrypoint: /bin/bash
     command: [
         "-c",
-        "curl -d '{\"seed\":\"${WALLET_SEED_VONX}\", \"role\":\"TRUST_ANCHOR\", \"alias\":\"${AGENT_NAME}\"}' -X POST ${LEDGER_URL}/register; \
+        "curl -d '{\"seed\":\"${MP_WALLET_SEED_VONX}\", \"role\":\"TRUST_ANCHOR\", \"alias\":\"${MP_AGENT_NAME}\"}' -X POST ${LEDGER_URL}/register; \
         sleep 5; \
         aca-py start \
-        --inbound-transport http '0.0.0.0' ${AGENT_HTTP_IN_PORT} \
-        --inbound-transport ws '0.0.0.0' ${AGENT_WS_IN_PORT} \
-        --endpoint ${AGENT_ENDPOINT} \
+        --inbound-transport http '0.0.0.0' ${INTERNAL_AGENT_HTTP_IN_PORT} \
+        --inbound-transport ws '0.0.0.0' ${INTERNAL_AGENT_WS_IN_PORT} \
+        --endpoint ${MP_AGENT_ENDPOINT} \
         --outbound-transport ws \
         --outbound-transport http \
         --genesis-url '${LEDGER_URL}/genesis' \
@@ -109,16 +109,16 @@ services:
         --wallet-name 'icat_agent_wallet' \
         --wallet-key '${WALLET_ENCRYPTION_KEY}' \
         --wallet-storage-type '${WALLET_TYPE}' \
-        --wallet-storage-config '{\"url\":\"${POSTGRESQL_WALLET_HOST}:${POSTGRESQL_WALLET_PORT}\",\"max_connections\":5}' \
+        --wallet-storage-config '{\"url\":\"${MP_WALLET_HOST}:${INTERNAL_WALLET_PORT}\",\"max_connections\":5}' \
         --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"postgres\",\"admin_password\":\"${POSTGRESQL_ADMIN_PASSWORD}\"}' \
-        --seed '${WALLET_SEED_VONX}' \
-        --admin '0.0.0.0' ${AGENT_ADMIN_PORT} \
+        --seed '${MP_WALLET_SEED_VONX}' \
+        --admin '0.0.0.0' ${INTERNAL_AGENT_ADMIN_PORT} \
         --${AGENT_ADMIN_MODE} \
-        --label ${AGENT_NAME} \
+        --label ${MP_AGENT_NAME} \
         --plugin indy_catalyst_issuer_registration",
       ]
 
-  myorg-wallet-db:
+  mp-wallet-db:
     image: registry.access.redhat.com/rhscl/postgresql-95-rhel7:9.5
     environment:
       - POSTGRESQL_USER=${POSTGRESQL_USER}
@@ -126,17 +126,150 @@ services:
       - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
       - POSTGRESQL_ADMIN_PASSWORD=${POSTGRESQL_ADMIN_PASSWORD}
     networks:
-      - myorg
+      - mp
     ports:
-      - 5435:5432
+      - ${MP_EXPOSED_WALLET_PORT}:${INTERNAL_WALLET_PORT}
     volumes:
-      - myorg-wallet-db:/var/lib/pgsql/data
+      - mp-wallet-db:/var/lib/pgsql/data
+
+  ghg-controller:
+    build:
+      context: ../ghg_issuer_controller
+      dockerfile: Dockerfile
+    environment:
+      LEDGER_URL: ${LEDGER_URL}
+      APPLICATION_URL: ${GHG_APPLICATION_URL}
+      ENDPOINT_URL: ${GHG_ENDPOINT_URL}
+      CONFIG_ROOT: ./config/local
+      HOST_PORT: ${CONTROLLER_PORT}
+      ENVIRONMENT: ${ENVIRONMENT:-default}
+      ENABLE_GUNICORN: ${ENABLE_GUNICORN:-0}
+      INDY_LEDGER_URL: ${LEDGER_URL}
+      FORMS: ${FORMS}
+      ISSUERS: ${ISSUERS}
+      LOG_LEVEL: ${LOG_LEVEL}
+      PYTHON_ENV: ${PYTHON_ENV:-development}
+      TOB_API_URL: ${TOB_API_URL}
+      TOB_APP_URL: ${TOB_APP_URL}
+      WALLET_TYPE: ${WALLET_TYPE}
+      POSTGRESQL_WALLET_HOST: ${GHG_WALLET_HOST}
+      POSTGRESQL_WALLET_PORT: ${GHG_EXPOSED_WALLET_PORT}
+      POSTGRESQL_WALLET_USER: ${POSTGRESQL_USER}
+      POSTGRESQL_WALLET_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRESQL_WALLET_ADMIN_PASSWORD: ${POSTGRESQL_ADMIN_PASSWORD}
+      WALLET_ENCRYPTION_KEY: ${WALLET_ENCRYPTION_KEY}
+      WALLET_SEED_VONX: ${GHG_WALLET_SEED_VONX}
+      ISSUER_WALLET_DID: ${ISSUER_WALLET_DID}
+      HTTP_FORCE_CLOSE_CONNECTIONS: "true"
+      AGENT_ADMIN_URL: ${GHG_AGENT_ADMIN_URL}
+      AGENT_ADMIN_API_KEY: ${AGENT_ADMIN_API_KEY}
+      WEBHOOK_PORT: ${GHG_EXPOSED_CONTROLLER_PORT}
+      TOB_CONNECTION_NAME: ${TOB_CONNECTION_NAME}
+      TOB_AGENT_ADMIN_URL: ${TOB_AGENT_ADMIN_URL}
+      TOB_ADMIN_API_KEY: ${TOB_ADMIN_API_KEY}
+      TRACE_EVENTS: ${TRACE_EVENTS}
+      TRACE_TARGET: ${TRACE_TARGET}
+      TRACE_MSG_PCT: ${TRACE_MSG_PCT}
+      ACK_ERROR_PCT: ${ACK_ERROR_PCT}
+      REGISTER_TOB_CONNECTION: ${REGISTER_TOB_CONNECTION:-true}
+    networks:
+      - ghg
+    ports:
+      - ${GHG_EXPOSED_CONTROLLER_PORT}:${INTERNAL_CONTROLLER_PORT}
+    depends_on:
+      - ghg-agent
+    entrypoint: >
+      /bin/bash -c "
+        echo sleeping ...;
+        sleep 30;
+        ./docker-entrypoint.sh;"
+    volumes:
+      - ../ghg_issuer_controller/app:/home/indy/app:Z
+      - ../ghg_issuer_controller/config:/home/indy/config:Z
+      - ../ghg_issuer_controller/test:/home/indy/test:Z
+
+  ghg-agent:
+    image: vcr-agent
+    environment:
+      - LEDGER_URL=${LEDGER_URL}
+      - WALLET_TYPE=${WALLET_TYPE}
+      - POSTGRESQL_WALLET_HOST=${GHG_WALLET_HOST}
+      - POSTGRESQL_WALLET_PORT=${INTERNAL_WALLET_PORT}
+      - POSTGRESQL_WALLET_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_WALLET_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_WALLET_ADMIN_PASSWORD=${POSTGRESQL_ADMIN_PASSWORD}
+      - WALLET_ENCRYPTION_KEY=${WALLET_ENCRYPTION_KEY}
+      - WALLET_SEED_VONX=${GHG_WALLET_SEED_VONX}
+      - ISSUER_WALLET_DID=${ISSUER_WALLET_DID}
+      - WEBHOOK_URL=${GHG_WEBHOOK_HOST}/api/agentcb
+      - AGENT_HTTP_IN_PORT=${GHG_EXPOSED_AGENT_HTTP_IN_PORT}
+      - AGENT_WS_IN_PORT=${GHG_EXPOSED_AGENT_WS_IN_PORT}
+      - AGENT_ADMIN_PORT=${GHG_EXPOSED_AGENT_ADMIN_PORT}
+      - AGENT_NAME=${GHG_AGENT_NAME}
+    networks:
+      - orgbook
+      - ghg
+    ports:
+      - ${GHG_EXPOSED_AGENT_HTTP_IN_PORT}:${INTERNAL_AGENT_HTTP_IN_PORT}
+      - ${GHG_EXPOSED_AGENT_WS_IN_PORT}:${INTERNAL_AGENT_WS_IN_PORT}
+      - ${GHG_EXPOSED_AGENT_ADMIN_PORT}:${INTERNAL_AGENT_ADMIN_PORT}
+    depends_on:
+      - ghg-wallet-db
+    entrypoint: /bin/bash
+    command: [
+        "-c",
+        "curl -d '{\"seed\":\"${GHG_WALLET_SEED_VONX}\", \"role\":\"TRUST_ANCHOR\", \"alias\":\"${GHG_AGENT_NAME}\"}' -X POST ${LEDGER_URL}/register; \
+        sleep 5; \
+        aca-py start \
+        --inbound-transport http '0.0.0.0' ${INTERNAL_AGENT_HTTP_IN_PORT} \
+        --inbound-transport ws '0.0.0.0' ${INTERNAL_AGENT_WS_IN_PORT} \
+        --endpoint ${GHG_AGENT_ENDPOINT} \
+        --outbound-transport ws \
+        --outbound-transport http \
+        --genesis-url '${LEDGER_URL}/genesis' \
+        --auto-accept-invites \
+        --auto-accept-requests \
+        --auto-ping-connection \
+        --auto-respond-messages \
+        --auto-respond-credential-offer \
+        --auto-respond-presentation-request \
+        --auto-respond-credential-request \
+        --auto-verify-presentation \
+        --auto-accept-invites \
+        --auto-accept-requests \
+        --wallet-type 'indy' \
+        --wallet-name 'icat_agent_wallet' \
+        --wallet-key '${WALLET_ENCRYPTION_KEY}' \
+        --wallet-storage-type '${WALLET_TYPE}' \
+        --wallet-storage-config '{\"url\":\"${GHG_WALLET_HOST}:${INTERNAL_WALLET_PORT}\",\"max_connections\":5}' \
+        --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"postgres\",\"admin_password\":\"${POSTGRESQL_ADMIN_PASSWORD}\"}' \
+        --seed '${GHG_WALLET_SEED_VONX}' \
+        --admin '0.0.0.0' ${INTERNAL_AGENT_ADMIN_PORT} \
+        --${AGENT_ADMIN_MODE} \
+        --label ${GHG_AGENT_NAME} \
+        --plugin indy_catalyst_issuer_registration",
+      ]
+
+  ghg-wallet-db:
+    image: registry.access.redhat.com/rhscl/postgresql-95-rhel7:9.5
+    environment:
+      - POSTGRESQL_USER=${POSTGRESQL_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRESQL_DATABASE}
+      - POSTGRESQL_ADMIN_PASSWORD=${POSTGRESQL_ADMIN_PASSWORD}
+    networks:
+      - ghg
+    ports:
+      - ${GHG_EXPOSED_WALLET_PORT}:${INTERNAL_WALLET_PORT}
+    volumes:
+      - ghg-wallet-db:/var/lib/pgsql/data
 
 volumes:
-  myorg-wallet-db:
-
+  mp-wallet-db:
+  ghg-wallet-db:
 networks:
-  myorg:
+  mp:
+  ghg:
   orgbook:
     external:
       name: vcr_vcr

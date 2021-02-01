@@ -1,30 +1,30 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: ../openshift/templates/mines-permitting-issuer/mines-permitting-issuer-deploy.json
+# Template File: ../openshift/templates/ghg-emissions-issuer/ghg-emissions-issuer-deploy.json
 #=========================================================
-# NAME=mines-permitting-issuer
+# NAME=ghg-emissions-issuer
 # ROLE=issuer
 # AGENT_ROLE=agent
 # WALLET_ROLE=wallet
 # NAMESPACE=a3e512
 # SUFFIX=-primary
 # APP_NAME=MinesDigitalTrust
-# APP_GROUP=mines-permitting
+# APP_GROUP=ghg-emissions
 # IMAGE_NAMESPACE=a3e512-tools
-TAG_NAME=prod
-CONFIG_ROOT=./config/openshift
+TAG_NAME=dev
+# CONFIG_ROOT=./config
 # HOST_PORT=8080
 # ENVIRONMENT=default
-# AGENT_SERVICE_NAME=mines-permitting-agent
+# AGENT_SERVICE_NAME=ghg-emissions-agent
 # AGENT_ADMIN_PORT=8024
-APPLICATION_DOMAIN=mines-permitting-issuer-a3e512-prod.apps.silver.devops.gov.bc.ca
+APPLICATION_DOMAIN=ghg-emissions-issuer-a3e512-dev.apps.silver.devops.gov.bc.ca
 # ROUTE_TIMEOUT=120s
 # CR_AGENT_ADMIN_URL=
 # CR_ADMIN_API_KEY=
 # CR_CONNECTION_NAME=icob-agent
-CR_API_URL=https://agent.orgbook.gov.bc.ca
-CR_APP_URL=https://prod.orgbook.gov.bc.ca
+# CR_API_URL=https://agent-dev.orgbook.gov.bc.ca
+# CR_APP_URL=https://dev.orgbook.gov.bc.ca
 # ISSUER_SECRET_KEY=[a-zA-Z0-9_]{16}
 # WEB_CONCURRENCY=1
 # WORKER_THREADS=160
