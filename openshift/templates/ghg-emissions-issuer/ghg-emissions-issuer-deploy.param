@@ -1,0 +1,37 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/ghg-emissions-issuer/ghg-emissions-issuer-deploy.json
+#=========================================================
+NAME=ghg-emissions-issuer
+ROLE=issuer
+AGENT_ROLE=agent
+WALLET_ROLE=wallet
+NAMESPACE=a3e512
+SUFFIX=-primary
+APP_NAME=MinesDigitalTrust
+APP_GROUP=ghg-emissions
+IMAGE_NAMESPACE=a3e512-tools
+TAG_NAME=dev
+CONFIG_ROOT=./config/openshift
+HOST_PORT=8080
+ENVIRONMENT=default
+AGENT_SERVICE_NAME=ghg-emissions-agent
+AGENT_ADMIN_PORT=8024
+APPLICATION_DOMAIN=ghg-emissions-issuer-a3e512-dev.apps.silver.devops.gov.bc.ca
+ROUTE_TIMEOUT=120s
+CR_AGENT_ADMIN_URL=
+CR_ADMIN_API_KEY=
+CR_CONNECTION_NAME=icob-agent
+CR_API_URL=https://agent-dev.orgbook.gov.bc.ca
+CR_APP_URL=https://dev.orgbook.gov.bc.ca
+# ISSUER_SECRET_KEY=[a-zA-Z0-9_]{16}
+WEB_CONCURRENCY=1
+WORKER_THREADS=160
+MAX_CRED_RESPONSE_TIMEOUT=90
+MIN_REPLICAS=1
+MAX_REPLICAS=1
+CPU_REQUEST=10m
+CPU_LIMIT=1000m
+MEMORY_REQUEST=10Mi
+MEMORY_LIMIT=1000Mi

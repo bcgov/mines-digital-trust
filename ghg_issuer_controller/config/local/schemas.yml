@@ -1,0 +1,169 @@
+- name: my-registration.ghg-emissions-report
+  version: 1.0.0
+  description: The my-registration credential issued by ghg-emissions-reporting
+  attributes:
+    corp_num:
+      description_en: Registration/Incorporation Number or Identifying Number
+      label_en: Registration ID
+      data_type: helper_uuid
+      required: true
+    registration_date:
+      description_en: Date of Registration, Incorporation, Continuation or Amalgamation
+      label_en: Registration Date
+      data_type: ui_date
+      required: false
+    entity_name:
+      description_en: The legal name of entity
+      label_en: Name
+      data_type: ui_name
+      required: true
+    entity_name_effective:
+      description_en: Date current name became effective
+      label_en: Name Effective Date
+      data_type: ui_date
+      required: true
+    addressee:
+      description: addressee
+      data_type: ui_text
+      required: true
+    address_line_1:
+      description: address_line_1
+      data_type: ui_text
+      required: true
+    city:
+      description: city
+      data_type: ui_text
+      required: true
+    province:
+      description: province
+      data_type: ui_text
+      required: true
+    postal_code:
+      description: postal_code
+      data_type: ui_text
+      required: true
+    country:
+      description: country
+      data_type: ui_text
+      required: true
+    entity_status:
+      description_en: Status of the entity (active or historical)
+      label_en: Registration Status
+      data_type: ui_select
+      required: true
+    entity_status_effective:
+      description_en: Date status became effective
+      label_en: Status Effective Date
+      data_type: ui_date
+      required: true
+    entity_type:
+      description_en: Type of entity incorporated or registered
+      label_en: Registration Type
+      data_type: ui_text
+      required: true
+    registered_jurisdiction:
+      description_en: The jurisdiction an entity was created in
+      label_en: Registered Jurisdiction
+      data_type: ui_text
+      required: false
+    effective_date:
+      description_en: Date Credential is effective
+      label_en: Credential Effective Date
+      data_type: ui_date
+      required: true
+    expiry_date:
+      description_en: Date Credential expired
+      label_en: Credential Expiry Date
+      data_type: ui_date
+      required: false
+
+- name: ggirc-act.ghg-emissions-report
+  version: 0.1.0
+  description: The ghg-emissions-report credential issued by ghg-emissions-reporting
+  attributes:
+    corp_num:
+      description_en: BC Registries Identifying Number
+      label_en: Registration ID
+      data_type: ui_text
+      required: true
+    facility_name:
+      description_en: Facility Name
+      label_en: Facility Name
+      data_type: ui_text
+      required: true
+    facility_location:
+      description_en: Facility Location
+      label_en: Facility Location
+      data_type: ui_text
+      required: true
+    primary_activity_code:
+      description_en: NAICS Primary Activity Code
+      label_en: Primary Activity Code
+      data_type: ui_text
+      required: true
+    primary_activity_description:
+      description_en: NAICS Primary Activity Description
+      label_en: Primary Activity Description
+      data_type: ui_text
+      required: true
+    co2_fossil_emissions:
+      description_en: CO2 Fossil Emissions (tonnes)
+      label_en: CO2 Fossil Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    co2_biomass_emissions:
+      description_en: CO2 Biomass Emissions (tonnes)
+      label_en: CO2 Biomass Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    ch4_emissions:
+      description_en: CH4 Emissions (tonnes)
+      label_en: CH4 Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    n2o_emissions:
+      description_en: N2O Emissions (tonnes)
+      label_en: N2O Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    hfcs_emissions:
+      description_en: HFCs Emissions (tonnes)
+      label_en: HFCs Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    pfcs_emissions:
+      description_en: PFCs Emissions (tonnes)
+      label_en: PFCs Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    sf6_emissions:
+      description_en: SF6 Emissions (tonnes)
+      label_en: SF6 Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    verification_body:
+      description_en: Verification Body
+      label_en: Verification Body
+      data_type: ui_text
+      required: true
+    verification_result:
+      description_en: Verification Result
+      label_en: Verification Result
+      data_type: ui_text
+      required: true
+    reporting_year:
+      description_en: Reporting Year
+      label_en: Reporting Year
+      data_type: ui_text
+      required: true
+    issued_date:
+      description_en: Date Permit is issued
+      label_en: Permit Issued Date
+      data_type: ui_date
+      required: true
+    effective_date:
+      description_en: Date permit is effective
+      label_en: Credential Effective Date
+      data_type: ui_date
+      required: true
+

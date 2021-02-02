@@ -1,0 +1,89 @@
+- name: ggirc-act.ghg-emissions-report
+  version: 0.1.0
+  description: The ghg-emissions-report credential issued by ghg-emissions-reporting
+  attributes:
+    registration_id:
+      description_en: BC Registries Identifying Number
+      label_en: Registration ID
+      data_type: ui_text
+      required: true
+    facility_name:
+      description_en: Facility Name
+      label_en: Facility Name
+      data_type: ui_text
+      required: true
+    facility_location:
+      description_en: Facility Location
+      label_en: Facility Location
+      data_type: ui_text
+      required: true
+    primary_activity_code:
+      description_en: NAICS Primary Activity Code
+      label_en: Primary Activity Code
+      data_type: ui_text
+      required: true
+    primary_activity_description:
+      description_en: NAICS Primary Activity Description
+      label_en: Primary Activity Description
+      data_type: ui_text
+      required: true
+    co2_fossil_emissions:
+      description_en: CO2 Fossil Emissions (tonnes)
+      label_en: CO2 Fossil Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    co2_biomass_emissions:
+      description_en: CO2 Biomass Emissions (tonnes)
+      label_en: CO2 Biomass Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    ch4_emissions:
+      description_en: CH4 Emissions (tonnes)
+      label_en: CH4 Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    n2o_emissions:
+      description_en: N2O Emissions (tonnes)
+      label_en: N2O Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    hfcs_emissions:
+      description_en: HFCs Emissions (tonnes)
+      label_en: HFCs Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    pfcs_emissions:
+      description_en: PFCs Emissions (tonnes)
+      label_en: PFCs Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    sf6_emissions:
+      description_en: SF6 Emissions (tonnes)
+      label_en: SF6 Emissions (tonnes)
+      data_type: ui_text
+      required: false
+    verification_body:
+      description_en: Verification Body
+      label_en: Verification Body
+      data_type: ui_text
+      required: true
+    verification_result:
+      description_en: Verification Result
+      label_en: Verification Result
+      data_type: ui_text
+      required: true
+    reporting_year:
+      description_en: Reporting Year
+      label_en: Reporting Year
+      data_type: ui_text
+      required: true
+    issued_date:
+      description_en: Date Permit is issued
+      label_en: Permit Issued Date
+      data_type: ui_date
+      required: true
+    effective_date:
+      description_en: Date permit is effective
+      label_en: Credential Effective Date
+      data_type: ui_date
+      required: true

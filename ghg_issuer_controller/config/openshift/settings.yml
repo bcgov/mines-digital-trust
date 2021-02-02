@@ -1,0 +1,15 @@
+default:
+  APPLICATION_URL_VONX: $APPLICATION_URL/ghg-emissions-reporting/ghg-emissions-report
+  TEMPLATE_PATH: ../templates
+
+  TOB_API_URL: http://localhost:8081/api/v2
+  TOB_APP_URL: http://localhost:8080
+
+  WALLET_SEED_VONX: ghg-emissions-report_00000000000000000000000000000
+
+  INDY_GENESIS_URL: http://localhost:9000/genesis
+
+  LEDGER_PROTOCOL_VERSION: "1.6"
+  AUTO_REGISTER_DID: false
+  SECRET_KEY: super_secret_key
+### eof ###

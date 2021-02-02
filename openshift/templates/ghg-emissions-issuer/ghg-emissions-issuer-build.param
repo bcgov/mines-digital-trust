@@ -1,0 +1,18 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/ghg-emissions-issuer/ghg-emissions-issuer-build.json
+#=========================================================
+NAME=ghg-emissions-issuer
+SUFFIX=-primary
+APP_NAME=MinesDigitalTrust
+APP_GROUP=ghg-emissions
+GIT_REPO_URL=https://github.com/bcgov/mines-digital-trust.git
+GIT_REF=develop
+SOURCE_CONTEXT_DIR=ghg_issuer_controller
+OUTPUT_IMAGE_TAG=latest
+DOCKER_FILE_PATH=Dockerfile
+CPU_LIMIT=0
+MEMORY_LIMIT=0Mi
+CPU_REQUEST=0
+MEMORY_REQUEST=0Mi

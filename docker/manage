@@ -65,21 +65,29 @@ configureEnvironment () {
     esac
   done
 
-  export LOG_LEVEL=${LOG_LEVEL:-"warning"}
-  # bcreg-controller
-  export CONTROLLER_PORT=5000
-  export EXPOSED_CONTROLLER_PORT=5000
-  export WEB_HOST_PORT=8081
-  export COMPOSE_PROJECT_NAME=myorg
-  export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-"myorg"}
-  export LEDGER_URL=${LEDGER_URL-http://$DOCKERHOST:9000}
-  export APPLICATION_URL=${APPLICATION_URL-http://localhost:${EXPOSED_CONTROLLER_PORT:-5000}}
-  export ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${CONTROLLER_PORT:-5000}}
-
+  #
+  # External Configuration - The Org Book & Ledger
+  #
   export TOB_API_URL=${TOB_API_URL-http://localhost:8081/api/v2}
   export TOB_APP_URL=${TOB_APP_URL-http://localhost:8080}
+  export TOB_AGENT_ADMIN_PORT=8024
+  export LEDGER_URL=${LEDGER_URL-http://$DOCKERHOST:9000}
 
+  # specify this as anything other than "true" to force manual connection to the TOB agent
+  export REGISTER_TOB_CONNECTION=${REGISTER_TOB_CONNECTION:-true}
+  if [  "${REGISTER_TOB_CONNECTION}" = "true"  ]; then
+    export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
+  fi
+  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-avcr.agent}
+  export TOB_ADMIN_API_KEY=${TOB_ADMIN_API_KEY:-R2D2HfPM5Zwd69IjclQiuFmcMV6}
 
+  #
+  # Common Configuration
+  #
+  #
+  export COMPOSE_PROJECT_NAME=myorg
+  export COMPOSE_PROJECT_NAME=${COMPOSE_PROJECT_NAME:-"myorg"}
+  export LOG_LEVEL=${LOG_LEVEL:-"warning"}
   export RECORD_TIMINGS=${RECORD_TIMINGS:-false}
   export TRACE_EVENTS=${TRACE_EVENTS:-false}
   export TRACE_TARGET=${TRACE_TARGET:-log}
@@ -87,16 +95,14 @@ configureEnvironment () {
   export TRACE_MSG_PCT=${TRACE_MSG_PCT:-0}
   export ACK_ERROR_PCT=${ACK_ERROR_PCT:-0}
 
-  # myorg-agent
-  export AGENT_ADMIN_PORT=8034
-  export TOB_AGENT_ADMIN_PORT=8024
-  export WEBHOOK_PORT=5000
+  export LOG_LEVEL=${LOG_LEVEL:-"warning"}
+
+  export INTERNAL_CONTROLLER_PORT=5000
+  export INTERNAL_AGENT_HTTP_IN_PORT=8031
+  export INTERNAL_AGENT_WS_IN_PORT=8033
+  export INTERNAL_AGENT_ADMIN_PORT=8034
+  export INTERNAL_WALLET_PORT=5432
   #export INDY_WALLET_DID=...
-  export AGENT_HTTP_IN_PORT=8031
-  export AGENT_WS_IN_PORT=8033
-  export WEBHOOK_HOST=http://myorg-controller:${WEBHOOK_PORT}
-  export AGENT_NAME="emli-agent"
-  export AGENT_ENDPOINT=${AGENT_ENDPOINT:-http://$DOCKERHOST:$AGENT_HTTP_IN_PORT}
   export AGENT_ADMIN_API_KEY=${AGENT_ADMIN_API_KEY}
   export AGENT_ADMIN_MODE="admin-insecure-mode"
   if [ ! -z "${AGENT_ADMIN_API_KEY}" ]; then
@@ -111,26 +117,49 @@ configureEnvironment () {
     AGENT_TRACE_MODE="--trace"
   fi
 
-  # wallet-db
   export POSTGRESQL_DATABASE="THE_ORG_BOOK"
   export POSTGRESQL_USER="DB_USER"
   export POSTGRESQL_PASSWORD="DB_PASSWORD"
   export WALLET_TYPE="postgres_storage"
   export WALLET_ENCRYPTION_KEY="key"
-  export POSTGRESQL_WALLET_HOST="myorg-wallet-db"
+
   export POSTGRESQL_WALLET_PORT="5432"
   export POSTGRESQL_ADMIN_USER="postgres"
   export POSTGRESQL_ADMIN_PASSWORD="mysecretpassword"
-  export WALLET_SEED_VONX=${WALLET_SEED_VONX:-"emli_000000000000000000000000000"}
 
-  # myorg-controller
-  # specify this as anything other than "true" to force manual connection to the TOB agent
-  export REGISTER_TOB_CONNECTION=${REGISTER_TOB_CONNECTION:-true}
-  if [  "${REGISTER_TOB_CONNECTION}" = "true"  ]; then
-    export TOB_AGENT_ADMIN_URL=${TOB_AGENT_ADMIN_URL:-http://${DOCKERHOST}:${TOB_AGENT_ADMIN_PORT}}
-  fi
-  export TOB_CONNECTION_NAME=${TOB_CONNECTION_NAME:-avcr.agent}
-  export TOB_ADMIN_API_KEY=${TOB_ADMIN_API_KEY:-R2D2HfPM5Zwd69IjclQiuFmcMV6}
+  #
+  # mines-permitting (mp)
+  #
+  export MP_EXPOSED_CONTROLLER_PORT=5000
+  export MP_EXPOSED_AGENT_HTTP_IN_PORT=8031
+  export MP_EXPOSED_AGENT_WS_IN_PORT=8033
+  export MP_EXPOSED_AGENT_ADMIN_PORT=8034
+  export MP_EXPOSED_WALLET_PORT=5435
+  export MP_APPLICATION_URL=${MP_APPLICATION_URL-http://localhost:${MP_EXPOSED_CONTROLLER_PORT}}
+  export MP_ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${MP_EXPOSED_CONTROLLER_PORT}}
+  export MP_WEBHOOK_HOST=http://mp-controller:${INTERNAL_CONTROLLER_PORT}
+  export MP_AGENT_ADMIN_URL=http://mp-agent:${INTERNAL_AGENT_ADMIN_PORT}
+  export MP_AGENT_NAME="mines-permitting-agent"
+  export MP_AGENT_ENDPOINT=${MP_AGENT_ENDPOINT:-http://$DOCKERHOST:$MP_EXPOSED_AGENT_HTTP_IN_PORT}
+  export MP_WALLET_HOST="mp-wallet-db"
+  export MP_WALLET_SEED_VONX=${MP_WALLET_SEED_VONX:-"mp_00000000000000000000000000001"}
+
+  #
+  # ghg-reporting
+  #
+  export GHG_EXPOSED_CONTROLLER_PORT=6000
+  export GHG_EXPOSED_AGENT_HTTP_IN_PORT=9031
+  export GHG_EXPOSED_AGENT_WS_IN_PORT=9033
+  export GHG_EXPOSED_AGENT_ADMIN_PORT=9034
+  export GHG_EXPOSED_WALLET_PORT=6435
+  export GHG_APPLICATION_URL=${GHG_APPLICATION_URL-http://localhost:${GHG_EXPOSED_CONTROLLER_PORT}}
+  export GHG_ENDPOINT_URL=http://${ENDPOINT_HOST-$DOCKERHOST:${GHG_EXPOSED_CONTROLLER_PORT}}
+  export GHG_WEBHOOK_HOST=http://ghg-controller:${INTERNAL_CONTROLLER_PORT}
+  export GHG_AGENT_ADMIN_URL=http://ghg-agent:${INTERNAL_AGENT_ADMIN_PORT}
+  export GHG_AGENT_NAME="ghg-agent"
+  export GHG_AGENT_ENDPOINT=${GHG_AGENT_ENDPOINT:-http://$DOCKERHOST:$GHG_EXPOSED_AGENT_HTTP_IN_PORT}
+  export GHG_WALLET_HOST="ghg-wallet-db"
+  export GHG_WALLET_SEED_VONX=${GHG_WALLET_SEED_VONX:-"ghg_0000000000000000000000000001"}
 
 }
 

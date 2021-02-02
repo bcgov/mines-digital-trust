@@ -1,0 +1,7 @@
+flask
+requests
+pyyaml
+gunicorn
+gevent
+pytest
+coverage
