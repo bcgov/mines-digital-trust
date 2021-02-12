@@ -34,6 +34,8 @@ issuers:
         type:
           input: my-registration.ghg-emissions-report
           from: value
+      cardinality_fields:
+        - reporting_year
       mapping:
       - model: attribute
         fields:

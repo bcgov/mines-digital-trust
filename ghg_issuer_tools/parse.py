@@ -115,51 +115,48 @@ def parse_csv(csv_file,
 
         return str(value)
 
+    def parse_value(name, data, default_value=None):
+        value = None
+        try:
+            value = data[name]
+        except KeyError:
+            if default_value is None:
+                # better be a mapping...
+                # ok, there should be a mapping for it then
+                # find the column name mapping used for this schema attribute...
+                csv_name = _mappings.iloc[0:1][name].values[0]
+                # grab the value
+                value = data[csv_name]
+            else:
+                value = default_value
+
+        return nice_value(value)
+
+    def parse_registration_id(data):
+        value = None
+        try:
+            value = data['registration_id']
+        except KeyError:
+            co_name = data['company_name']
+            value = _company_registry['registration_id'][co_name]
+
+        return nice_value(value)
+
     def get_value(name, data):
+        value = None
 
         if name == 'registration_id':
-            try:
-                # is registration_id in emissions data?
-                return nice_value(data[name])
-            except KeyError:
-                # then look up in company registry (emissions csv should have company_name column)
-                co_name = data['company_name']
-                return nice_value(_company_registry['registration_id'][co_name])
+            value = parse_registration_id(data)
+        elif name == 'reporting_year':
+            value = parse_value(name, data, year)
+        elif name == 'issued_date':
+            value = parse_value(name, data, _today)
+        elif name == 'effective_date':
+            value = parse_value(name, data, _today)
+        else:
+            value = parse_value(name, data)
 
-        if name == 'reporting_year':
-            try:
-                # is reporting_year in emissions data?
-                return nice_value(data[name])
-            except KeyError:
-                # then we should have passed in a year...
-                return nice_value(year)
-
-        if name == 'issued_date':
-            try:
-                # is issued_date in emissions data?
-                return nice_value(data[name])
-            except KeyError:
-                # then let's use today
-                return nice_value(_today)
-
-        if name == 'effective_date':
-            try:
-                # is effective_date in emissions data?
-                return nice_value(data[name])
-            except KeyError:
-                # then let's use today
-                return nice_value(_today)
-
-        try:
-            # schema attribute name is a emissions csv column
-            return nice_value(data[name])
-        except KeyError:
-            # ok, there should be a mapping for it then
-            # find the column name mapping used for this schema attribute...
-            csv_name = _mappings.iloc[0:1][name].values[0]
-            # grab the value
-            value = data[csv_name]
-            return nice_value(value)
+        return value
 
     def get_attributes(names, data):
         result = {}
