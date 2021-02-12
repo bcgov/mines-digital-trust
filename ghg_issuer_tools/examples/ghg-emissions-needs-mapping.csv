@@ -1,0 +1,6 @@
+﻿company_name,facility_name,activity,facility_type,facility_location_latitude,facility_location_longitude,regional_district,co2_fossil,co2_biomass,ch4,n2o,hfcs,pfcs,sf6,total,verification_body,verification_result,verification_accordance
+Precious Rocks Inc.,The Boss Gold Mine,212220--Gold and Silver Ore Mining,SFO,56.46624,-130.186,KITIMAT-STIKINE,16880.77,,21.00905,594.8932,,,,17496.68,,,
+Gimme Mines Ltd.,Gimme Mine (SFO),212233--Copper-Zinc Ore Mining,SFO,52.531,-122.286,CARIBOO,87005.73,,118.4024,3951.778,,,,91075.91,,,
+Hi-lo Valley Copper,Hi-lo Valley Copper,212233--Copper-Zinc Ore Mining,SFO,50.47235,-121.021,THOMPSON-NICOLA,162033.9,,184.44,6423.211,,,,168641.5,,,
+Northstar Downs,Northstar Downs Ltd,212233--Copper-Zinc Ore Mining,SFO,49.575,-125.583,STRATHCONA,30115.54,,5.48763,178.7529,,,,30299.78,,,
+Old and Gold,New and Silver,212220--Gold and Silver Ore Mining,SFO,50.6639,-120.523,THOMPSON-NICOLA,17706.19,,27.25,628.78,,,,18362.22,,,
