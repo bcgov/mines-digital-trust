@@ -1,5 +1,5 @@
 - name: ggirc-act.ghg-emissions-report
-  version: 0.1.0
+  version: 0.2.0
   description: The ghg-emissions-report credential issued by ghg-emissions-reporting
   attributes:
     registration_id:
@@ -12,9 +12,14 @@
       label_en: Facility Name
       data_type: ui_text
       required: true
-    facility_location:
-      description_en: Facility Location
-      label_en: Facility Location
+    facility_latitude:
+      description_en: Approx Latitude of facility
+      label_en: Latitude
+      data_type: ui_text
+      required: true
+    facility_longitude:
+      description_en: Approx Longitude of facility
+      label_en: Longitude
       data_type: ui_text
       required: true
     primary_activity_code:
