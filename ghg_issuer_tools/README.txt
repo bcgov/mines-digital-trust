@@ -74,7 +74,7 @@ When you override the schema, you need to provide the schema definition file, an
 
 In the following example, you have a schemas definition file that contains an older GHG schema and you want to produce credentials for that version.
 
-REview the schemas found under [ghg_issuer_controller](../ghg_issuer_controller/config/openshift/schemas.yml)
+Review [schemas.yml](../ghg_issuer_controller/config/openshift/schemas.yml) file.
 
 ```sh
 parse.py -c ghg-emissions-0.1.0.csv -s schemas.yml -n ggirc-act.ghg-emissions-report -v 0.1.0
@@ -83,7 +83,8 @@ parse.py -c ghg-emissions-0.1.0.csv -s schemas.yml -n ggirc-act.ghg-emissions-re
 #### Schema Attribute / CSV Mapping File
 When you create your emissions data file, you may have more columns that the credential needs, and/or they are named differently than the schema you are using to issue.
 
-Create a separate CSV file with the first row being the schema attributes, and the second row having the name of your emissions column that contains the data for the attribute.
+Create a separate CSV file with the first row being the schema attributes, and the second row having the name of your emissions column that contains the data for the attribute. See [examples/csv\_schema\_mapping.csv](./examples/csv_schema_mapping.csv) and [examples/ghg-emissions-needs-mapping.csv](./examples/ghg-emissions-needs-mapping.csv)
+
 
 Specify that you need the mapping file when you process your CSV (use the `-m` or `--mapping` parameter and path to your mapping file).
 
@@ -97,7 +98,7 @@ parse.py -c ghg-emissions-needs-mapping.csv -m csv_schema_mapping.csv
 #### Company Registry
 This is a CSV File that maps a company name (as found in your CSV data) to a BC Registries Registration ID. If your source data does not have the Registration ID, you will have to determine it in the [Org Book](https://orgbook.gov.bc.ca/en/home). This allows you to mine your system for data, exporting to a CSV and not worrying about knowing the correct Business Name or Registration ID. You can do that afterward by creating a "lookup" table...
 
-Create a CSV file with the columns: `company_name` and `registration_id`.
+Create a CSV file with the columns: `company_name` and `registration_id`. See [examples/company_registry.csv](./examples/company_registry.csv)
 
 `company_name` should match the `company_name` in your emissions data CSV.
 `registration_id` is the BC Registries Registration of the Company receiving the credential.
