@@ -36,7 +36,7 @@ def create_app():
     signal.signal(signal.SIGTERM, issuer.signal_issuer_shutdown)
 
     # Load application settings (environment)
-    config_root = os.environ.get('CONFIG_ROOT', './config')
+    config_root = os.environ.get('CONFIG_ROOT', './config/local')
     ENV = config.load_settings(config_root=config_root)
     app = init_app(ENV)
     return app
