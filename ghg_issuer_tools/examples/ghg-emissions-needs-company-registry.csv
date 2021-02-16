@@ -1,0 +1,6 @@
+﻿company_name,facility_name,facility_latitude,facility_longitude,primary_activity_code,primary_activity_description,co2_fossil_emissions,co2_biomass_emissions,ch4_emissions,n2o_emissions,hfcs_emissions,pfcs_emissions,sf6_emissions,verification_body,verification_result,reporting_year
+Precious Rocks Inc.,The Boss Gold Mine,56.46624,-130.186,212220,Gold and Silver Ore Mining,16880.77,,21.00905,594.8932,,,,,,2000
+Gimme Mines Ltd.,Gimme Mine (SFO),52.531,-122.286,212233,Copper-Zinc Ore Mining,87005.73,,118.4024,3951.778,,,,,,2000
+Hi-lo Valley Copper,Hi-lo Valley Copper,50.47235,-121.021,212233,Copper-Zinc Ore Mining,162033.9,,184.44,6423.211,,,,,,2000
+Northstar Downs,Northstar Downs Ltd,49.575,-125.583,212233,Copper-Zinc Ore Mining,30115.54,,5.48763,178.7529,,,,,,2000
+Old and Gold,New and Silver,50.6639,-120.523,212220,Gold and Silver Ore Mining,17706.19,,27.25,628.78,,,,,,2000

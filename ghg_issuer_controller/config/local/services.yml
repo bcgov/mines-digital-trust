@@ -34,6 +34,8 @@ issuers:
         type:
           input: my-registration.ghg-emissions-report
           from: value
+      cardinality_fields:
+        - reporting_year
       mapping:
       - model: attribute
         fields:
@@ -54,10 +56,18 @@ issuers:
       - model: attribute
         fields:
           type:
-            input: facility_location
+            input: facility_latitude
             from: value
           value:
-            input: facility_location
+            input: facility_latitude
+            from: claim
+      - model: attribute
+        fields:
+          type:
+            input: facility_longitude
+            from: value
+          value:
+            input: facility_longitude
             from: claim
       - model: attribute
         fields:
