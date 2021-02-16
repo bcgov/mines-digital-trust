@@ -13,6 +13,8 @@ This folder contains the files used to configure a VON issuer/verifier agent. If
 
 ## Summary: The Configuration Files
 
+We have two sets of configuration, one in **`/local`** used by default for local configuration, and **`/openshift`** for deployment into openshift to integrate with existing or common services. setting the **`config_root`** environment variable to **`/config/local`** or **`/config/openshift`** respectively. 
+
 There are (currently) four configuration files used to configure a VON issuer/verifier agent.  Each of the configuration files is a [YAML file](https://en.wikipedia.org/wiki/YAML). Although YAML makes it easy to structure data (with way fewer characters than XML or JSON), it is very important to remember when editing a YAML file that the indentations of the lines are important and must be consistent, and that the indenting must ONLY use spaces, never tab characters. When editing these files, we recommend using a text editor that has a YAML configuration and better, a YAML linter to make sure the file structure is correct.
 
 The following is a brief summary of the purpose of each of the VON issuer/verifier agent configuration files:
