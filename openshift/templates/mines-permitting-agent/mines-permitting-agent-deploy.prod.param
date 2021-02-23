@@ -26,6 +26,7 @@ GENESIS_FILE_URL=https://raw.githubusercontent.com/sovrin-foundation/sovrin/stab
 # LOG_LEVEL=WARNING
 # AGENT_TIMING=
 AGENT_READ_ONLY_LEDGER=true
+##^ comment out when registering schemas on Sovrin
 # AGENT_TRACING=
 # AGENT_TRACE_TARGET=
 # AGENT_TRACE_TAG=
