@@ -84,7 +84,7 @@ This command generates two secrets in the dev environment. You should be prompte
 genDepls.sh -c mines-permitting-agent-secrets -e dev
 ```
 
-#### register did with Org. Book ledger
+#### Register DID with Org. Book ledger (BSovrin DEV, and BSovrin TEST)
 Now that we have a wallet seed, we need to register it with the ledger.  We will use the Dev instance of Org. Book as an example.
 
 1. Go to http://dev.bcovrin.vonx.io
@@ -94,6 +94,29 @@ Now that we have a wallet seed, we need to register it with the ledger.  We will
 5. set Alias = mines-permitting-agent
 6. click Register DID
 7. Save the returned values
+
+#### Register your Agent DID on Sovrin (Sovrin MainNET is the production ledger)
+
+1. Start Agent locally with aca-py command line argument `--read-only-ledger` and `--genesis-url https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_sandbox_genesis`
+    - for Sovrin MainNET use this instead `--genesis-url https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis`
+1. GET from local agent at `/wallet/did/public`, note DID and VerKey
+1. Register DID and VerKey on Sovrin Ledger with `Endorser` role
+    - StagingNET https://selfserve.sovrin.org/ - Set network to StagingNet and ignore Payment Address
+    - MainNET,Must be registered manually by DTS Team
+1. Restart Agent locally (it will error with `Ledger rejected transaction request`)
+    - We must accept the Transaction Author Agreement (TAA) before writing to the ledger
+1. GET from local agent at `ledger/taa` to read the TAA.
+1. POST to local agent at `ledger/taa/accept` to accept TAA with dictionary as body as follows
+```
+    {   'text': copy from GET,
+        'version': copy from GET,
+        'mechanism': select the appropriate AML (Acceptance Mechanism List), use 'at_submission' by default.
+    } 
+```
+1. remove `--read-only-ledger` argument, and start controller to register schema's on ledger
+1. restart agent with `--read-only-ledger` argument for the final time. Congrats!
+
+
 
 #### tag db and mines-permitting-agent images
 Tagging the images for a namespace/environment (dev, test, prod) makes them available for deployment. Using dev as an example.

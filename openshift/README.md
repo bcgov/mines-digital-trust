@@ -7,7 +7,6 @@ Due to the limited timeframe to get a Proof-of-Concept complete, we have forgone
 1. [Setup required tools](./tooling.md)
 1. [Initialize namespaces](./initialization.md)
 1. [Generate parameters](./generated-params.md)
-1. [First deployment](./first-deployments.md)
+1. [First deployment](./first-deployments.md) (Including Sovrin Registration)
 1. [Ongoing deployments](./ongoing-deployments.md)
-1. [Sovrin Registration](./sovrin_registration.md)
 Once you have read _all_ the documentation, and you have met the prerequisites for deployment, jump to where you need (most likely [Ongoing deployments](./ongoing-deployments.md)).
