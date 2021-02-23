@@ -22,10 +22,11 @@ AGENT_BASE_URL=https://ghg-emissions-agent-a3e512-prod.apps.silver.devops.gov.bc
 # ADMIN_CREDENTIAL_STORE_NAME=ghg-emissions-agent
 # AGENT_HTTP_PORT=8021
 # AGENT_WS_PORT=8023
-GENESIS_FILE_URL=http://prod.bcovrin.vonx.io/genesis
+GENESIS_FILE_URL=https://raw.githubusercontent.com/sovrin-foundation/sovrin/stable/sovrin/pool_transactions_live_genesis
 # LOG_LEVEL=WARNING
 # AGENT_TIMING=
-# AGENT_READ_ONLY_LEDGER=
+AGENT_READ_ONLY_LEDGER=true
+##^ comment out when registering schemas on Sovrin
 # AGENT_TRACING=
 # AGENT_TRACE_TARGET=
 # AGENT_TRACE_TAG=
