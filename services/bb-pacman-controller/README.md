@@ -1,6 +1,6 @@
 # Purpose
 
-This will be a controller on top of aca-py to support all the VC features required for businesses to manage partnerships through (BB-Pacman)[../bb-pacman-frontend]. 
+This will be a controller on top of aca-py to support all the VC features required for businesses to manage partnerships through [BB-Pacman](../bb-pacman-frontend). 
 
 # Features 
 

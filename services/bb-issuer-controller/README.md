@@ -1,6 +1,6 @@
 # Purpose
 
-This will be an issuer controller designed to issue credentials to Business Partners running bb-pacman ((controller)[../bb-pacman-controller] and (frontend)[../bb-pacman-frontend])
+This will be an issuer controller designed to issue credentials to Business Partners running bb-pacman ([controller](../bb-pacman-controller) and [frontend](../bb-pacman-frontend))
 
 # Features 
 
