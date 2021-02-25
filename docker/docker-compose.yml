@@ -2,7 +2,7 @@ version: "3"
 services:
   mp-controller:
     build:
-      context: ../issuer_controller
+      context: ../mp-orgbook-issuer-controller
       dockerfile: Dockerfile
     environment:
       LEDGER_URL: ${LEDGER_URL}
@@ -134,7 +134,7 @@ services:
 
   ghg-controller:
     build:
-      context: ../ghg_issuer_controller
+      context: ../ghg-orgbook-issuer-controller
       dockerfile: Dockerfile
     environment:
       LEDGER_URL: ${LEDGER_URL}
