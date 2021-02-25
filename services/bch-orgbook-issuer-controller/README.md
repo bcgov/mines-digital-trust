@@ -2,7 +2,7 @@
 
 This service interacts with the ACA-py agent on behalf of the business application to issue credentials to OrgBook. 
 
-bch-orgbook-issuer-controller has been configured to issue BC Hydro Customer Credentials to the OrgBook. The intended consumer of this does not have a web application.
+bch-orgbook-issuer-controller has been configured to issue BC Hydro Customer Credentials to the [OrgBook](https://orgbook.gov.bc.ca/en/home). The intended consumer of this does not have a web application.
 
 # Credential
 

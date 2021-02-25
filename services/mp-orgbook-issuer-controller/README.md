@@ -1,6 +1,6 @@
 # Purpose
 
-This service interacts with the ACA-py agent on behalf of the business application to issue credentials to OrgBook. 
+This service interacts with the ACA-py agent on behalf of the business application to issue credentials to [OrgBook](https://orgbook.gov.bc.ca/en/home). 
 
 mp-orgbook-issuer-controller has been configured to issue BCGov Mines Act Permits to the OrgBook. The intended consumer of this is [CORE](https://github.com/bcgov/mds) the web application used be ministry staff to manage mining operations in BC. 
 
