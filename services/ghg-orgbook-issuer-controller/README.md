@@ -6,4 +6,4 @@ ghg-orgbook-issuer-controller has been configured to issue Annual GHG Emission R
 
 # Credential
 
-The configured credential attests that... The given business has self-reported the included Greenhouse Gas Emissions data for the included year and that data has been verified by the BC Government
+The configured credential attests that... The given business has self-reported the included Greenhouse Gas Emissions data for the included year and the data has been received by the Ministry of Environment & Climate Change Strategy.

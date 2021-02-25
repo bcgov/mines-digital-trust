@@ -6,4 +6,4 @@ mp-orgbook-issuer-controller has been configured to issue BCGov Mines Act Permit
 
 # Credential
 
-The configured credential attests to the following... That a given business has been authorized to preform mining operations under the included Permit Number (permit_no), within the dated period
+The configured credential attests to the following... That a given business has been authorized to preform mining operations under the included Permit Number (permit_no), within the dated time period
