@@ -34,6 +34,8 @@ issuers:
         type:
           input: registration.registries.ca
           from: value
+      cardinality_fields:
+        - permit_no
       mapping:
       - model: attribute
         fields:
