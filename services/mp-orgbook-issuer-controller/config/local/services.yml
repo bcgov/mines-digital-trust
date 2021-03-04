@@ -38,6 +38,8 @@ issuers:
         type:
           input: my-registration.bcgov-mines-permitting
           from: value
+      cardinality_fields:
+        - permit_no
       mapping:
       - model: attribute
         fields:
