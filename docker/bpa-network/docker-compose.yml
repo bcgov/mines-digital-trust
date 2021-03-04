@@ -4,7 +4,9 @@ services:
 # Business 1
 #######
   bpa1:
-    image: ${BPA_DOCKER_IMAGE}
+    build:
+      context: ../../services/bb-pacman
+      dockerfile: Dockerfile
     depends_on:
       - bpa-agent1
     environment:
@@ -78,7 +80,9 @@ services:
 # Business 2
 #######
   bpa2:
-    image: ${BPA_DOCKER_IMAGE}
+    build:
+      context: ../../services/bb-pacman
+      dockerfile: Dockerfile
     depends_on:
       -  bpa-agent2
     environment:
