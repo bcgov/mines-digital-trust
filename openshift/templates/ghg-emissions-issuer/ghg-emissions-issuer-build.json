@@ -116,7 +116,7 @@
       "displayName": "Source Context Directory",
       "description": "The source context directory.",
       "required": false,
-      "value": "ghg_issuer_controller"
+      "value": "services/ghg-orgbook-issuer-controller"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",

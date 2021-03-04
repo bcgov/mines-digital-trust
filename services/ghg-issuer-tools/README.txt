@@ -74,7 +74,7 @@ When you override the schema, you need to provide the schema definition file, an
 
 In the following example, you have a schemas definition file that contains an older GHG schema and you want to produce credentials for that version.
 
-Review [schemas.yml](../ghg_issuer_controller/config/openshift/schemas.yml) file.
+Review [schemas.yml](../services/ghg-orgbook-issuer-controller/config/openshift/schemas.yml) file.
 
 ```sh
 parse.py -c ghg-emissions-0.1.0.csv -s schemas.yml -n ggirc-act.ghg-emissions-report -v 0.1.0
