@@ -2,7 +2,7 @@ version: "3"
 services:
   mp-controller:
     build:
-      context: ../issuer_controller
+      context: ../services/mp-orgbook-issuer-controller
       dockerfile: Dockerfile
     environment:
       LEDGER_URL: ${LEDGER_URL}
@@ -52,9 +52,9 @@ services:
         sleep 30;
         ./docker-entrypoint.sh;"
     volumes:
-      - ../issuer_controller/app:/home/indy/app:Z
-      - ../issuer_controller/config:/home/indy/config:Z
-      - ../issuer_controller/test:/home/indy/test:Z
+      - ../services/mp-orgbook-issuer-controller/app:/home/indy/app:Z
+      - ../services/mp-orgbook-issuer-controller/config:/home/indy/config:Z
+      - ../services/mp-orgbook-issuer-controller/test:/home/indy/test:Z
 
   mp-agent:
     image: vcr-agent
@@ -134,7 +134,7 @@ services:
 
   ghg-controller:
     build:
-      context: ../ghg_issuer_controller
+      context: ../services/ghg-orgbook-issuer-controller
       dockerfile: Dockerfile
     environment:
       LEDGER_URL: ${LEDGER_URL}
@@ -184,9 +184,9 @@ services:
         sleep 30;
         ./docker-entrypoint.sh;"
     volumes:
-      - ../ghg_issuer_controller/app:/home/indy/app:Z
-      - ../ghg_issuer_controller/config:/home/indy/config:Z
-      - ../ghg_issuer_controller/test:/home/indy/test:Z
+      - ../services/ghg-orgbook-issuer-controller/app:/home/indy/app:Z
+      - ../services/ghg-orgbook-issuer-controller/config:/home/indy/config:Z
+      - ../services/ghg-orgbook-issuer-controller/test:/home/indy/test:Z
 
   ghg-agent:
     image: vcr-agent

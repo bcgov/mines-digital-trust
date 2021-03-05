@@ -37,7 +37,7 @@ Use this [Permit Issuer/Controller Getting Started Tutorial](GettingStartedTutor
 
 ## Configuration Guide
 
-Much of the work in configuring an the Permit Issuer Agent is in setting up the YAML files in the [issuer_controller/config](issuer_controller/config) folder. A [Configuration Guide](issuer_controller/config/README.md) documents those files.
+Much of the work in configuring an the Permit Issuer Agent is in setting up the YAML files in the [services/ghg-orgbook-issuer-controller/config](services/ghg-orgbook-issuer-controller/config) folder. A [Configuration Guide](services/ghg-orgbook-issuer-controller/config/README.md) documents those files.
 
 ## Getting Help or Reporting an Issue
 
