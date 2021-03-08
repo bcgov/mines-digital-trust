@@ -21,4 +21,5 @@ COPY --from=0 /home/maven/backend/business-partner-agent/target/business-partner
 COPY --from=0 /home/maven/backend/business-partner-agent/src/main/resources/3rdPartyLicenses ./3rdPartyLicenses
 
 EXPOSE 8080
+EXPOSE 1044
 CMD java -XX:+UnlockExperimentalVMOptions -Dcom.sun.management.jmxremote -noverify ${JAVA_OPTS} -jar business-partner-agent.jar

@@ -15,6 +15,7 @@ services:
         -Dbpa.acapy.apiKey=${ACAPY_ADMIN_URL_API_KEY}
         -Dmicronaut.security.enabled=${BPA_SECURITY_ENABLED} 
         -Dmicronaut.server.port=${BPA1_PORT}
+        -Dmicronaut.environments=dev
         -Dbpa.pg.url=jdbc:postgresql://${POSTGRESQL1_HOST}/${POSTGRESQL_USER} 
         -Dbpa.pg.username=${POSTGRESQL_USER} 
         -Dbpa.pg.password=${POSTGRESQL_PASSWORD} 
@@ -57,7 +58,7 @@ services:
         --wallet-storage-type '${ACAPY_WALLET_TYPE}' \
         --wallet-storage-config '{\"url\":\"${POSTGRESQL1_HOST}:5432\",\"max_connections\":5}' \
         --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_USER}\",\"admin_password\":\"${POSTGRESQL_PASSWORD}\"}' \
-        --seed '${ACAPY_SEED}' \
+        --seed '${ACAPY_SEED1}' \
         --admin '0.0.0.0' ${ACAPY1_ADMIN_PORT} \
         --label '${AGENT_NAME}' \
         ${ACAPY_ADMIN_CONFIG} \
@@ -134,7 +135,7 @@ services:
         --wallet-storage-type '${ACAPY_WALLET_TYPE}' \
         --wallet-storage-config '{\"url\":\"${POSTGRESQL2_HOST}:5432\",\"max_connections\":5}' \
         --wallet-storage-creds '{\"account\":\"${POSTGRESQL_USER}\",\"password\":\"${POSTGRESQL_PASSWORD}\",\"admin_account\":\"${POSTGRESQL_USER}\",\"admin_password\":\"${POSTGRESQL_PASSWORD}\"}' \
-        --seed '${ACAPY_SEED}' \
+        --seed '${ACAPY_SEED2}' \
         --admin '0.0.0.0' ${ACAPY2_ADMIN_PORT} \
         --label '${AGENT_NAME}' \
         ${ACAPY_ADMIN_CONFIG} \
@@ -157,3 +158,4 @@ services:
 volumes:
   bpa-wallet-db1:
   bpa-wallet-db2:
+
