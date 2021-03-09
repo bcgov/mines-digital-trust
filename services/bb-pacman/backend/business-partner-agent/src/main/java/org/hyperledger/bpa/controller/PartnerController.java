@@ -113,6 +113,24 @@ public class PartnerController {
     }
 
     /**
+     * Update partner's did
+     *
+     * @param id     the partner id
+     * @param update {@link UpdatePartnerRequest}
+     * @return {@link PartnerAPI}
+     */
+    @Put("/{id}/did")
+    public HttpResponse<PartnerAPI> updatePartner(
+            @PathVariable String id,
+            @Body UpdatePartnerDidRequest update) {
+        Optional<PartnerAPI> partner = pm.updatePartnerDid(UUID.fromString(id), update.getDid());
+        if (partner.isPresent()) {
+            return HttpResponse.ok(partner.get());
+        }
+        return HttpResponse.notFound();
+    }
+
+    /**
      * Remove partner
      *
      * @param id the partner id
