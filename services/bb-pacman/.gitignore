@@ -62,7 +62,8 @@ backend/*/src/main/resources/3rdPartyLicenses/**
 # Frontend
 # --------------------------------------
 
-.env
+!frontend/.env
+.env.development.*
 
 # Ignore Node
 frontend/node/**
