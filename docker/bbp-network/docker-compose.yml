@@ -30,6 +30,7 @@ services:
       BPA_BOOTSTRAP_PW: ${BPA_BOOTSTRAP_PW}
       ACAPY_ENDPOINT: ${ACAPY1_ENDPOINT}
       AGENT_NAME: ${AGENT1_NAME}
+      NODE_ENV: development
     ports:
       - ${BPA1_PORT}:${BPA1_PORT}
       - ${BPA1_DEBUG_PORT}:${BPA1_DEBUG_PORT}
@@ -108,6 +109,7 @@ services:
       BPA_BOOTSTRAP_PW: ${BPA_BOOTSTRAP_PW}
       ACAPY_ENDPOINT: ${ACAPY2_ENDPOINT}
       AGENT_NAME: ${AGENT2_NAME}
+      NODE_ENV: development
     ports:
       - ${BPA2_PORT}:${BPA2_PORT}
     restart: always
