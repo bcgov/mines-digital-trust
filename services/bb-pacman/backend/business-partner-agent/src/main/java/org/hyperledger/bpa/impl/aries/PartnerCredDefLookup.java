@@ -73,7 +73,7 @@ public class PartnerCredDefLookup {
         return result;
     }
 
-    @Scheduled(cron = "0 15 2 ? * *")
+    @Scheduled(fixedRate = "5m", initialDelay = "5m")
     public void lookupTypesForAllPartners() {
         Map<String, List<PartnerCredentialType>> didToTypes = new HashMap<>();
         schemaRepo.findAll().forEach(
