@@ -81,27 +81,31 @@ public class SchemaService {
                 log.error("Schema not created.");
             }
 
-            if (result != null) {
-                // for now hack this in, let's create a cred def with default values.
-                // no revocation!
-                CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
-                        .revocationRegistrySize(1000)
-                        .schemaId(result.getSchemaId())
-                        .supportRevocation(false)
-                        .tag("default")
-                        .build();
-                Optional<CredentialDefinition.CredentialDefinitionResponse> creddefResponse = ac.credentialDefinitionsCreate(creddef);
-                if (creddefResponse.isPresent()) {
-                    // will have to save to db?
-                    log.debug("Credential Definition created: {}", creddefResponse.get().getCredentialDefinitionId());
-                } else {
-                    log.error("Credential Definition not created.");
-                }
-            }
+            addCredentialDefinition(result);
         } catch (IOException e) {
             log.error("aca-py not reachable", e);
         }
         return result;
+    }
+
+    private void addCredentialDefinition(SchemaAPI result) throws IOException {
+        if (result != null) {
+            // for now hack this in, let's create a cred def with default values.
+            // no revocation!
+            CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
+                    .revocationRegistrySize(1000)
+                    .schemaId(result.getSchemaId())
+                    .supportRevocation(false)
+                    .tag("default")
+                    .build();
+            Optional<CredentialDefinition.CredentialDefinitionResponse> creddefResponse = ac.credentialDefinitionsCreate(creddef);
+            if (creddefResponse.isPresent()) {
+                // will have to save to db?
+                log.debug("Credential Definition created: {}", creddefResponse.get().getCredentialDefinitionId());
+            } else {
+                log.error("Credential Definition not created.");
+            }
+        }
     }
 
     SchemaAPI addSchema(@NonNull String schemaId, @Nullable String label,
