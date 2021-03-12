@@ -71,7 +71,7 @@ Example:
 # set your environment variables...
 export BPA_WEB_MODE=false
 export BPA_RESOLVER_URL=http://host.docker.internal:7776
-export BPA_LEDGER_BROWSER=http://host.docker.internal:7776
+export BPA_LEDGER_BROWSER=http://host.docker.internal:9000
 export BPA_DID_PREFIX=did:sov:
 export BPA_BOOTSTRAP_UN=admin
 export BPA_BOOTSTRAP_PW=changeme
