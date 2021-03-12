@@ -88,13 +88,13 @@ public class SchemaService {
         return result;
     }
 
-    private void addCredentialDefinition(SchemaAPI result) throws IOException {
-        if (result != null) {
+    private void addCredentialDefinition(SchemaAPI schema) throws IOException {
+        if (schema != null) {
             // for now hack this in, let's create a cred def with default values.
             // no revocation!
             CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
                     .revocationRegistrySize(1000)
-                    .schemaId(result.getSchemaId())
+                    .schemaId(schema.getSchemaId())
                     .supportRevocation(false)
                     .tag("default")
                     .build();
