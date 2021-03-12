@@ -22,9 +22,14 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.aries.AriesClient;
+import org.hyperledger.aries.api.creddef.CredentialDefinition;
+import org.hyperledger.aries.api.schema.SchemaSendRequest;
+import org.hyperledger.aries.api.schema.SchemaSendResponse;
 import org.hyperledger.bpa.api.aries.SchemaAPI;
 import org.hyperledger.bpa.api.exception.WrongApiUsageException;
+import org.hyperledger.bpa.client.LedgerClient;
 import org.hyperledger.bpa.config.SchemaConfig;
+import org.hyperledger.bpa.controller.api.partner.PartnerCredentialType;
 import org.hyperledger.bpa.impl.util.AriesStringUtil;
 import org.hyperledger.bpa.model.BPASchema;
 import org.hyperledger.bpa.repository.SchemaRepository;
@@ -48,11 +53,55 @@ public class SchemaService {
     @Inject
     List<SchemaConfig> schemas;
 
+    @Inject
+    LedgerClient ledgerClient;
+
     // CRUD Methods
 
     public SchemaAPI addSchema(@NonNull String schemaId, @Nullable String label,
             @Nullable String defaultAttributeName) {
         return addSchema(schemaId, label, defaultAttributeName, false);
+    }
+
+    public SchemaAPI createSchema(@NonNull String schemaName, @NonNull String schemaVersion,
+                        @NonNull List<String> attributes) {
+        SchemaAPI result = null;
+        try {
+            SchemaSendRequest request = SchemaSendRequest.builder()
+                    .schemaName(schemaName)
+                    .schemaVersion(schemaVersion)
+                    .attributes(attributes)
+                    .build();
+            Optional<SchemaSendResponse> response = ac.schemas(request);
+            if (response.isPresent()) {
+                // save it to the db...
+                SchemaSendResponse ssr = response.get();
+                result = this.addSchema(ssr.getSchemaId(), schemaName, null);
+            } else {
+                log.error("Schema not created.");
+            }
+
+            if (result != null) {
+                // for now hack this in, let's create a cred def with default values.
+                // no revocation!
+                CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
+                        .revocationRegistrySize(1000)
+                        .schemaId(result.getSchemaId())
+                        .supportRevocation(false)
+                        .tag("default")
+                        .build();
+                Optional<CredentialDefinition.CredentialDefinitionResponse> creddefResponse = ac.credentialDefinitionsCreate(creddef);
+                if (creddefResponse.isPresent()) {
+                    // will have to save to db?
+                    log.debug("Credential Definition created: {}", creddefResponse.get().getCredentialDefinitionId());
+                } else {
+                    log.error("Credential Definition not created.");
+                }
+            }
+        } catch (IOException e) {
+            log.error("aca-py not reachable", e);
+        }
+        return result;
     }
 
     SchemaAPI addSchema(@NonNull String schemaId, @Nullable String label,

@@ -30,6 +30,7 @@ import org.hyperledger.aries.api.ledger.TAAInfo.TAARecord;
 import org.hyperledger.bpa.api.aries.SchemaAPI;
 import org.hyperledger.bpa.config.RuntimeConfig;
 import org.hyperledger.bpa.controller.api.admin.AddSchemaRequest;
+import org.hyperledger.bpa.controller.api.admin.CreateSchemaRequest;
 import org.hyperledger.bpa.controller.api.admin.TAADigestRequest;
 import org.hyperledger.bpa.controller.api.admin.UpdateSchemaRequest;
 import org.hyperledger.bpa.impl.mode.indy.EndpointService;
@@ -82,6 +83,17 @@ public class AdminController {
             return HttpResponse.ok(schema.get());
         }
         return HttpResponse.notFound();
+    }
+
+    /**
+     * Aries: Create a schema configuration
+     *
+     * @param req {@link CreateSchemaRequest}
+     * @return {@link HttpResponse}
+     */
+    @Post("/schema/create")
+    public HttpResponse<SchemaAPI> createSchema(@Body CreateSchemaRequest req) {
+        return HttpResponse.ok(schemaService.createSchema(req.getSchemaName(), req.getSchemaVersion(), req.getAttributes()));
     }
 
     /**
@@ -146,7 +158,7 @@ public class AdminController {
      * Trigger the backend to write configured endpoints to the ledger. TAA digest
      * has to be passed to explicitly confirm prior TTA acceptance by the user for
      * this ledger interaction / session.
-     * 
+     *
      * @param tAADigest {@link TAADigestRequest}
      * @return {@link HttpResponse}
      */
@@ -172,7 +184,7 @@ public class AdminController {
 
     /**
      * Get TAA record (digest, text, version)
-     * 
+     *
      * @return {@link TAARecord}
      */
     @Get("/taa/get")
