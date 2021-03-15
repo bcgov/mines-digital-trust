@@ -18,6 +18,7 @@
 package org.hyperledger.bpa.impl.aries;
 
 import io.micronaut.cache.annotation.Cacheable;
+import io.micronaut.context.event.ApplicationEventPublisher;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +34,7 @@ import org.hyperledger.bpa.controller.api.partner.PartnerCredentialType;
 import org.hyperledger.bpa.impl.util.AriesStringUtil;
 import org.hyperledger.bpa.model.BPASchema;
 import org.hyperledger.bpa.repository.SchemaRepository;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -43,6 +45,7 @@ import java.util.*;
 @Slf4j
 @Singleton
 public class SchemaService {
+    @Inject private ApplicationEventPublisher eventPublisher;
 
     @Inject
     SchemaRepository schemaRepo;
@@ -63,20 +66,22 @@ public class SchemaService {
         return addSchema(schemaId, label, defaultAttributeName, false);
     }
 
-    public SchemaAPI createSchema(@NonNull String schemaName, @NonNull String schemaVersion,
+    public SchemaAPI createSchema(@NonNull String schemaLabel, @NonNull String schemaName, @NonNull String schemaVersion,
                         @NonNull List<String> attributes) {
         SchemaAPI result = null;
+        // ensure no leading or trailing spaces on attribute names... bad things happen when crypto signing.
+        attributes.replaceAll(s -> getSchemaString(s));
         try {
             SchemaSendRequest request = SchemaSendRequest.builder()
-                    .schemaName(schemaName)
-                    .schemaVersion(schemaVersion)
+                    .schemaName(getSchemaString(schemaName))
+                    .schemaVersion(getSchemaString(schemaVersion))
                     .attributes(attributes)
                     .build();
             Optional<SchemaSendResponse> response = ac.schemas(request);
             if (response.isPresent()) {
                 // save it to the db...
                 SchemaSendResponse ssr = response.get();
-                result = this.addSchema(ssr.getSchemaId(), schemaName, null);
+                result = this.addSchema(ssr.getSchemaId(), schemaLabel, null);
             } else {
                 log.error("Schema not created.");
             }
@@ -88,12 +93,17 @@ public class SchemaService {
         return result;
     }
 
+    @NotNull
+    private String getSchemaString(String s) {
+        return s.trim().replaceAll("\\s+", "_");
+    }
+
     private void addCredentialDefinition(SchemaAPI schema) throws IOException {
         if (schema != null) {
             // for now hack this in, let's create a cred def with default values.
             // no revocation!
             CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
-                    .revocationRegistrySize(1000)
+                    .revocationRegistrySize(4)
                     .schemaId(schema.getSchemaId())
                     .supportRevocation(false)
                     .tag("default")
@@ -101,10 +111,13 @@ public class SchemaService {
             Optional<CredentialDefinition.CredentialDefinitionResponse> creddefResponse = ac.credentialDefinitionsCreate(creddef);
             if (creddefResponse.isPresent()) {
                 // will have to save to db?
-                log.debug("Credential Definition created: {}", creddefResponse.get().getCredentialDefinitionId());
+                String id = creddefResponse.get().getCredentialDefinitionId();
+                log.debug("Credential Definition created: {}", id);
+                eventPublisher.publishEventAsync(new CredentialDefinitionAddedEvent(id));
             } else {
                 log.error("Credential Definition not created.");
             }
+
         }
     }
 
@@ -135,6 +148,9 @@ public class SchemaService {
             }
         } catch (IOException e) {
             log.error("aca-py not reachable", e);
+        }
+        if (result != null) {
+            eventPublisher.publishEventAsync(new SchemaAddedEvent(result));
         }
         return result;
     }

@@ -93,7 +93,7 @@ public class AdminController {
      */
     @Post("/schema/create")
     public HttpResponse<SchemaAPI> createSchema(@Body CreateSchemaRequest req) {
-        return HttpResponse.ok(schemaService.createSchema(req.getSchemaName(), req.getSchemaVersion(), req.getAttributes()));
+        return HttpResponse.ok(schemaService.createSchema(req.getSchemaLabel(), req.getSchemaName(), req.getSchemaVersion(), req.getAttributes()));
     }
 
     /**

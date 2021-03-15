@@ -25,6 +25,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class CreateSchemaRequest {
+    private String schemaLabel;
+
     private String schemaName;
 
     private String schemaVersion;
