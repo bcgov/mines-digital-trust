@@ -16,6 +16,23 @@
       </v-card-title>
       <v-list-item>
         <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
+          Schema Label:
+        </v-list-item-title>
+        <v-list-item-subtitle>
+          <v-text-field
+            class="mt-6"
+            placeholder="Label"
+            v-model="schemaLabel"
+            :rules="[rules.required]"
+            outlined
+            dense
+            required
+          >
+          </v-text-field>
+        </v-list-item-subtitle>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
           Schema Name:
         </v-list-item-title>
         <v-list-item-subtitle>
@@ -23,7 +40,7 @@
             class="mt-6"
             placeholder="Name"
             v-model="schemaName"
-            :rules="[rules.required]"
+            :rules="[rules.required,rules.schemaText]"
             outlined
             dense
             required
@@ -53,16 +70,14 @@
           Attributes:
         </v-list-item-title>
         <v-list-item-subtitle>
-          <v-text-field
+          <vue-tags-input
             class="mt-6"
-            placeholder="Comma separated values"
             v-model="schemaAttributes"
-            :rules="[rules.required]"
-            outlined
-            dense
-            required
-          >
-          </v-text-field>
+            :tags="tags"
+            :validation="tagValidation"
+            placeholder="List of attributes. Alphanumeric, '_' or '-' only"
+            @tags-changed="newTags => tags = newTags"
+          />
         </v-list-item-subtitle>
       </v-list-item>
       <v-card-actions>
@@ -83,38 +98,56 @@
 
 <script>
 import { EventBus } from "../main";
+import VueTagsInput from '@johmun/vue-tags-input';
+
 export default {
   name: "CreateSchema",
-  components: {},
+  components: {VueTagsInput},
   created: () => {},
   data: () => {
     return {
       schema: undefined,
+      schemaLabel: "",
       schemaName: "",
       schemaVersion: "",
       schemaAttributes: "",
+      tags: [],
       isBusyCreateSchema: false,
       rules: {
         required: (value) => !!value || "Can't be empty",
-        version: (value) => (value && /^\d+(\.\d+){0,2}$/.test(value)) || "Schema must be numbers and '.'"
+        version: (value) => (value && /^\d+(\.\d+){0,2}$/.test(value)) || "Schema Version must be numbers and '.'",
+        schemaText: (value) => (value && /^[a-zA-Z\d-_]+$/.test(value)) || "Schema name and attributes must be alphanumeric and '_' or '-'"
       },
+      tagValidation: [
+        {
+          classes: 'invalid-tag',
+          rule: /^[a-zA-Z\d-_]+$/,
+          disableAdd: true
+        }
+      ]
     };
   },
   computed: {
     fieldsEmpty() {
       return (
-        this.schemaName.length === 0 || this.schemaVersion.length === 0 || this.schemaAttributes.length === 0
+        this.schemaLabel.length === 0 || this.schemaName.length === 0 || this.schemaVersion.length === 0 || this.tags.length === 0
       );
     },
   },
   methods: {
+    fixSchemaParams(s) {
+      return s.trim().replace(/ /g, "_");
+    },
     createSchema() {
       this.isBusyCreateSchema = true;
 
+      const attrs = this.tags.map(s => this.fixSchemaParams(s));
+
       const data = {
-        schemaName: this.schemaName,
-        schemaVersion: this.schemaVersion,
-        attributes: this.schemaAttributes.split(",")
+        schemaLabel: this.schemaLabel,
+        schemaName: this.fixSchemaParams(this.schemaName),
+        schemaVersion: this.fixSchemaParams(this.schemaVersion),
+        attributes: attrs
       };
 
       this.$axios
@@ -126,6 +159,7 @@ export default {
           if (result.status === 200 || result.status === 200) {
             EventBus.$emit("success", "Schema created successfully");
             this.$router.push({ name: "SchemaSettings" });
+            this.$store.dispatch("loadSchemas");
           }
         })
         .catch((e) => {
