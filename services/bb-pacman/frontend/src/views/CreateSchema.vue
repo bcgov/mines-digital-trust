@@ -70,14 +70,16 @@
           Attributes:
         </v-list-item-title>
         <v-list-item-subtitle>
-          <vue-tags-input
+          <v-text-field
             class="mt-6"
+            placeholder="Comma separated attribute names"
             v-model="schemaAttributes"
-            :tags="tags"
-            :validation="tagValidation"
-            placeholder="List of attributes. Alphanumeric, '_' or '-' only"
-            @tags-changed="newTags => tags = newTags"
-          />
+            :rules="[rules.required]"
+            outlined
+            dense
+            required
+          >
+          </v-text-field>
         </v-list-item-subtitle>
       </v-list-item>
       <v-card-actions>
@@ -98,11 +100,9 @@
 
 <script>
 import { EventBus } from "../main";
-import VueTagsInput from '@johmun/vue-tags-input';
-
 export default {
   name: "CreateSchema",
-  components: {VueTagsInput},
+  components: {},
   created: () => {},
   data: () => {
     return {
@@ -111,26 +111,18 @@ export default {
       schemaName: "",
       schemaVersion: "",
       schemaAttributes: "",
-      tags: [],
       isBusyCreateSchema: false,
       rules: {
         required: (value) => !!value || "Can't be empty",
         version: (value) => (value && /^\d+(\.\d+){0,2}$/.test(value)) || "Schema Version must be numbers and '.'",
         schemaText: (value) => (value && /^[a-zA-Z\d-_]+$/.test(value)) || "Schema name and attributes must be alphanumeric and '_' or '-'"
-      },
-      tagValidation: [
-        {
-          classes: 'invalid-tag',
-          rule: /^[a-zA-Z\d-_]+$/,
-          disableAdd: true
-        }
-      ]
+      }
     };
   },
   computed: {
     fieldsEmpty() {
       return (
-        this.schemaLabel.length === 0 || this.schemaName.length === 0 || this.schemaVersion.length === 0 || this.tags.length === 0
+        this.schemaLabel.length === 0 || this.schemaName.length === 0 || this.schemaVersion.length === 0 || this.schemaAttributes.length === 0
       );
     },
   },
@@ -141,7 +133,7 @@ export default {
     createSchema() {
       this.isBusyCreateSchema = true;
 
-      const attrs = this.tags.map(s => this.fixSchemaParams(s));
+      const attrs = this.schemaAttributes.split(",").map(s => this.fixSchemaParams(s));
 
       const data = {
         schemaLabel: this.schemaLabel,
@@ -153,7 +145,6 @@ export default {
       this.$axios
         .post(`${this.$apiBaseUrl}/admin/schema/create`, data)
         .then((result) => {
-          console.log(result);
           this.isBusyCreateSchema = false;
 
           if (result.status === 200 || result.status === 200) {
@@ -167,7 +158,6 @@ export default {
           if (e.response.status === 400) {
             EventBus.$emit("error", "Schema already exists");
           } else {
-            console.error(e);
             EventBus.$emit("error", e);
           }
         });
