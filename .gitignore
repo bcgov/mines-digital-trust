@@ -50,3 +50,4 @@ build
 .project
 
 docker/**/*.txn
+docker/bbp-network/von-network
