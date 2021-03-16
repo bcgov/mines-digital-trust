@@ -133,16 +133,7 @@ public class SchemaService {
         try {
             Optional<org.hyperledger.aries.api.schema.SchemaSendResponse.Schema> ariesSchema = ac.schemasGetById(sId);
             if (ariesSchema.isPresent()) {
-                BPASchema dbS = BPASchema.builder()
-                        .label(label)
-                        .schemaId(sId)
-                        .schemaAttributeNames(new LinkedHashSet<>(ariesSchema.get().getAttrNames()))
-                        .defaultAttributeName(defaultAttributeName)
-                        .seqNo(ariesSchema.get().getSeqNo())
-                        .isReadOnly(isReadOnly)
-                        .build();
-                BPASchema saved = schemaRepo.save(dbS);
-                result = SchemaAPI.from(saved);
+                result = saveSchema(label, defaultAttributeName, isReadOnly, sId, ariesSchema.get().getAttrNames(), ariesSchema.get().getSeqNo());
             } else {
                 log.error("Schema with id: {} does not exist on the ledger, skipping.", schemaId);
             }
@@ -152,6 +143,22 @@ public class SchemaService {
         if (result != null) {
             eventPublisher.publishEventAsync(new SchemaAddedEvent(result));
         }
+        return result;
+    }
+
+    private SchemaAPI saveSchema(@Nullable String label, @Nullable String defaultAttributeName, boolean isReadOnly,
+                                 String schemaId, List<String> attributeNames,  Integer seqNo) {
+        SchemaAPI result;
+        BPASchema dbS = BPASchema.builder()
+                .label(label)
+                .schemaId(schemaId)
+                .schemaAttributeNames(new LinkedHashSet<>(attributeNames))
+                .defaultAttributeName(defaultAttributeName)
+                .seqNo(seqNo)
+                .isReadOnly(isReadOnly)
+                .build();
+        BPASchema saved = schemaRepo.save(dbS);
+        result = SchemaAPI.from(saved);
         return result;
     }
 
