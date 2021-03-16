@@ -14,6 +14,8 @@ import org.hyperledger.bpa.model.Partner;
 import org.hyperledger.bpa.repository.PartnerRepository;
 import org.hyperledger.bpa.repository.SchemaRepository;
 
+import io.micronaut.runtime.event.annotation.EventListener;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.*;
@@ -73,7 +75,7 @@ public class PartnerCredDefLookup {
         return result;
     }
 
-    @Scheduled(cron = "0 15 2 ? * *")
+    @Scheduled(fixedRate = "15m", initialDelay = "15m")
     public void lookupTypesForAllPartners() {
         Map<String, List<PartnerCredentialType>> didToTypes = new HashMap<>();
         schemaRepo.findAll().forEach(
@@ -93,6 +95,24 @@ public class PartnerCredDefLookup {
 
     @Async
     public void lookupTypesForAllPartnersAsync() {
+        lookupTypesForAllPartners();
+    }
+
+    @Async
+    @EventListener
+    public void on(PartnerAddedEvent event) {
+        lookupTypesForAllPartners();
+    }
+
+    @Async
+    @EventListener
+    public void on(SchemaAddedEvent event) {
+        lookupTypesForAllPartners();
+    }
+
+    @Async
+    @EventListener
+    public void on(CredentialDefinitionAddedEvent event) {
         lookupTypesForAllPartners();
     }
 

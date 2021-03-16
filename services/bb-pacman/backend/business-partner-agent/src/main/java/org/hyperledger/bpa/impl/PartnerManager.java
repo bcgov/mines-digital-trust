@@ -19,6 +19,7 @@ package org.hyperledger.bpa.impl;
 
 import io.micronaut.cache.annotation.CacheInvalidate;
 import io.micronaut.context.annotation.Value;
+import io.micronaut.context.event.ApplicationEventPublisher;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.bpa.api.PartnerAPI;
@@ -26,7 +27,7 @@ import org.hyperledger.bpa.api.exception.PartnerException;
 import org.hyperledger.bpa.core.RegisteredWebhook.WebhookEventType;
 import org.hyperledger.bpa.impl.activity.PartnerLookup;
 import org.hyperledger.bpa.impl.aries.ConnectionManager;
-import org.hyperledger.bpa.impl.aries.PartnerCredDefLookup;
+import org.hyperledger.bpa.impl.aries.PartnerAddedEvent;
 import org.hyperledger.bpa.impl.util.Converter;
 import org.hyperledger.bpa.model.Partner;
 import org.hyperledger.bpa.repository.MyCredentialRepository;
@@ -42,6 +43,7 @@ import java.util.UUID;
 
 @Singleton
 public class PartnerManager {
+    @Inject private ApplicationEventPublisher eventPublisher;
 
     @Value("${bpa.did.prefix}")
     private String ledgerPrefix;
@@ -54,9 +56,6 @@ public class PartnerManager {
 
     @Inject
     ConnectionManager cm;
-
-    @Inject
-    PartnerCredDefLookup credLookup;
 
     @Inject
     PartnerLookup partnerLookup;
@@ -108,12 +107,12 @@ public class PartnerManager {
         if (did.startsWith(ledgerPrefix) && lookupP.getAriesSupport()) {
             //wrong did
             cm.createConnection(did, connectionLabel, alias);
-            credLookup.lookupTypesForAllPartnersAsync();
         } else if (lookupP.getAriesSupport()) {
             cm.createConnection(lookupP.getDidDocAPI(), connectionLabel, alias);
         }
         final PartnerAPI apiPartner = converter.toAPIObject(result);
         webhook.convertAndSend(WebhookEventType.PARTNER_ADD, apiPartner);
+        eventPublisher.publishEventAsync(new PartnerAddedEvent(apiPartner));
         return apiPartner;
     }
 
