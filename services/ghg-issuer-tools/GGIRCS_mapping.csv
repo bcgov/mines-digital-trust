@@ -1,0 +1,2 @@
+registration_id, facility_name,facility_latitude,facility_longitude,primary_activity_code,primary_activity_description,co2_fossil_emissions,co2_biomass_emissions,ch4_emissions,n2o_emissions,hfcs_emissions,pfcs_emissions,sf6_emissions,verification_body,verification_result
+registration_id, facility_name,latitude,longitude,naics_code,naics_description,co2nonbio,co2bio,ch4,n2o,hfcs,pfcs,sf6,vr,vb
