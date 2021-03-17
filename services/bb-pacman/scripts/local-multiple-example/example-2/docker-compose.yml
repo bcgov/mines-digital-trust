@@ -5,6 +5,9 @@ version: '3'
 services:
   bpa2:
     image: ${BPA_DOCKER_IMAGE}
+    build:
+      context: ../../..
+      dockerfile: Dockerfile
     depends_on:
       - aca-py2
     environment:
@@ -28,6 +31,7 @@ services:
       AGENT_NAME: ${AGENT_NAME}
       BPA_SCHEMA_BANK_ID: ${BPA_SCHEMA_BANK_ID}
       BPA_SCHEMA_COMREG_ID: ${BPA_SCHEMA_COMREG_ID}
+      NODE_ENV: development
     ports:
       - ${BPA_PORT}:${BPA_PORT}
     restart: always

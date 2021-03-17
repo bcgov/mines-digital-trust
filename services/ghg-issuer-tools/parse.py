@@ -7,7 +7,7 @@ import pandas as pd
 import yaml
 
 DEFAULT_SCHEMA_NAME = 'ggirc-act.ghg-emissions-report'
-DEFAULT_SCHEMA_VERSION = '0.2.0'
+DEFAULT_SCHEMA_VERSION = '0.2.1'
 DEFAULT_ATTRIBUTES = [
     'registration_id',
     'facility_name',
@@ -173,7 +173,7 @@ def parse_csv(csv_file,
                   'attributes': get_attributes(_schema_attributes, row)
                   }
             vcs.append(vc)
-        except KeyError as e :
+        except KeyError as e:
             print(f'Error creating VC for line {index+2}, {str(e)}')
 
     return json.dumps(vcs)

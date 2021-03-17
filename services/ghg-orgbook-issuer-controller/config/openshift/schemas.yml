@@ -1,5 +1,5 @@
 - name: ggirc-act.ghg-emissions-report
-  version: 0.2.0
+  version: 0.2.1
   description: The ghg-emissions-report credential issued by ghg-emissions-reporting
   attributes:
     registration_id:
@@ -71,12 +71,12 @@
       description_en: Verification Body
       label_en: Verification Body
       data_type: ui_text
-      required: true
+      required: false
     verification_result:
       description_en: Verification Result
       label_en: Verification Result
       data_type: ui_text
-      required: true
+      required: false
     reporting_year:
       description_en: Reporting Year
       label_en: Reporting Year
