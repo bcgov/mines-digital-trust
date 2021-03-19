@@ -2,7 +2,7 @@
  Copyright (c) 2020 - for information on the respective copyright owner
  see the NOTICE file and/or the repository at
  https://github.com/hyperledger-labs/organizational-agent
- 
+
  SPDX-License-Identifier: Apache-2.0
 */
 
@@ -22,6 +22,7 @@ const store = new Vuex.Store({
     documents: [],
     credentials: [],
     schemas: [],
+    credDefs: {},
     busyStack: 0,
     expertMode: false,
     settings: {},
@@ -42,6 +43,9 @@ const store = new Vuex.Store({
     },
     setSchemas(state, payload) {
       state.schemas = payload.schemas;
+    },
+    setCredDefs(state, payload) {
+      state.credDefs = payload.credDefs;
     },
     setExpertMode(state, payload) {
       state.expertMode = payload.isExpert;

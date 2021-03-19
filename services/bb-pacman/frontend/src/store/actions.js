@@ -30,6 +30,22 @@ export const loadSchemas = async ({ commit }) => {
     });
 };
 
+export const loadCredDefs = async ({ commit }) => {
+  axios
+    .get(`${apiBaseUrl}/admin/creddef?map=true`)
+    .then((result) => {
+      let creddefs = result.data;
+      commit({
+        type: "setCredDefs",
+        creddefs: creddefs,
+      });
+    })
+    .catch((e) => {
+      console.error(e);
+      EventBus.$emit("error", e);
+    });
+};
+
 export const loadPartners = async ({ commit }) => {
   axios
     .get(`${apiBaseUrl}/partners`)

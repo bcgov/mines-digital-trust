@@ -27,6 +27,7 @@ import SchemaSettings from "../views/SchemaSettings.vue";
 import Schema from "../views/Schema.vue";
 import AddSchema from "../views/AddSchema.vue";
 import CreateSchema from "../views/CreateSchema.vue";
+import CreateCredDef from "../views/CreateCredDef.vue";
 import About from "../views/About.vue";
 
 Vue.use(VueRouter);
@@ -136,6 +137,12 @@ const routes = [
     path: "/app/schema/create",
     name: "CreateSchema",
     component: CreateSchema,
+  },
+  {
+    path: "/app/creddef/create",
+    name: "CreateCredDef",
+    component: CreateCredDef,
+    props: true,
   },
   {
     path: "/app/schema/:id",

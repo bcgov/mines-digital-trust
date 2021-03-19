@@ -25,7 +25,8 @@ Vue.use(SortUtil);
 
 
 var apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
-var socketApi = `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/${process.env.VUE_APP_EVENTS_PATH}`;
+var eventsHost = process.env.VUE_APP_EVENTS_HOST ? process.env.VUE_APP_EVENTS_HOST : window.location.host;
+var socketApi = `${window.location.protocol === "https:" ? "wss" : "ws"}://${eventsHost}/${process.env.VUE_APP_EVENTS_PATH}`;
 
 if (process.env.NODE_ENV === "development") {
   store.commit({
@@ -108,6 +109,7 @@ export { EventBus, axios, apiBaseUrl };
 console.log(Vue.prototype);
 store.dispatch("loadSettings");
 store.dispatch("loadSchemas");
+store.dispatch("loadCredDefs");
 
 new Vue({
   vuetify,

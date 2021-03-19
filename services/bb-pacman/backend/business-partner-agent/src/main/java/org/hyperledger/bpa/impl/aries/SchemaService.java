@@ -45,7 +45,8 @@ import java.util.*;
 @Slf4j
 @Singleton
 public class SchemaService {
-    @Inject private ApplicationEventPublisher eventPublisher;
+    @Inject
+    private ApplicationEventPublisher eventPublisher;
 
     @Inject
     SchemaRepository schemaRepo;
@@ -66,10 +67,11 @@ public class SchemaService {
         return addSchema(schemaId, label, defaultAttributeName, false);
     }
 
-    public SchemaAPI createSchema(@NonNull String schemaLabel, @NonNull String schemaName, @NonNull String schemaVersion,
-                        @NonNull List<String> attributes) {
+    public SchemaAPI createSchema(@NonNull String schemaName, @NonNull String schemaVersion,
+            @NonNull List<String> attributes, @NonNull String schemaLabel, String defaultAttributeName) {
         SchemaAPI result = null;
-        // ensure no leading or trailing spaces on attribute names... bad things happen when crypto signing.
+        // ensure no leading or trailing spaces on attribute names... bad things happen
+        // when crypto signing.
         attributes.replaceAll(s -> getSchemaString(s));
         try {
             SchemaSendRequest request = SchemaSendRequest.builder()
@@ -81,12 +83,11 @@ public class SchemaService {
             if (response.isPresent()) {
                 // save it to the db...
                 SchemaSendResponse ssr = response.get();
-                result = this.addSchema(ssr.getSchemaId(), schemaLabel, null);
+                result = this.addSchema(ssr.getSchemaId(), schemaLabel, defaultAttributeName);
             } else {
                 log.error("Schema not created.");
             }
 
-            addCredentialDefinition(result);
         } catch (IOException e) {
             log.error("aca-py not reachable", e);
         }
@@ -96,29 +97,6 @@ public class SchemaService {
     @NotNull
     private String getSchemaString(String s) {
         return s.trim().replaceAll("\\s+", "_");
-    }
-
-    private void addCredentialDefinition(SchemaAPI schema) throws IOException {
-        if (schema != null) {
-            // for now hack this in, let's create a cred def with default values.
-            // no revocation!
-            CredentialDefinition.CredentialDefinitionRequest creddef = CredentialDefinition.CredentialDefinitionRequest.builder()
-                    .revocationRegistrySize(4)
-                    .schemaId(schema.getSchemaId())
-                    .supportRevocation(false)
-                    .tag("default")
-                    .build();
-            Optional<CredentialDefinition.CredentialDefinitionResponse> creddefResponse = ac.credentialDefinitionsCreate(creddef);
-            if (creddefResponse.isPresent()) {
-                // will have to save to db?
-                String id = creddefResponse.get().getCredentialDefinitionId();
-                log.debug("Credential Definition created: {}", id);
-                eventPublisher.publishEventAsync(new CredentialDefinitionAddedEvent(id));
-            } else {
-                log.error("Credential Definition not created.");
-            }
-
-        }
     }
 
     SchemaAPI addSchema(@NonNull String schemaId, @Nullable String label,
@@ -133,7 +111,8 @@ public class SchemaService {
         try {
             Optional<org.hyperledger.aries.api.schema.SchemaSendResponse.Schema> ariesSchema = ac.schemasGetById(sId);
             if (ariesSchema.isPresent()) {
-                result = saveSchema(label, defaultAttributeName, isReadOnly, sId, ariesSchema.get().getAttrNames(), ariesSchema.get().getSeqNo());
+                result = saveSchema(label, defaultAttributeName, isReadOnly, sId, ariesSchema.get().getAttrNames(),
+                        ariesSchema.get().getSeqNo());
             } else {
                 log.error("Schema with id: {} does not exist on the ledger, skipping.", schemaId);
             }
@@ -147,7 +126,7 @@ public class SchemaService {
     }
 
     private SchemaAPI saveSchema(@Nullable String label, @Nullable String defaultAttributeName, boolean isReadOnly,
-                                 String schemaId, List<String> attributeNames,  Integer seqNo) {
+            String schemaId, List<String> attributeNames, Integer seqNo) {
         SchemaAPI result;
         BPASchema dbS = BPASchema.builder()
                 .label(label)

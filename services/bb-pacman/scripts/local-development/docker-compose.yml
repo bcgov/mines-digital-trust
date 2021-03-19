@@ -5,6 +5,7 @@ services:
 # (Docker Backend/Frontend + agent + wallet)
 #######
   partner-app:
+    image: ${BPA_DOCKER_IMAGE}
     build:
       context: ../..
       dockerfile: Dockerfile

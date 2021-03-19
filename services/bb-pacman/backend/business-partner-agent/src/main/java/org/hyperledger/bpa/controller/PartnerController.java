@@ -150,7 +150,7 @@ public class PartnerController {
      */
     @Post
     public HttpResponse<PartnerAPI> addPartner(@Body AddPartnerRequest partner) {
-        //wrong did
+        // wrong did
         return HttpResponse.created(pm.addPartnerFlow(partner.getDid(), partner.getAlias()));
     }
 

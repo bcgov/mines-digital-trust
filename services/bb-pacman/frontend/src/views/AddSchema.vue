@@ -96,7 +96,7 @@ export default {
       this.isBusyAddSchema = true;
 
       this.$axios
-        .post(`${this.$apiBaseUrl}/admin/schema`, this.schema)
+        .post(`${this.$apiBaseUrl}/admin/schema/import`, this.schema)
         .then((result) => {
           console.log(result);
           this.isBusyAddSchema = false;
