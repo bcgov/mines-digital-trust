@@ -18,6 +18,7 @@
 package org.hyperledger.bpa.api.aries;
 
 import lombok.*;
+import org.hyperledger.bpa.model.IssuedCredential;
 import org.hyperledger.bpa.model.MyCredential;
 
 import java.util.Map;
@@ -53,6 +54,17 @@ public class AriesCredential {
                 .state(c.getState())
                 .isPublic(c.getIsPublic())
                 .issuer(c.getIssuer())
+                .connectionId(c.getConnectionId())
+                .label(c.getLabel());
+    }
+
+    public static AriesCredentialBuilder fromIssuedCredential(@NonNull IssuedCredential c, @NonNull String myDid) {
+        return AriesCredential
+                .builder()
+                .id(c.getId())
+                .issuedAt(c.getIssuedAt() != null ? c.getIssuedAt().toEpochMilli() : null)
+                .state(c.getState())
+                .issuer(myDid)
                 .connectionId(c.getConnectionId())
                 .label(c.getLabel());
     }

@@ -90,6 +90,16 @@ public class CredentialDefinitionService {
         return myCredDefs;
     }
 
+    public Optional<CredentialDefinition> getCredentialDefinition(@NonNull String id) {
+        Optional<CredentialDefinition> result = null;
+        try {
+            result = ac.credentialDefinitionsGetById(id);
+        } catch (IOException e) {
+            log.error("aca-py not reachable", e);
+        }
+        return result;
+    }
+
     private List<String> getCreatedCredentialDefinitionIds() {
         List<String> result = null;
         try {
@@ -97,16 +107,6 @@ public class CredentialDefinitionService {
             if (created.isPresent()) {
                 result = created.get().getCredentialDefinitionIds();
             }
-        } catch (IOException e) {
-            log.error("aca-py not reachable", e);
-        }
-        return result;
-    }
-
-    private Optional<CredentialDefinition> getCredentialDefinition(@NonNull String id) {
-        Optional<CredentialDefinition> result = null;
-        try {
-            result = ac.credentialDefinitionsGetById(id);
         } catch (IOException e) {
             log.error("aca-py not reachable", e);
         }

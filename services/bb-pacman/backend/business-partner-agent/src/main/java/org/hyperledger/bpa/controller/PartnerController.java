@@ -27,7 +27,9 @@ import io.micronaut.validation.Validated;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
+import org.hyperledger.aries.api.credential.CredentialExchange;
 import org.hyperledger.bpa.api.PartnerAPI;
+import org.hyperledger.bpa.api.aries.AriesCredential;
 import org.hyperledger.bpa.api.aries.AriesProof;
 import org.hyperledger.bpa.controller.api.partner.*;
 import org.hyperledger.bpa.impl.PartnerManager;
@@ -35,10 +37,12 @@ import org.hyperledger.bpa.impl.activity.PartnerLookup;
 import org.hyperledger.bpa.impl.aries.CredentialManager;
 import org.hyperledger.bpa.impl.aries.PartnerCredDefLookup;
 import org.hyperledger.bpa.impl.aries.ProofManager;
+import org.hyperledger.bpa.impl.util.Converter;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,6 +67,9 @@ public class PartnerController {
 
     @Inject
     PartnerCredDefLookup credLookup;
+
+    @Inject
+    Converter conv;
 
     /**
      * Get known partners
@@ -286,4 +293,48 @@ public class PartnerController {
         proofM.deletePartnerProof(UUID.fromString(proofId));
         return HttpResponse.ok();
     }
+
+    /**
+     * Aries: Request credential from partner
+     *
+     * @param id      the partner id
+     * @param credReq {@link RequestCredentialRequest}
+     * @return HTTP status
+     */
+    @Post("/{id}/issue-credential/send")
+    public HttpResponse<Void> issueCredentialSend(
+            @PathVariable String id,
+            @Body IssueCredentialSendRequest credReq) {
+        credM.issueCredentialSend(
+                UUID.fromString(id),
+                credReq.getSchemaId(),
+                credReq.getCredentialDefinitionId(),
+                conv.toMap(credReq.getDocument()));
+        return HttpResponse.ok();
+    }
+
+    /**
+     * Aries: List aries credentials we issued to partner
+     *
+     * @return list of {@link AriesCredential}
+     */
+    @Get("/{id}/issue-credential")
+    public HttpResponse<List<AriesCredential>> getIssuedCredentials(@PathVariable String id) {
+        return HttpResponse.ok(credM.getIssuedCredentialsForPartner(UUID.fromString(id)));
+    }
+
+    /**
+     * Aries: List aries credentials we issued to partner
+     *
+     * @return list of {@link AriesCredential}
+     */
+    @Get("/{id}/issue-credential/{credId}")
+    public HttpResponse<AriesCredential> getIssuedCredentials(@PathVariable String id, @PathVariable String credId) {
+        AriesCredential credential = credM.getIssuedCredential(UUID.fromString(id), UUID.fromString(credId));
+        if (credential != null) {
+            return HttpResponse.ok(credential);
+        }
+        return HttpResponse.notFound();
+    }
+
 }
