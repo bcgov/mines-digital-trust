@@ -29,6 +29,10 @@ export const getSchemas = (state) => {
   return state.schemas;
 };
 
+export const getCredDefs = (state) => {
+  return state.credDefs;
+};
+
 export const getSchemaById = (state) => (schemaId) => {
   if (!schemaId) {
     return null;
@@ -36,6 +40,14 @@ export const getSchemaById = (state) => (schemaId) => {
   return state.schemas.find((schema) => {
     return schema.schemaId === schemaId;
   });
+};
+
+export const getSchemaCredDef = (state) => (schemaId) => {
+  const s = getSchemaById(schemaId);
+  if (!s) {
+    return null;
+  }
+  return state.credDefs[s.schemaId];
 };
 
 export const getSchemaByType = (state) => (schemaType) => {

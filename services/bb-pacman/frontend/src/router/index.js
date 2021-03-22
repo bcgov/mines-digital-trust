@@ -27,7 +27,10 @@ import SchemaSettings from "../views/SchemaSettings.vue";
 import Schema from "../views/Schema.vue";
 import AddSchema from "../views/AddSchema.vue";
 import CreateSchema from "../views/CreateSchema.vue";
+import CreateCredDef from "../views/CreateCredDef.vue";
 import About from "../views/About.vue";
+import IssueCredential from "../views/IssueCredential.vue"
+import IssuedCredentialPresentation from "../views/IssuedCredentialPresentation.vue"
 
 Vue.use(VueRouter);
 
@@ -90,6 +93,12 @@ const routes = [
     props: true,
   },
   {
+    path: "/app/partners/:id/issued/:credId",
+    name: "IssuedCredentialPresentation",
+    component: IssuedCredentialPresentation,
+    props: true,
+  },
+  {
     path: "/app/partners",
     name: "Partners",
     component: Partners,
@@ -110,6 +119,12 @@ const routes = [
     path: "/app/partners/:id/send",
     name: "SendPresentation",
     component: SendPresentation,
+    props: true,
+  },
+  {
+    path: "/app/partners/:id/issue",
+    name: "IssueCredential",
+    component: IssueCredential,
     props: true,
   },
   {
@@ -136,6 +151,12 @@ const routes = [
     path: "/app/schema/create",
     name: "CreateSchema",
     component: CreateSchema,
+  },
+  {
+    path: "/app/creddef/create",
+    name: "CreateCredDef",
+    component: CreateCredDef,
+    props: true,
   },
   {
     path: "/app/schema/:id",

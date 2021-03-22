@@ -20,12 +20,15 @@ package org.hyperledger.bpa.impl.aries;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.aries.api.connection.ConnectionRecord;
 import org.hyperledger.aries.api.credential.CredentialExchange;
+import org.hyperledger.aries.api.message.BasicMessage;
 import org.hyperledger.aries.api.message.PingEvent;
 import org.hyperledger.aries.api.proof.PresentationExchangeRecord;
 import org.hyperledger.aries.webhook.EventHandler;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -39,6 +42,8 @@ public class AriesEventHandler extends EventHandler {
     private final CredentialManager credMgmt;
 
     private final ProofManager proofMgmt;
+
+    private List<Object> items = new ArrayList<>();
 
     @Inject
     public AriesEventHandler(
@@ -91,11 +96,26 @@ public class AriesEventHandler extends EventHandler {
                     credMgmt.handleCredentialEvent(credential);
                 }
             }
+        } else if ("issuer".equals(credential.getRole())) {
+            synchronized (credMgmt) {
+                if ("credential_received".equals(credential.getState())) {
+                    credMgmt.handleStoreIssuedCredential(credential);
+                } else if ("credential_acked".equals(credential.getState())) {
+                    credMgmt.handleIssuedCredentialAcked(credential);
+                } else {
+                    credMgmt.handleIssuedCredentialEvent(credential);
+                }
+            }
         }
     }
 
     @Override
     public void handleRaw(String eventType, String json) {
         log.trace(json);
+    }
+
+    @Override
+    public void handleBasicMessage(BasicMessage message) {
+        log.debug("Basic Message: {}", message);
     }
 }

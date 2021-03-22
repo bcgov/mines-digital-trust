@@ -2,7 +2,7 @@
  Copyright (c) 2020 - for information on the respective copyright owner
  see the NOTICE file and/or the repository at
  https://github.com/hyperledger-labs/organizational-agent
- 
+
  SPDX-License-Identifier: Apache-2.0
 -->
 <template>
@@ -17,6 +17,20 @@
           <!-- <v-btn depressed icon @click="isUpdatingName = !isUpdatingName">
                     <v-icon dark>mdi-pencil</v-icon>
                 </v-btn> -->
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                color="primary"
+                v-bind="attrs"
+                v-on="on"
+                icon
+                @click="fetchCredDef()"
+              >
+                <v-icon dark>mdi-refresh</v-icon>
+              </v-btn>
+            </template>
+            <span>Refresh</span>
+          </v-tooltip>
           <v-btn
             depressed
             color="red"
@@ -50,7 +64,38 @@
             {{ attribute }}
           </p>
         </v-list-item>
+        <v-list-item class="mt-4" v-if="this.credDef">
+          <v-list-item-title
+            class="grey--text text--darken-2 font-weight-medium"
+          >
+            Credential Definition Id:
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            {{ this.credDef.id }}
+          </v-list-item-subtitle>
+        </v-list-item>
       </v-container>
+      <v-card-actions v-if="!this.credDef">
+        <v-tooltip bottom>
+          <template v-slot:activator="{on, attrs}">
+            <v-btn
+              color="primary"
+              small
+              dark
+              absolute
+              bottom
+              left
+              fab
+              @click="goToCredDef()"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>Create Credential Definition</span>
+        </v-tooltip>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -72,15 +117,38 @@ export default {
     } else {
       this.fetch();
     }
+    this.fetchCredDef();
   },
   data: () => {
     return {
       data: [],
+      credDef: undefined,
       isLoading: true,
     };
   },
   computed: {},
   methods: {
+    fetchCredDef() {
+      this.isLoading = true;
+      this.$axios
+        .get(`${this.$apiBaseUrl}/admin/schema/${this.id}/creddef`)
+        .then((result) => {
+          console.log(result);
+          if ({}.hasOwnProperty.call(result, "data")) {
+            this.credDef = result.data;
+            this.isLoading = false;
+          }
+        })
+        .catch((e) => {
+          this.isLoading = false;
+          if (e.response.status === 404) {
+            this.credDef = undefined;
+          } else {
+            //console.error(e);
+            //EventBus.$emit("error", e);
+          }
+        });
+    },
     fetch() {
       this.isLoading = true;
       this.$axios
@@ -120,6 +188,15 @@ export default {
           EventBus.$emit("error", e);
         });
     },
+
+    goToCredDef() {
+      this.$router.push({
+        name: "CreateCredDef",
+        params: {
+          schemaId: this.schema ? this.schema.schemaId : this.data['schemaId']
+        },
+      });
+    }
   },
 };
 </script>
