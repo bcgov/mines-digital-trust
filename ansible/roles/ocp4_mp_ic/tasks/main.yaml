@@ -1,0 +1,17 @@
+---
+# This role's tassks connect to the cluster and applies a templated manifest populated by an inventory
+- name:
+  debug:
+    msg: verify cluster in known hosts
+
+- name:
+  debug:
+    msg: authenticate with the cluster
+
+- name:
+  debug:
+    msg: populating manfiest templates
+
+- name:
+  debug:
+    msg: applying manfiests
