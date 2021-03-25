@@ -1,0 +1,40 @@
+name: Build MP IC
+
+on:
+  #pull_request
+  #branches:
+  # - develop
+  push:
+    paths:
+      - ".github/workflows/mp_ic_build.yaml"
+      - "services/mp-orgbook-issuer-controller/**"
+      - "!**/README.md"
+
+env:
+  REGISTRY_HOST: ${{ secrets.REGISTRY }}
+  REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
+  REGISTRY_TOKEN: $${{ secrets.REGISTRY_TOKEN }}
+  SERVICE_CONTEXT: services/mp-orgbook-issuer-controller/
+  IMAGE: mp-orgbook-issuer-controller
+  NAMESPACE: dev
+  ENV_TAG: dev
+
+jobs:
+  mp-ic-build:
+    name: mp-ic-build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: test oc registry
+        run: |
+          docker login -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_TOKEN }} ${{ env.REGISTRY_HOST }}
+
+      - name: build
+        run: |
+          cd ${{ env.SERVICE_CONTEXT }} && docker build -t ${{ env.IMAGE }}:${{ env.ENV_TAG }} -t ${{ env.IMAGE }}:${{ github.sha }} .
+
+      - name: push
+        run: |
+          docker push ${{ env.REGISTRY_HOST }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.ENV_TAG }}

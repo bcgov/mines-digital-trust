@@ -1,0 +1,33 @@
+name: Test GHG IC
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ghg_ic_test.yaml"
+      - "services/ghg-orgbook-issuer-controller/**"
+      - "!**/README.md"
+
+env:
+  SERVICE_CONTEXT: ghg-orgbook-issuer-controller
+
+jobs:
+  test-ghg-ci:
+    name: test-ghg-ci
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.6"
+
+      - name: install dependencies
+        run: |
+          cd services/${{ env.SERVICE_CONTEXT }} && pip install -r requirements.txt
+
+      - name: Run tests
+        id: results
+        run: |
+          cd services/${{ env.SERVICE_CONTEXT }} && pytest .
