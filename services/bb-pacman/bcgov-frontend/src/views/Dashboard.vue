@@ -19,7 +19,6 @@
           label="DID"
           :append-icon="'$vuetify.icons.copy'"
           @click:append="copyDid"
-          class="col-md-8 offset-md-2 col-sm-10 offset-sm-1"
         ></v-text-field>
         </v-col>
       </v-row>
@@ -52,7 +51,7 @@
     <div v-if="!isWelcome && !isLoading">
       <v-row>
         <v-col class="col-sm-5 offset-sm-1 col-md-4 offset-md-2">
-          <v-card class="mx-auto" :to="{ name: 'Wallet' }">
+          <v-card class="mx-auto dashboard-card" :to="{ name: 'Wallet' }">
             <v-img
               class="align-end"
               src="@/assets/undraw_certification_aif8.png"
@@ -71,7 +70,7 @@
           </v-card>
         </v-col>
         <v-col class="col-sm-5 col-md-4">
-          <v-card class="mx-auto" :to="{ name: 'Partners' }">
+          <v-card class="mx-auto dashboard-card" :to="{ name: 'Partners' }">
             <!-- FIXME Used aspect ratio as a hacky way to make the cards the same height -->
             <v-img
               class="align-end"
@@ -163,6 +162,6 @@ export default {
 }
 .cardTitle {
   font-size: 400%;
-  margin-bottom: 2;
+  margin-bottom: 2px;
 }
 </style>

@@ -153,3 +153,16 @@ nav {
     }
   }
 }
+
+a.dashboard-card {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.v-data-table-header th.sortable {
+  .v-data-table-header__icon {
+    margin-left: 4px;
+  }
+}
+

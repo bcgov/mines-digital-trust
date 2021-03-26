@@ -7,7 +7,7 @@ WORKDIR /home/maven/backend
 COPY backend/pom.xml backend/formatter.xml ./
 COPY backend/business-partner-agent ./business-partner-agent
 COPY backend/business-partner-agent-core ./business-partner-agent-core
-COPY frontend ../frontend
+COPY bcgov-frontend ../frontend
 
 # Cache Maven Artefacts
 RUN mvn dependency:go-offline || true

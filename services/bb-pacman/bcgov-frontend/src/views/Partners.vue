@@ -36,7 +36,7 @@ export default {
     PartnerList,
   },
   created() {
-    EventBus.$emit("title", "Business Partners");
+    EventBus.$emit("title", "Connections");
   },
   data: () => {
     return {

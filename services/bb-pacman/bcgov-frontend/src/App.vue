@@ -18,12 +18,12 @@
               <v-list-item-subtitle>Business Partner Agent</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item v-else two-line class="pl-3 mt-n2">
-            <v-list-item-avatar>
+          <v-list-item v-else two-line class="pl-3 mt-n2" >
+            <v-list-item-avatar style="width: fit-content">
               <v-icon>$vuetify.icons.user</v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ getAgentName }}</v-list-item-title>
+              <!-- <v-list-item-title>{{ getAgentName }}</v-list-item-title> -->
               <!-- <v-list-item-subtitle></v-list-item-subtitle> -->
             </v-list-item-content>
           </v-list-item>
@@ -68,19 +68,9 @@
             <v-list-item-title>Wallet</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link :to="{ name: 'CredentialManagement' }">
+        <v-list-item link :to="{ name: 'CredentialManagement' }" style="display: none">
           <v-list-item-action>
-            <v-badge
-              overlap
-              bordered
-              :content="newPartnersCount"
-              :value="newPartnersCount"
-              color="red"
-              offset-x="10"
-              offset-y="10"
-            >
-              <v-icon>$vuetify.icons.credentialManagement</v-icon>
-            </v-badge>
+            <v-icon>$vuetify.icons.credentialManagement</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Credential Management</v-list-item-title>
@@ -104,19 +94,9 @@
             <v-list-item-title>Connections</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link :to="{ name: 'Notifications' }">
+        <v-list-item link :to="{ name: 'Notifications' }" style="display: none">
           <v-list-item-action>
-            <v-badge
-              overlap
-              bordered
-              :content="newPartnersCount"
-              :value="newPartnersCount"
-              color="red"
-              offset-x="10"
-              offset-y="10"
-            >
-              <v-icon>$vuetify.icons.notifications</v-icon>
-            </v-badge>
+            <v-icon>$vuetify.icons.notifications</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Notifications</v-list-item-title>
@@ -148,7 +128,7 @@
 
     <v-app-bar color="primary" app flat dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-toolbar-title>{{ getTitle }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -256,6 +236,10 @@ export default {
       }
       return bpaName;
     },
+    getTitle() {
+      let pageTitle = (this.title && this.title.trim().length > 0) ? ` > ${this.title}` : "";
+      return `${this.getAgentName} ${pageTitle}`;
+    }
   },
   created() {
     this.$vuetify.theme.dark = false;
