@@ -1,22 +1,18 @@
 name: Build MP IC
 
 on:
-  #pull_request
-  #branches:
-  # - develop
   push:
     paths:
       - ".github/workflows/mp_ic_build.yaml"
       - "services/mp-orgbook-issuer-controller/**"
       - "!**/README.md"
+    # TODO: uncomment when merging into develop
+    # branches:
+    #   - develop
 
 env:
-  REGISTRY_HOST: ${{ secrets.REGISTRY }}
-  REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
-  REGISTRY_TOKEN: $${{ secrets.REGISTRY_TOKEN }}
   SERVICE_CONTEXT: services/mp-orgbook-issuer-controller/
   IMAGE: mp-orgbook-issuer-controller
-  NAMESPACE: dev
   ENV_TAG: dev
 
 jobs:
@@ -27,14 +23,17 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - name: test oc registry
+      - name: login to oc registry
         run: |
-          docker login -u ${{ env.REGISTRY_USER }} -p ${{ env.REGISTRY_TOKEN }} ${{ env.REGISTRY_HOST }}
+          docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }} ${{ secrets.REGISTRY_HOST }}
 
-      - name: build
+      - name: build and tag
         run: |
-          cd ${{ env.SERVICE_CONTEXT }} && docker build -t ${{ env.IMAGE }}:${{ env.ENV_TAG }} -t ${{ env.IMAGE }}:${{ github.sha }} .
+          cd ${{ env.SERVICE_CONTEXT }}
+          docker build -t ${{ env.IMAGE }}:${{ env.ENV_TAG }} -t ${{ env.IMAGE }}:${{ github.sha }} .
+          docker tag ${{ env.IMAGE }}:dev ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}:${{ github.sha }}
+          docker tag ${{ env.IMAGE }}:dev ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}:dev
 
       - name: push
         run: |
-          docker push ${{ env.REGISTRY_HOST }}/${{ env.NAMESPACE }}/${{ env.IMAGE }}:${{ env.ENV_TAG }}
+          docker push --all-tags ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}
