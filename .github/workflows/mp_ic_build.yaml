@@ -12,7 +12,7 @@ on:
 
 env:
   SERVICE_CONTEXT: services/mp-orgbook-issuer-controller/
-  IMAGE: mp-orgbook-issuer-controller
+  IMAGE: mines-permitting-issuer
   ENV_TAG: dev
 
 jobs:
