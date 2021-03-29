@@ -196,3 +196,7 @@ postgresql:
   image:
     tag: 12
 
+  securityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
