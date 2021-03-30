@@ -6,9 +6,8 @@ on:
       - ".github/workflows/mp_ic_build.yaml"
       - "services/mp-orgbook-issuer-controller/**"
       - "!**/README.md"
-    # TODO: uncomment when merging into develop
-    # branches:
-    #   - develop
+    branches:
+      - develop
 
 env:
   SERVICE_CONTEXT: services/mp-orgbook-issuer-controller/
