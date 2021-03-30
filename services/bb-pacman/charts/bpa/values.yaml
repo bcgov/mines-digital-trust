@@ -14,10 +14,10 @@ bpa:
   name: bpacore
  
   image:
-    repository: ghcr.io/hyperledger-labs/business-partner-agent
+    repository: image-registry.openshift-image-registry.svc:5000/f6b17d-tools/bbcm-app
     pullPolicy: IfNotPresent
     # --  Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "dev"
 
   # -- enable security (username and password)
   securityEnabled: true
@@ -35,7 +35,7 @@ bpa:
   resolverURL: https://resolver.stage.economyofthings.io
   
   # --  The ledger prefix that is configured with the Uni Resolver
-  didPrefix: "did:sov:iil:"
+  didPrefix: "did:sov:"
 
   # --  The Ledger URL
   ledgerURL: http://dev.bcovrin.vonx.io
@@ -103,6 +103,7 @@ bpa:
 
   affinity: {}
 
+  https: https 
 acapy:
   name: acapy
 
