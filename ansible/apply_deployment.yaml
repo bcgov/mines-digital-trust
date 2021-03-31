@@ -1,6 +1,8 @@
 ---
 - name: "Apply deployment configs to OCP4"
-  hosts: 127.0.0.1
-  connection: local # this will run in the context of the github runner
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  # execute tasks in roles
   roles:
     - ocp4_mp_ic
