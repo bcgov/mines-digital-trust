@@ -15,9 +15,16 @@ bpa:
  
   image:
     repository: image-registry.openshift-image-registry.svc:5000/f6b17d-tools/bbcm-app
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # --  Overrides the image tag whose default is the chart appVersion.
     tag: "dev"
+
+
+    # -- If building onsite, refer to image stream in another namespace
+    namespace: f6b17d-tools
+    kind: ImageStreamTag
+    name: bbcm-app:dev
+
 
   # -- enable security (username and password)
   securityEnabled: true
