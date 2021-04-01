@@ -6,6 +6,18 @@
   include_vars: roles/ocp4_mp_ic/vars/mines-permitting-issuer-deploy-params.dev.yaml
   when: "'dev' == lookup('env','DEPLOY_ENV')"
 
+# If files exist, delete them, They could have been generated last run and are outdated
+# We do not cleanup post-run, in the event a developer wants to read the output files
+- name: Cleanup outdated procedural manifests
+  file:
+    path: roles/ocp4_mp_ic/templates/mines-permitting-issuer-deploy-{{ item.kind }}.yaml
+    state: absent
+  loop:
+    - { kind: "service" }
+    - { kind: "route" }
+    - { kind: "hpas" }
+    - { kind: "dc" }
+
 # take existing manifests pulled from template, use as j2 and populate with params
 # output file
 # We template each manifest 1 at a time by iterating
