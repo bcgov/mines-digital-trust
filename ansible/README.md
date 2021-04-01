@@ -4,7 +4,8 @@
 
 - Install Ansible (Used v3.1.0)
 - Python
-- pip install openshift
+- pip
+- pip install openshift pyyaml kubernetes
 
 ## Development
 
@@ -37,9 +38,14 @@ Playbook ENVs:
 
 ### Registry Access
 
-- Create service account
-- Create role binding between the service account and edit registry role
+- Created service account `internal-registry`
+- Created role binding between the service account and edit registry role
 - Get the token from the service account's secret. Using this in a github secret lets you login to the internal registry
+
+### API Resources access
+
+- Created service account `infra-update`
+- create role binding with custom role that can edit all required resources
 
 ### Pull a config and clean it:
 

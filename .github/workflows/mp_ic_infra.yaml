@@ -29,13 +29,13 @@ jobs:
         with:
           version: "4.6"
           openshift_server_url: ${{ secrets.CLUSTER_API }}
-          parameters: '{"apitoken": "${{ secrets.DEPLOY_DEV_TOKEN }}"}'
+          parameters: '{"apitoken": "${{ secrets.DEPLOY_IC_DEV_TOKEN }}"}'
           cmd: |
-            -n ${{ secrets.DEV_NAMESPACE }} get pods
+            -n ${{ secrets.IC_DEV_NAMESPACE }} get pods
 
       - name: Apply manifests to check for drift
         env:
           DEPLOY_ENV: dev
-          NAMESPACE: ${{ secrets.DEV_NAMESPACE }}
+          NAMESPACE: ${{ secrets.IC_DEV_NAMESPACE }}
         run: |
           cd ansible/ && ansible-playbook apply_deployment.yaml
