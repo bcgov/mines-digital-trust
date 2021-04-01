@@ -11,7 +11,7 @@
     <v-tooltip right>
       <template v-slot:activator="{ on, attrs }">
         <v-icon x-small class="ml-2" :color="color" v-bind="attrs" v-on="on"
-          >$vuetify.icons.partnerStatebrightness-1</v-icon
+          >$vuetify.icons.partnerState</v-icon
         >
       </template>
       <span>Aries connection state: {{ this.state }}</span>
