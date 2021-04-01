@@ -24,6 +24,10 @@ jobs:
         run: |
           pip3 install openshift pyyaml kubernetes
 
+      - name: Ansible version
+        run: |
+          ansible-playbook --version
+
       - name: OpenShift Action
         uses: redhat-developer/openshift-actions@v1.1
         with:
