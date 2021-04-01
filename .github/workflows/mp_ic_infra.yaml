@@ -24,10 +24,6 @@ jobs:
         run: |
           pip3 install openshift pyyaml kubernetes
 
-      - name: debug
-        run: |
-          ansible-playbook --version
-
       - name: OpenShift Action
         uses: redhat-developer/openshift-actions@v1.1
         with:
@@ -35,7 +31,7 @@ jobs:
           openshift_server_url: ${{ secrets.CLUSTER_API }}
           parameters: '{"apitoken": "${{ secrets.DEPLOY_DEV_TOKEN }}"}'
           cmd: |
-            project ${{ secrets.DEV_NAMESPACE }}
+            -n ${{ secrets.DEV_NAMESPACE }} get pods
 
       - name: Apply manifests to check for drift
         env:
