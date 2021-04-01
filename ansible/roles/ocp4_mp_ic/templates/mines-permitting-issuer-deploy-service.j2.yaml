@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ${NAME}${SUFFIX}
+  labels:
+    name: ${NAME}${SUFFIX}
+    app: ${APP_NAME}${SUFFIX}
+    app-group: ${APP_GROUP}
+    role: ${ROLE}
+    env: ${TAG_NAME}
+spec:
+  ports:
+    - name: ${NAME}-http
+      port: ${HOST_PORT}
+      protocol: TCP
+      targetPort: ${HOST_PORT}
+  selector:
+    name: ${NAME}${SUFFIX}
