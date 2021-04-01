@@ -4,8 +4,8 @@ on:
   push:
     paths:
       - "ansible/**"
-    # branches:
-    #   - develop
+    branches:
+      - develop
 
 jobs:
   infra-mp-ic:
