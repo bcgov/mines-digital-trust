@@ -32,7 +32,7 @@ Playbook ENVs:
 
 - DEPLOY_ENV
 
-* oc login with a token that has deploymentconfig resource access
+* oc login with a token that has deploymentconfig, services, routes, and horizontalpodautoscalers resource access
 
 ## Footnotes
 

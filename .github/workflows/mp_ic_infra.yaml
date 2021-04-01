@@ -18,11 +18,11 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
+          python-version: "3.8.2"
 
       - name: Include required python dependencies for ansible
         run: |
-          pip3 install openshift pyyaml kubernetes
+          pip3 install ansible openshift pyyaml kubernetes
 
       - name: Ansible version
         run: |
