@@ -10,6 +10,8 @@ metadata:
     description: Defines how to deploy the container.
 spec:
   strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
     type: Rolling
     rollingParams:
       updatePeriodSeconds: 1
@@ -49,7 +51,7 @@ spec:
             - name: CONFIG_ROOT
               value: ${CONFIG_ROOT}
             - name: HOST_PORT
-              value: ${HOST_PORT}
+              value: "${HOST_PORT}"
             - name: ENVIRONMENT
               value: ${ENVIRONMENT}
             - name: AGENT_ADMIN_URL
@@ -81,23 +83,31 @@ spec:
                   name: ${NAME}${SUFFIX}
                   key: issuer-secret-key
             - name: WEB_CONCURRENCY
-              value: ${WEB_CONCURRENCY}
+              value: "${WEB_CONCURRENCY}"
             - name: WORKER_THREADS
-              value: ${WORKER_THREADS}
+              value: "${WORKER_THREADS}"
             - name: MAX_CRED_RESPONSE_TIMEOUT
-              value: ${MAX_CRED_RESPONSE_TIMEOUT}
+              value: "${MAX_CRED_RESPONSE_TIMEOUT}"
           readinessProbe:
-            timeoutSeconds: 30
-            initialDelaySeconds: 3
+            failureThreshold: 3
             httpGet:
               path: /health
               port: ${HOST_PORT}
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
           livenessProbe:
+            failureThreshold: 3
             timeoutSeconds: 30
             initialDelaySeconds: 300
+            periodSeconds: 10
+            successThreshold: 1
             httpGet:
               path: /health
               port: ${HOST_PORT}
+              scheme: HTTP
           resources:
             requests:
               cpu: ${CPU_REQUEST}
