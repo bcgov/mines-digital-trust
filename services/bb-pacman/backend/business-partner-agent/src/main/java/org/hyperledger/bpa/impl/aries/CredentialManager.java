@@ -17,13 +17,17 @@
  */
 package org.hyperledger.bpa.impl.aries;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import io.micronaut.context.annotation.Value;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.hyperledger.aries.AriesClient;
+import org.hyperledger.aries.api.creddef.CredentialDefinition;
 import org.hyperledger.aries.api.credential.Credential;
 import org.hyperledger.aries.api.credential.CredentialAttributes;
 import org.hyperledger.aries.api.credential.CredentialExchange;
@@ -32,6 +36,7 @@ import org.hyperledger.aries.api.credential.CredentialProposalRequest.Credential
 import org.hyperledger.aries.api.exception.AriesException;
 import org.hyperledger.aries.api.jsonld.VerifiableCredential.VerifiableIndyCredential;
 import org.hyperledger.aries.api.jsonld.VerifiablePresentation;
+import org.hyperledger.bpa.api.CredDefAPI;
 import org.hyperledger.bpa.api.CredentialType;
 import org.hyperledger.bpa.api.aries.AriesCredential;
 import org.hyperledger.bpa.api.aries.AriesCredential.AriesCredentialBuilder;
@@ -40,13 +45,16 @@ import org.hyperledger.bpa.api.exception.NetworkException;
 import org.hyperledger.bpa.api.exception.PartnerException;
 import org.hyperledger.bpa.controller.api.WebSocketMessageBody;
 import org.hyperledger.bpa.impl.MessageService;
+import org.hyperledger.bpa.impl.activity.Identity;
 import org.hyperledger.bpa.impl.activity.LabelStrategy;
 import org.hyperledger.bpa.impl.activity.VPManager;
 import org.hyperledger.bpa.impl.util.AriesStringUtil;
 import org.hyperledger.bpa.impl.util.Converter;
+import org.hyperledger.bpa.model.IssuedCredential;
 import org.hyperledger.bpa.model.MyCredential;
 import org.hyperledger.bpa.model.MyDocument;
 import org.hyperledger.bpa.model.Partner;
+import org.hyperledger.bpa.repository.IssuedCredentialRepository;
 import org.hyperledger.bpa.repository.MyCredentialRepository;
 import org.hyperledger.bpa.repository.MyDocumentRepository;
 import org.hyperledger.bpa.repository.PartnerRepository;
@@ -56,10 +64,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Singleton
@@ -67,6 +73,9 @@ public class CredentialManager {
 
     @Value("${bpa.did.prefix}")
     String didPrefix;
+
+    @Inject
+    Identity id;
 
     @Inject
     @Setter
@@ -80,6 +89,9 @@ public class CredentialManager {
 
     @Inject
     MyCredentialRepository credRepo;
+
+    @Inject
+    IssuedCredentialRepository issuedCredRepo;
 
     @Inject
     VPManager vpMgmt;
@@ -101,6 +113,9 @@ public class CredentialManager {
 
     @Inject
     LabelStrategy labelStrategy;
+
+    @Inject
+    CredentialDefinitionService credentialDefinitionService;
 
     // request credential from issuer (partner)
     public void sendCredentialRequest(@NonNull UUID partnerId, @NonNull UUID myDocId) {
@@ -161,6 +176,26 @@ public class CredentialManager {
                 });
     }
 
+    public void handleIssuedCredentialEvent(CredentialExchange credEx) {
+        issuedCredRepo.findByThreadId(credEx.getThreadId())
+                .ifPresentOrElse(cred -> issuedCredRepo.updateState(cred.getId(), credEx.getState()), () -> {
+                    HashMap<String, Object> cp = new Gson()
+                            .fromJson(credEx.getCredentialOfferDict().get("credential_preview"), HashMap.class);
+
+                    IssuedCredential dbCred = IssuedCredential
+                            .builder()
+                            .connectionId(credEx.getConnectionId())
+                            .state(credEx.getState())
+                            .threadId(credEx.getThreadId())
+                            .credentialExchangeId(credEx.getCredentialExchangeId())
+                            .schemaId(credEx.getSchemaId())
+                            .credentialDefinitionId(credEx.getCredentialDefinitionId())
+                            .credentialPreview(cp)
+                            .build();
+                    issuedCredRepo.save(dbCred);
+                });
+    }
+
     // credential signed, but not in wallet yet
     public void handleStoreCredential(CredentialExchange credEx) {
         credRepo.findByThreadId(credEx.getThreadId())
@@ -173,6 +208,20 @@ public class CredentialManager {
                         log.error("aca-py not reachable", e);
                     }
                 }, () -> log.error("Received store credential event without matching thread id"));
+    }
+
+    // not sure if we need to do this for issued creds?
+    public void handleStoreIssuedCredential(CredentialExchange credEx) {
+        issuedCredRepo.findByThreadId(credEx.getThreadId())
+                .ifPresentOrElse(cred -> {
+                    try {
+                        issuedCredRepo.updateState(cred.getId(), credEx.getState());
+                        // TODO should not be necessary with --auto-store-credential set
+                        ac.issueCredentialRecordsStore(credEx.getCredentialExchangeId());
+                    } catch (IOException e) {
+                        log.error("aca-py not reachable", e);
+                    }
+                }, () -> log.error("Received store issued credential event without matching thread id"));
     }
 
     // credential, signed and stored in wallet
@@ -192,6 +241,33 @@ public class CredentialManager {
                     messageService.sendMessage(WebSocketMessageBody.credentialReceived(buildAriesCredential(updated)));
 
                 }, () -> log.error("Received credential without matching thread id, credential is not stored."));
+    }
+
+    // credential, signed and stored in wallet
+    public void handleIssuedCredentialAcked(CredentialExchange credEx) {
+        issuedCredRepo.findByThreadId(credEx.getThreadId())
+                .ifPresentOrElse(cred -> {
+                    String label = schemaService.getSchemaLabel(credEx.getSchemaId());
+                    // build credential from credential offer/preview and schema/cred def ids
+                    ArrayList<LinkedHashMap> attributes = (ArrayList) cred.getCredentialPreview().get("attributes");
+                    final Map<String, String> attrs = attributes
+                            .stream()
+                            .collect(Collectors.toMap(s -> (String) s.get("name"),
+                                    s -> (String) s.get("value")));
+
+                    Credential c = new Credential();
+                    c.setSchemaId(credEx.getSchemaId());
+                    c.setCredentialDefinitionId(credEx.getCredentialDefinitionId());
+                    c.setAttrs(attrs);
+                    cred
+                            .setCredential(conv.toMap(c))
+                            .setType(CredentialType.SCHEMA_BASED)
+                            .setState(credEx.getState())
+                            .setIssuedAt(Instant.now())
+                            .setLabel(label);
+                    IssuedCredential updated = issuedCredRepo.update(cred);
+
+                }, () -> log.error("Received issued credential without matching thread id, credential is not stored."));
     }
 
     public Optional<MyCredential> toggleVisibility(UUID id) {
@@ -233,9 +309,22 @@ public class CredentialManager {
         return myCred.build();
     }
 
+    private AriesCredential buildAriesCredential(IssuedCredential dbCred) {
+        final AriesCredentialBuilder issuedCred = AriesCredential.fromIssuedCredential(dbCred, id.getMyDid());
+        if (dbCred.getCredential() != null) {
+            final Credential ariesCred = conv.fromMap(dbCred.getCredential(), Credential.class);
+            issuedCred
+                    .schemaId(ariesCred.getSchemaId())
+                    .credentialDefinitionId(ariesCred.getCredentialDefinitionId())
+                    .typeLabel(schemaService.getSchemaLabel(ariesCred.getSchemaId()))
+                    .credentialData(ariesCred.getAttrs());
+        }
+        return issuedCred.build();
+    }
+
     /**
      * Updates the credentials label
-     * 
+     *
      * @param id    the credential id
      * @param label the credentials label
      * @return the updated credential if found
@@ -306,4 +395,62 @@ public class CredentialManager {
         }
         return issuer;
     }
+
+    public Optional<CredentialExchange> issueCredentialSend(@NonNull UUID partnerId, @NonNull String schemaId,
+            @NonNull String credDefId, @NonNull Map<String, Object> doc) {
+        final Optional<Partner> dbPartner = partnerRepo.findById(partnerId);
+        if (dbPartner.isPresent()) {
+            final Optional<CredentialDefinition> credDef = credentialDefinitionService
+                    .getCredentialDefinition(credDefId);
+            if (credDef.isPresent()) {
+                try {
+                    Optional<CredentialExchange> exchange = ac.issueCredentialSend(
+                            CredentialProposalRequest
+                                    .builder()
+                                    .connectionId(dbPartner.get().getConnectionId())
+                                    .schemaId(schemaId)
+                                    .credentialProposal(
+                                            new CredentialPreview(
+                                                    CredentialAttributes.from(doc)))
+                                    .credentialDefinitionId(credDefId)
+                                    .build());
+                    return exchange;
+                } catch (IOException e) {
+                    throw new NetworkException("No aries connection", e);
+                }
+            } else {
+                throw new PartnerException("Found no matching credential definition: " + credDefId);
+            }
+        } else {
+            throw new PartnerException("No partner found for id: " + partnerId.toString());
+        }
+    }
+
+    public List<AriesCredential> listIssuedCredentials() {
+        List<AriesCredential> result = new ArrayList<>();
+        issuedCredRepo.findAll().forEach(c -> result.add(buildAriesCredential(c)));
+        return result;
+    }
+
+    public List<AriesCredential> getIssuedCredentialsForPartner(@NonNull UUID partnerId) {
+        List<AriesCredential> result = new ArrayList<>();
+        final Optional<Partner> dbPartner = partnerRepo.findById(partnerId);
+        if (dbPartner.isPresent()) {
+            issuedCredRepo.findByConnectionId(dbPartner.get().getConnectionId())
+                    .forEach(c -> result.add(buildAriesCredential(c)));
+        }
+        return result;
+    }
+
+    public AriesCredential getIssuedCredential(@NonNull UUID partnerId, @NonNull UUID credId) {
+        final Optional<Partner> dbPartner = partnerRepo.findById(partnerId);
+        if (dbPartner.isPresent()) {
+            Optional<IssuedCredential> ic = issuedCredRepo.findById(credId);
+            if (ic.isPresent()) {
+                return buildAriesCredential(ic.get());
+            }
+        }
+        return null;
+    }
+
 }

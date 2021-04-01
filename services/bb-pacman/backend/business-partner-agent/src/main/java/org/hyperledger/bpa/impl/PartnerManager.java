@@ -43,7 +43,8 @@ import java.util.UUID;
 
 @Singleton
 public class PartnerManager {
-    @Inject private ApplicationEventPublisher eventPublisher;
+    @Inject
+    private ApplicationEventPublisher eventPublisher;
 
     @Value("${bpa.did.prefix}")
     private String ledgerPrefix;
@@ -105,7 +106,7 @@ public class PartnerManager {
                 .setState("requested");
         Partner result = repo.save(partner); // save before creating the connection
         if (did.startsWith(ledgerPrefix) && lookupP.getAriesSupport()) {
-            //wrong did
+            // wrong did
             cm.createConnection(did, connectionLabel, alias);
         } else if (lookupP.getAriesSupport()) {
             cm.createConnection(lookupP.getDidDocAPI(), connectionLabel, alias);
