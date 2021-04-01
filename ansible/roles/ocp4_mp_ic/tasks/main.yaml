@@ -1,17 +1,34 @@
 ---
-# This role's tassks connect to the cluster and applies a templated manifest populated by an inventory
-- name:
-  debug:
-    msg: verify cluster in known hosts
+# This role's tasks connect to the cluster and applies a templated manifest populated by role variables
+# variables used to fill template are determined by DEPLOY_ENV environment variable
+# eg: on your local machine, or the github runner if run in a pipeline
+- name: Include values for deployment to dev environment
+  include_vars: roles/ocp4_mp_ic/vars/mines-permitting-issuer-deploy-params.dev.yaml
+  when: "'dev' == lookup('env','DEPLOY_ENV')"
 
-- name:
-  debug:
-    msg: authenticate with the cluster
+# take existing manifests pulled from template, use as j2 and populate with params
+# output file
+# We template each manifest 1 at a time by iterating
+- name: Template service manifest
+  template:
+    src: roles/ocp4_mp_ic/templates/mines-permitting-issuer-deploy-{{ item.kind }}.j2.yaml
+    dest: roles/ocp4_mp_ic/templates/mines-permitting-issuer-deploy-{{ item.kind }}.yaml
+    variable_start_string: "${"
+    variable_end_string: "}"
+  loop:
+    - { kind: "service" }
+    - { kind: "route" }
+    - { kind: "hpas" }
+    - { kind: "dc" }
 
-- name:
-  debug:
-    msg: populating manfiest templates
-
-- name:
-  debug:
-    msg: applying manfiests
+# iterate over populated manifests and check for drift in the namespace
+- name: Apply service manifest
+  k8s:
+    namespace: "{{ lookup('env','NAMESPACE') }}"
+    state: present
+    src: roles/ocp4_mp_ic/templates/mines-permitting-issuer-deploy-{{ item.kind }}.yaml
+  loop:
+    - { kind: "service" }
+    - { kind: "route" }
+    - { kind: "hpas" }
+    - { kind: "dc" }
