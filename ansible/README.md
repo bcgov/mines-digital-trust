@@ -46,6 +46,7 @@ Playbook ENVs:
 
 - Created service account `infra-update`
 - create role binding with custom role that can edit all required resources
+- role is `infra-updater`
 
 ### Pull a config and clean it:
 
