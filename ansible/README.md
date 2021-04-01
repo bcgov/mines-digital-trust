@@ -23,9 +23,15 @@
 - The github runner first uses oc to login into the silver cluster to obtain a local .kube config
 - It uses this config to connect during the playbook
 - The playbook is configured to run on localhost (the runner itself) and apply changes to the openshift API
-- The runner itself will call the playbook. If you setup the relavant ENV variables, you can also execute it locally: `ansible-playbook apply_deployment.yaml`
-- When the k8's module is invoked in the playbook, Ansible will make an idemptotent check to determine if there's any drift
+- The runner itself will call the playbook. If you setup the relevant ENV variables, you can also execute it locally: `ansible-playbook apply_deployment.yaml`
+- When the k8's module is invoked in the playbook, Ansible will make an idempotent check to determine if there's any drift
 - If no drift is detected, then no changes occur, so you can call the playbook as many times as you want without side effects
+
+Playbook ENVs:
+
+- DEPLOY_ENV
+
+* oc login with a token that has deploymentconfig resource access
 
 ## Footnotes
 
