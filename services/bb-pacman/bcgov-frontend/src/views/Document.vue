@@ -99,11 +99,10 @@
 
       <v-card-actions>
         <v-layout align-end justify-end>
-          <v-btn color="secondary" class="mr-2" @click="cancel()">Cancel</v-btn>
+          <v-btn color="secondary" @click="cancel()">Cancel</v-btn>
           <v-btn
             :loading="this.isBusy"
             color="primary"
-            class="mr-2"
             @click="saveDocument(false || isProfile(intDoc.type))"
             >Save</v-btn
           >
@@ -111,7 +110,6 @@
             v-show="this.id && !isProfile(intDoc.type)"
             :loading="this.isBusy"
             color="primary"
-            class="mr-2"
             @click="saveDocument(true && !isProfile(intDoc.type))"
             >Save & Close</v-btn
           >

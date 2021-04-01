@@ -166,3 +166,15 @@ a.dashboard-card {
   }
 }
 
+div {
+  &.layout {
+    &.align-end {
+      &.justify-end {
+        > button {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+
+}
