@@ -1,0 +1,14 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: ${NAME}${SUFFIX}
+  labels:
+    name: ${NAME}${SUFFIX}
+    app: ${APP_NAME}${SUFFIX}
+    app-group: ${APP_GROUP}
+spec:
+  scaleTargetRef:
+    kind: DeploymentConfig
+    name: ${NAME}${SUFFIX}
+  minReplicas: ${MIN_REPLICAS}
+  maxReplicas: ${MAX_REPLICAS}
