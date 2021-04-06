@@ -7,81 +7,113 @@
 -->
 <template>
   <v-container>
-    <v-card max-width="600" class="mx-auto">
+    <v-card class="mx-auto">
       <v-card-title class="bg-light">
         <v-btn depressed color="secondary" icon @click="$router.go(-1)">
           <v-icon dark>mdi-chevron-left</v-icon>
         </v-btn>
         <span>Create Schema</span>
       </v-card-title>
-      <v-list-item>
-        <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
-          Schema Label:
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <v-text-field
-            class="mt-6"
-            placeholder="Label"
-            v-model="schemaLabel"
-            :rules="[rules.required]"
-            outlined
-            dense
-            required
-          >
-          </v-text-field>
-        </v-list-item-subtitle>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
-          Schema Name:
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <v-text-field
-            class="mt-6"
-            placeholder="Name"
-            v-model="schemaName"
-            :rules="[rules.required,rules.schemaText]"
-            outlined
-            dense
-            required
-          >
-          </v-text-field>
-        </v-list-item-subtitle>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
-          Schema Version:
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <v-text-field
-            class="mt-6"
-            placeholder="0.0.0"
-            v-model="schemaVersion"
-            :rules="[rules.required, rules.version]"
-            outlined
-            dense
-            required
-          >
-          </v-text-field>
-        </v-list-item-subtitle>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-title class="grey--text text--darken-2 font-weight-medium">
-          Attributes:
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <v-text-field
-            class="mt-6"
-            placeholder="Comma separated attribute names"
-            v-model="schemaAttributes"
-            :rules="[rules.required]"
-            outlined
-            dense
-            required
-          >
-          </v-text-field>
-        </v-list-item-subtitle>
-      </v-list-item>
+      <v-container>
+        <v-row>
+          <v-col cols="4" class="pb-0">
+            <p class="grey--text text--darken-2 font-weight-medium">
+              Schema Information
+            </p>
+          </v-col>
+          <v-col cols="8" class="pb-0">
+            <v-text-field
+              label="Schema Label"
+              placeholder="Label in your application for this schema"
+              v-model="schemaLabel"
+              :rules="[rules.required]"
+              outlined
+              dense
+            ></v-text-field>
+            <v-text-field
+              label="Schema Name"
+              placeholder="Published schema name (ex. my-schema)"
+              v-model="schemaName"
+              :rules="[rules.required, rules.schemaText]"
+              required
+              outlined
+              dense
+            ></v-text-field>
+            <v-text-field
+              label="Schema Version"
+              placeholder="Published schema version (ex. 1.2 or 1.2.3)"
+              v-model="schemaVersion"
+              :rules="[rules.required, rules.version]"
+              required
+              outlined
+              dense
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="pb-0">
+            <p class="grey--text text--darken-2 font-weight-medium">
+              Schema Attributes
+            </p>
+          </v-col>
+          <v-col cols="8" class="pb-0">
+            <v-row>
+              <v-col class="py-0"><p class="grey--text">
+                Name
+              </p></v-col>
+              <v-col cols="4" class="py-0"><p class="grey--text">
+                Is Default
+              </p></v-col>
+              <v-col cols="2" class="py-0"><p class="grey--text">
+                Action
+              </p>
+              </v-col>
+            </v-row>
+          <v-row
+              v-for="(attr, index) in schemaAttributes"
+              v-bind:key="attr.type"
+            >
+              <v-col class="py-0">
+                <v-text-field
+                  placeholder="Ex. companyName or company-name"
+                  v-model="attr.text"
+                  :rules="[rules.required, rules.schemaText]"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="4" class="py-0">
+                <v-checkbox
+                  v-model="attr.defaultAttribute"
+                  outlined
+                  dense
+                  style="margin-top: 4px;padding-top: 4px;"
+                  @change="makeDefaultAttribute(index, attr.defaultAttribute)"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="2" class="py-0">
+                <v-layout>
+                  <v-btn
+                    v-if="index === schemaAttributes.length - 1"
+                    icon
+                    text
+                    @click="addAttribute"
+                  >
+                    <v-icon color="primary">mdi-plus</v-icon></v-btn>
+                  <v-btn
+                    icon
+                    v-if="index !== schemaAttributes.length - 1"
+                    @click="deleteAttribute(index)"
+                  >
+                    <v-icon color="error">mdi-delete</v-icon>
+                  </v-btn>
+                </v-layout>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-divider></v-divider>
       <v-card-actions>
         <v-layout justify-end>
           <v-btn
@@ -103,19 +135,20 @@ import { EventBus } from "../main";
 export default {
   name: "CreateSchema",
   components: {},
-  created: () => {},
+  created: () => {
+  },
   data: () => {
     return {
-      schema: undefined,
       schemaLabel: "",
       schemaName: "",
       schemaVersion: "",
-      schemaAttributes: "",
+      schemaAttributeText: "",
+      schemaAttributes: [{defaultAttribute: true, text: ""}],
       isBusyCreateSchema: false,
       rules: {
         required: (value) => !!value || "Can't be empty",
-        version: (value) => (value && /^\d+(\.\d+){0,2}$/.test(value)) || "Schema Version must be numbers and '.'",
-        schemaText: (value) => (value && /^[a-zA-Z\d-_]+$/.test(value)) || "Schema name and attributes must be alphanumeric and '_' or '-'"
+        version: (value) => (value && /^(\d+)\.(\d+)(?:\.\d+)?$/.test(value)) || "Must be follow common version numbering (ex. 1.2 or 1.2.3)",
+        schemaText: (value) => (value && /^[a-zA-Z\d-_]+$/.test(value)) || "Must be alphanumeric with optional '_' or '-'"
       }
     };
   },
@@ -124,26 +157,42 @@ export default {
       return (
         this.schemaLabel.length === 0 || this.schemaName.length === 0 || this.schemaVersion.length === 0 || this.schemaAttributes.length === 0
       );
-    },
+    }
   },
   methods: {
+    makeDefaultAttribute(idx, val) {
+      // if setting true, set all others to false...
+      if (val) {
+        this.schemaAttributes.forEach((v,i) => v.defaultAttribute = idx === i);
+      }
+    },
+    addAttribute() {
+      this.schemaAttributes.push({
+        defaultAttribute: false,
+        text: "",
+      });
+    },
+    deleteAttribute(i) {
+      this.schemaAttributes.splice(i, 1);
+    },
     fixSchemaParams(s) {
       return s.trim().replace(/ /g, "_");
     },
     createSchema() {
       this.isBusyCreateSchema = true;
 
-      const attrs = this.schemaAttributes.split(",").map(s => this.fixSchemaParams(s));
-
+      const attrs = this.schemaAttributes.filter(x => x.text.trim().length).map(x => this.fixSchemaParams(x.text));
+      const defaultAttr = this.schemaAttributes.find(x => x.defaultAttribute);
       const data = {
         schemaLabel: this.schemaLabel,
         schemaName: this.fixSchemaParams(this.schemaName),
         schemaVersion: this.fixSchemaParams(this.schemaVersion),
-        attributes: attrs
+        attributes: attrs,
+        defaultAttributeName: defaultAttr ? defaultAttr.text : undefined
       };
 
       this.$axios
-        .post(`${this.$apiBaseUrl}/admin/schema/create`, data)
+        .post(`${this.$apiBaseUrl}/admin/schema`, data)
         .then((result) => {
           this.isBusyCreateSchema = false;
 

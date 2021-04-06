@@ -80,6 +80,7 @@ export default {
   data: () => {
     return {
       data: [],
+      credDefs: {},
       newSchema: {
         label: "",
         schemaId: "",
@@ -95,10 +96,15 @@ export default {
           text: "Schema ID",
           value: "schemaId",
         },
+        {
+          text: "Cred Def ID",
+          value: "credDefId",
+        },
       ],
     };
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     fetch() {
       this.$axios
@@ -106,12 +112,25 @@ export default {
         .then((result) => {
           console.log(result);
           if ({}.hasOwnProperty.call(result, "data")) {
-            this.isBusy = false;
-
             this.data = result.data;
-
             console.log(this.data);
           }
+        })
+        .then(() => { return this.$axios.get(`${this.$apiBaseUrl}/admin/creddef?map=true`) })
+        .then((result) => {
+          console.log(result);
+          if ({}.hasOwnProperty.call(result, "data")) {
+            this.credDefs = result.data;
+            console.log(this.data);
+          }
+          // pop the credential definition id in the data if exists.
+          this.data.forEach(d => {
+            const cdef = this.credDefs[d.schemaId];
+            if (cdef) {
+              d["credDefId"] = cdef.id;
+            }
+          });
+          this.isBusy = false;
         })
         .catch((e) => {
           this.isBusy = false;

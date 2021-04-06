@@ -18,6 +18,7 @@
 package org.hyperledger.bpa.controller;
 
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
@@ -27,17 +28,17 @@ import io.micronaut.validation.Validated;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.hyperledger.aries.AriesClient;
 import org.hyperledger.aries.api.ledger.TAAInfo.TAARecord;
+import org.hyperledger.bpa.api.CredDefAPI;
 import org.hyperledger.bpa.api.aries.SchemaAPI;
 import org.hyperledger.bpa.config.RuntimeConfig;
-import org.hyperledger.bpa.controller.api.admin.AddSchemaRequest;
-import org.hyperledger.bpa.controller.api.admin.CreateSchemaRequest;
-import org.hyperledger.bpa.controller.api.admin.TAADigestRequest;
-import org.hyperledger.bpa.controller.api.admin.UpdateSchemaRequest;
+import org.hyperledger.bpa.controller.api.admin.*;
+import org.hyperledger.bpa.impl.aries.CredentialDefinitionService;
 import org.hyperledger.bpa.impl.mode.indy.EndpointService;
 import org.hyperledger.bpa.impl.aries.SchemaService;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,6 +51,9 @@ public class AdminController {
 
     @Inject
     SchemaService schemaService;
+
+    @Inject
+    CredentialDefinitionService credDefService;
 
     @Inject
     Optional<EndpointService> endpointService;
@@ -86,26 +90,44 @@ public class AdminController {
     }
 
     /**
+     * Aries: Get a schema configuration
+     *
+     * @param id the schema id
+     * @return {@link HttpResponse}
+     */
+    @Get("/schema/{id}/creddef")
+    public HttpResponse<CredDefAPI> getSchemaCredDef(@PathVariable UUID id) {
+        final Optional<SchemaAPI> schema = schemaService.getSchema(id);
+        if (schema.isPresent()) {
+            CredDefAPI credDef = credDefService.getSchemaCredDef(schema.get().getSchemaId());
+            if (credDef != null)
+                return HttpResponse.ok(credDef);
+        }
+        return HttpResponse.notFound();
+    }
+
+    /**
+     * Aries: Add/Import a schema configuration
+     *
+     * @param req {@link AddSchemaRequest}
+     * @return {@link HttpResponse}
+     */
+    @Post("/schema/import")
+    public HttpResponse<SchemaAPI> addSchema(@Body AddSchemaRequest req) {
+        return HttpResponse.ok(schemaService.addSchema(req.getSchemaId(), req.getLabel(),
+                req.getDefaultAttributeName()));
+    }
+
+    /**
      * Aries: Create a schema configuration
      *
      * @param req {@link CreateSchemaRequest}
      * @return {@link HttpResponse}
      */
-    @Post("/schema/create")
-    public HttpResponse<SchemaAPI> createSchema(@Body CreateSchemaRequest req) {
-        return HttpResponse.ok(schemaService.createSchema(req.getSchemaLabel(), req.getSchemaName(), req.getSchemaVersion(), req.getAttributes()));
-    }
-
-    /**
-     * Aries: Add a schema configuration
-     *
-     * @param req {@link AddSchemaRequest}
-     * @return {@link HttpResponse}
-     */
     @Post("/schema")
-    public HttpResponse<SchemaAPI> addSchema(@Body AddSchemaRequest req) {
-        return HttpResponse.ok(schemaService.addSchema(req.getSchemaId(), req.getLabel(),
-                req.getDefaultAttributeName()));
+    public HttpResponse<SchemaAPI> createSchema(@Body CreateSchemaRequest req) {
+        return HttpResponse.ok(schemaService.createSchema(req.getSchemaName(), req.getSchemaVersion(),
+                req.getAttributes(), req.getSchemaLabel(), req.getDefaultAttributeName()));
     }
 
     /**
@@ -142,6 +164,32 @@ public class AdminController {
             return HttpResponse.notAllowed();
         }
         return HttpResponse.notFound();
+    }
+
+    /**
+     * Aries: List my credential definitions
+     *
+     * @return list of {@link CredDefAPI}
+     */
+    @Get("/creddef")
+    public MutableHttpResponse listCredDefs(@QueryValue boolean map) {
+        if (map) {
+            return HttpResponse.ok(credDefService.getSchemaCredDefs());
+        } else {
+            return HttpResponse.ok(credDefService.getCredDefs());
+        }
+    }
+
+    /**
+     * Aries: Create a credential definition
+     *
+     * @param req {@link CreateCredDefRequest}
+     * @return {@link HttpResponse}
+     */
+    @Post("/creddef")
+    public HttpResponse<String> createCreateCredentialDefinition(@Body CreateCredDefRequest req) {
+        return HttpResponse.ok(credDefService.createCredentialDefinition(req.getSchemaId(), req.getTag(),
+                req.getRevocationRegistrySize(), req.isSupportRevocation()));
     }
 
     /**

@@ -151,6 +151,29 @@
             ></PresentationList>
           </v-col>
         </v-row>
+        <v-row class="mx-4">
+          <v-divider></v-divider>
+        </v-row>
+        <v-row v-if="partner.ariesSupport" class="mx-4">
+          <v-col cols="4">
+            <v-row>
+              <p class="grey--text text--darken-2 font-weight-medium">
+                Issued Credentials
+              </p>
+            </v-row>
+            <v-row>The credentials you issued your partner</v-row>
+            <v-row class="mt-4">
+              <v-btn small @click="issueCredential"> Issue Credential</v-btn>
+            </v-row>
+          </v-col>
+          <v-col cols="8">
+            <IssuedCredentialList
+              v-if="isReady"
+              v-bind:credentials="credentialsIssued"
+              :expandable="false"
+            ></IssuedCredentialList>
+          </v-col>
+        </v-row>
       </v-card-text>
 
       <v-card-actions>
@@ -200,13 +223,14 @@
 <script>
 import Profile from "@/components/Profile";
 import PresentationList from "@/components/PresentationList";
+import IssuedCredentialList from "@/components/IssuedCredentialList";
 import PartnerStateIndicator from "@/components/PartnerStateIndicator";
 import { CredentialTypes } from "../constants";
 import { getPartnerProfile, getPartnerName } from "../utils/partnerUtils";
 import { EventBus } from "../main";
 import {
   sentHeaders,
-  receivedHeaders,
+  receivedHeaders
 } from "@/components/tableHeaders/PartnerHeaders";
 
 export default {
@@ -216,6 +240,7 @@ export default {
     Profile,
     PresentationList,
     PartnerStateIndicator,
+    IssuedCredentialList
   },
   created() {
     EventBus.$emit("title", "Partner");
@@ -239,6 +264,7 @@ export default {
       credentials: [],
       presentationsSent: [],
       presentationsReceived: [],
+      credentialsIssued: [],
       rules: {
         required: (value) => !!value || "Can't be empty",
       },
@@ -299,6 +325,27 @@ export default {
         };
       }
     },
+    issueCredential() {
+      if (
+        this.partner.state === "response" ||
+        this.partner.state === "active"
+      ) {
+        this.$router.push({
+          name: "IssueCredential",
+          params: {
+            id: this.id,
+          },
+        });
+      } else {
+        this.attentionPartnerStateDialog = true;
+        this.goTo = {
+          name: "IssueCredential",
+          params: {
+            id: this.id,
+          },
+        };
+      }
+    },
     getPresentationRecords() {
       console.log("Getting presentation records...");
       this.$axios
@@ -317,6 +364,12 @@ export default {
             console.log(this.presentationsSent);
           }
         })
+        .then(() => { return this.$axios.get(`${this.$apiBaseUrl}/partners/${this.id}/issue-credential`) })
+        .then((result) => {
+          if ({}.hasOwnProperty.call(result, "data")) {
+            this.credentialsIssued = result.data;
+          }
+        })
         .catch((e) => {
           console.error(e);
           // EventBus.$emit("error", e);
@@ -331,6 +384,9 @@ export default {
       this.presentationsSent = this.presentationsSent.filter((item) => {
         return item.id !== id;
       });
+    },
+    removeCredentialIssued(id) {
+      console.log(id);
     },
     getPartner() {
       console.log("Getting partner...");

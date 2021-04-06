@@ -63,6 +63,7 @@ backend/*/src/main/resources/3rdPartyLicenses/**
 # --------------------------------------
 
 !frontend/.env
+!bcgov-frontend/.env
 .env.development.*
 
 # Ignore Node

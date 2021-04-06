@@ -1,0 +1,180 @@
+/*
+ * BCGov Style
+ * This globally extends the base Vuetify style
+ */
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
+@import url("https://fonts.googleapis.com/css?family=Material+Icons");
+@import "~material-design-icons-iconfont/dist/material-design-icons.css";
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~vuetify/src/styles/styles.sass";
+
+// Variables
+$bcgov-blue: #003366;
+$bcgov-blue-secondary: #38598a;
+$bcgov-orange: #fcba19;
+$bcgov-grey: #efefef;
+$bcgov-font: #313132;
+$bcgov-error: #d8292f;
+$bcgov-link: #1a5a96;
+$bcgov-link-hover: #3b99fc;
+$bcgov-input-placeholder: #606060;
+
+// Sticky Footer
+body {
+  display: flex;
+  flex-direction: column;
+  & > .v-content {
+    flex: 1 0 auto;
+  }
+}
+
+// Typography
+.v-application {
+  font-family: -apple-system, BlinkMacSystemFont, BCSans, Roboto, Verdana, Arial, sans-serif !important;
+  line-height: 1.4;
+  font-size: 0.875rem;
+}
+
+h1 {
+  font-size: 1.9em;
+}
+h2 {
+  font-size: 1.7em;
+}
+h3 {
+  font-size: 1.3em;
+}
+h4 {
+  font-size: 1.05em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $bcgov-font;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+p {
+  color: $bcgov-font;
+  line-height: 1.7;
+}
+
+// links
+a {
+  color: $bcgov-link;
+  &:hover {
+    color: $bcgov-link-hover;
+  }
+}
+
+// Horizontal Rule
+hr {
+  border-top: 1px solid lightgrey;
+  margin-bottom: 1em;
+  .orange {
+    border-top: 2px solid $bcgov-orange;
+  }
+}
+
+// Anchor and Tab Behavior
+a,
+.v-tab {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+    button,
+    .v-icon {
+      display: inline-block;
+      text-decoration: none;
+    }
+  }
+}
+
+// General Button Style Extensions
+.v-btn {
+  span > span {
+    font-weight: bold;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    span > span {
+      text-decoration: underline;
+    }
+  }
+
+  &.v-btn--disabled {
+    color: #777;
+  }
+
+  &.v-btn--outlined {
+    &.theme--light {
+      border: 2px solid #003366;
+    }
+
+    &.theme--dark {
+      border: 2px solid #fff;
+    }
+    &.v-btn--disabled {
+      border-color: rgba(0, 0, 0, 0.26);
+    }
+  }
+  // align links with icons (shown in My Forms in table)
+  // causes underline issues in firefox
+  // a > i ~ span {
+  //   vertical-align: middle;
+  // }
+}
+
+// buttons in v-card
+.v-card__actions > .v-btn {
+  padding: 0 16px !important;
+}
+
+// vuetify radio button and checkbox labels need alignment help
+.v-input--selection-controls__input {
+  ~ .v-label {
+    margin-bottom: 0 !important;
+  }
+}
+
+nav {
+  // prevents the icon from causing a resize of list item on hover.
+  .v-icon.v-icon {
+    display: inline-block;
+  }
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+a.dashboard-card {
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.v-data-table-header th.sortable {
+  .v-data-table-header__icon {
+    margin-left: 4px;
+  }
+}
+
+div {
+  &.layout {
+    &.align-end {
+      &.justify-end {
+        > button {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+
+}

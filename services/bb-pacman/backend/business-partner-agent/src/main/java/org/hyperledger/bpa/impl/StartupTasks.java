@@ -26,6 +26,7 @@ import io.micronaut.scheduling.annotation.Async;
 import lombok.extern.slf4j.Slf4j;
 import org.hyperledger.aries.AriesClient;
 import org.hyperledger.bpa.impl.activity.VPManager;
+import org.hyperledger.bpa.impl.aries.CredentialDefinitionService;
 import org.hyperledger.bpa.impl.aries.PartnerCredDefLookup;
 import org.hyperledger.bpa.impl.aries.SchemaService;
 import org.hyperledger.bpa.impl.mode.indy.IndyStartupTasks;
@@ -63,6 +64,9 @@ public class StartupTasks {
     PartnerCredDefLookup credLookup;
 
     @Inject
+    CredentialDefinitionService credentialDefinitionService;
+
+    @Inject
     VPManager vpMgmt;
 
     @Inject
@@ -96,6 +100,7 @@ public class StartupTasks {
                 });
 
         credLookup.lookupTypesForAllPartnersAsync();
+        credentialDefinitionService.refreshSchemaCredDefsAsync();
     }
 
     private void checkModeChange() {

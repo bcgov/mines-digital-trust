@@ -25,11 +25,16 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class CreateSchemaRequest {
+    // BPA fields
     private String schemaLabel;
 
+    private String defaultAttributeName;
+
+    // aries fields...
     private String schemaName;
 
     private String schemaVersion;
 
     private List<String> attributes;
+
 }
