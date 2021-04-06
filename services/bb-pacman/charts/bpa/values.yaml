@@ -86,7 +86,7 @@ bpa:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: bpa2-f6b17d-dev.apps.silver.devops.gov.bc.ca
+      - host: bpa-f6b17d-dev.apps.silver.devops.gov.bc.ca
         paths: ['/']
     tls: []
     #  - secretName: my-bpa-tls
@@ -155,7 +155,7 @@ acapy:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: acapy2-f6b17d-dev.apps.silver.devops.gov.bc.ca
+      - host: acapy-f6b17d-dev.apps.silver.devops.gov.bc.ca
         paths: ['/']
     tls: []
     #  - secretName: my-acapy-tls

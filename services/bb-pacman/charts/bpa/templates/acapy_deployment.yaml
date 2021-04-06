@@ -34,7 +34,7 @@ spec:
            "curl -d '{\"seed\":\"$(WALLET_SEED)\", \"role\":\"TRUST_ANCHOR\", \"alias\":\"{{ include "bpa.fullname" . }}\"}' -X POST {{ .Values.bpa.ledgerURL }}/register; \
            sleep 15; \
            aca-py provision \
-           --endpoint http://{{ (index .Values.acapy.ingress.hosts 0).host }} \
+           --endpoint http://{{ .Release.Name }}-{{ (index .Values.acapy.ingress.hosts 0).host }} \
            --genesis-url '{{ .Values.bpa.ledgerURL }}/genesis' \
            --wallet-type 'indy' \
            --wallet-name 'mywallet' \
@@ -64,7 +64,7 @@ spec:
            --outbound-transport http \ 
            --webhook-url http://{{ include "bpa.fullname" . }}:{{ .Values.bpa.service.port }}/log \
            --genesis-url '{{ .Values.bpa.ledgerURL }}/genesis' \
-           --endpoint http://{{ (index .Values.acapy.ingress.hosts 0).host }} \
+           --endpoint http://{{ .Release.Name }}-{{ (index .Values.acapy.ingress.hosts 0).host }} \
            --wallet-storage-type 'postgres_storage' \
            --wallet-type 'indy' \
            --wallet-name 'mywallet' \
