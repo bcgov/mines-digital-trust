@@ -1,0 +1,37 @@
+name: GHG IC promote to test
+
+on:
+  push:
+    branches:
+      - develop
+    tags:
+      - "*rc*"
+
+env:
+  IMAGE: ghg-emissions-issuer
+  ENV_TAG: dev
+  PROMOTE_TAG: test
+
+jobs:
+  ghg-ic-promote-test:
+    name: ghg-ic-promote-test
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: login to oc registry
+        run: |
+          docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }} ${{ secrets.REGISTRY_HOST }}
+
+      - name: pull dev image to promote
+        run: |
+          docker pull ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}:${{ env.ENV_TAG }}
+
+      - name: add test tag to promote image
+        run: |
+          docker tag ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}:${{ env.ENV_TAG }} ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}:${{ env.PROMOTE_TAG }}
+
+      - name: push
+        run: |
+          docker push --all-tags ${{ secrets.REGISTRY_HOST }}/${{ secrets.IS_NAMESPACE }}/${{ env.IMAGE }}

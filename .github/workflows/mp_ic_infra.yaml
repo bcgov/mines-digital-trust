@@ -1,0 +1,45 @@
+name: Update MP IC infrastructure
+
+on:
+  push:
+    paths:
+      - "ansible/**"
+    branches:
+      - develop
+
+jobs:
+  infra-mp-ic:
+    name: infra-mp-ic
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8.2"
+
+      - name: Include required python dependencies for ansible
+        run: |
+          pip3 install ansible openshift pyyaml kubernetes
+
+      - name: Ansible version
+        run: |
+          ansible-playbook --version
+
+      - name: OpenShift Action
+        uses: redhat-developer/openshift-actions@v1.1
+        with:
+          version: "4.6"
+          openshift_server_url: ${{ secrets.CLUSTER_API }}
+          parameters: '{"apitoken": "${{ secrets.DEPLOY_IC_DEV_TOKEN }}"}'
+          cmd: |
+            -n ${{ secrets.IC_DEV_NAMESPACE }} get pods
+
+      - name: Apply manifests to check for drift
+        env:
+          DEPLOY_ENV: dev
+          NAMESPACE: ${{ secrets.IC_DEV_NAMESPACE }}
+        run: |
+          cd ansible/ && ansible-playbook apply_deployment.yaml

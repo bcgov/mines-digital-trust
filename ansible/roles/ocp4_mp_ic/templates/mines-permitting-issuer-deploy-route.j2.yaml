@@ -1,0 +1,23 @@
+kind: Route
+apiVersion: v1
+metadata:
+  name: ${NAME}${SUFFIX}
+  labels:
+    name: ${NAME}${SUFFIX}
+    app: ${APP_NAME}${SUFFIX}
+    app-group: ${APP_GROUP}
+    role: ${ROLE}
+    env: ${TAG_NAME}
+  annotations:
+    haproxy.router.openshift.io/timeout: ${ROUTE_TIMEOUT}
+spec:
+  host: ${APPLICATION_DOMAIN}
+  port:
+    targetPort: ${NAME}-http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: ${NAME}${SUFFIX}
+    weight: 100
