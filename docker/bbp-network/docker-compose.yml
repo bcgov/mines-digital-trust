@@ -4,7 +4,6 @@ services:
 # Business 1
 #######
   bpa1:
-    image: ghcr.io/hyperledger-labs/business-partner-agent:local
     build:
       context: ../../services/bb-pacman
       dockerfile: Dockerfile
