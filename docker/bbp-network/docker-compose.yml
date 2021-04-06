@@ -159,6 +159,7 @@ services:
       - bpa-wallet-db2:/var/lib/postgresql/data
 
 
+
 volumes:
   bpa-wallet-db1:
   bpa-wallet-db2:
