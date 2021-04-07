@@ -86,6 +86,7 @@ services:
 # Business 2
 #######
   bpa2:
+    image: ghcr.io/hyperledger-labs/business-partner-agent:local
     build:
       context: ../../services/bb-pacman
       dockerfile: Dockerfile
@@ -129,6 +130,7 @@ services:
         "-c",
         "sleep 1;
         aca-py start \
+        --auto-provision
         --arg-file acapy-static-args.yml \
         --inbound-transport http '0.0.0.0' ${ACAPY2_HTTP_PORT} \
         --webhook-url http://bpa2:${BPA2_PORT}/log \
