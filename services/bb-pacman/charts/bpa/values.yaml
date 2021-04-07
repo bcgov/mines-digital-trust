@@ -20,10 +20,10 @@ bpa:
     tag: "dev"
 
 
-    # -- If building onsite, refer to image stream in another namespace
-    namespace: f6b17d-tools
-    kind: ImageStreamTag
-    name: bbcm-app:dev
+    #TODO If building onsite, refer to image stream in another namespace,
+    # namespace: f6b17d-tools
+    # kind: ImageStreamTag
+    # name: bbcm-app:dev
 
 
   # -- enable security (username and password)
