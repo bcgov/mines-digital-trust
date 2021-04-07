@@ -8,7 +8,7 @@ It will also create the default ingress routes.
 
 ## TL;DR
 
-This will automagically register the new agents on the specified Indy Hyperledger (values.ledgerURL and values.ledgerBrowser)
+This will automatically generate the wallet_seed register the new agents on the specified Indy Hyperledger ([values](./values.yaml).ledgerURL and [values](./values.yaml).ledgerBrowser)
 ```sh
 # login to kubuernetes cluster (we are using OCP4)
 # Select the target namespace
@@ -48,27 +48,22 @@ helm upgrade \
 > You could easily deploy a second business partner agent like this, e.g. for demo purpose.
 > Just use a different helm release name.
 
-#### Install in local development cluster
 
-No special handling, should work the same way as with a remote cluster.
-With minikube you would
+## Registering Secret Prior to Startup
 
-Install and run minikube (see also minikube [documentation](https://minikube.sigs.k8s.io/docs/start/))
-```sh
- curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
- sudo install minikube-linux-amd64 /usr/local/bin/minikube 
- minikube start --vm-driver=docker
+- If you want to define the seed, you can create the secret <.Release.Name>-acapy {seed: <SEED>}
 
-```
 
-Install the chart
-```sh
-helm upgrade \
-	--values values-mybpa.yaml \
-   	mybpa bpa/bpa -i -n mynamespace --devel 
-```
+- If you need to register your DID manually prior to starting the BPA (required for Sovrin MainNet)? TODO:
+	(start app targetting a ledger that is free to write to, grab did/verkey and register those same values on the restricted ledger)
+	(start agent and call the acapy admin api's `wallet/did/public` to get the values, register them, and restart the app.)
+
+
 
 ## Uninstalling the Chart
+
+**This also deletes the secret that holds the SEED used to create and register it's DID. if you run uninstall/delete on the helm chart, you will need to either, SAVE the seed in the secret somewhere else to re-use it in the following installation, OR, also delete the PVC**
+
 
 To uninstall/delete the my-release deployment:
 
@@ -76,8 +71,7 @@ To uninstall/delete the my-release deployment:
 helm delete mybpa
 ```
 
-The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release. *This also deletes the secret that holds the SEED used to create and register it's DID. if you run uninstall/delete on the helm chart, you will need to either, SAVE the seed in the secret, OR, also delete the PVC*
-
+The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release. 
 To delete the PVC's associated with my-release:
 
 ```sh
