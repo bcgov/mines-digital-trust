@@ -1,0 +1,117 @@
+kind: DeploymentConfig
+apiVersion: v1
+metadata:
+  name: ${NAME}${SUFFIX}
+  labels:
+    name: ${NAME}${SUFFIX}
+    app: ${APP_NAME}${SUFFIX}
+    app-group: ${APP_GROUP}
+  annotations:
+    description: Defines how to deploy the container.
+spec:
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ${NAME}${SUFFIX}
+        from:
+          kind: ImageStreamTag
+          namespace: ${IMAGE_NAMESPACE}
+          name: ${NAME}:${TAG_NAME}
+  replicas: 1
+  selector:
+    name: ${NAME}${SUFFIX}
+  template:
+    metadata:
+      name: ${NAME}${SUFFIX}
+      labels:
+        name: ${NAME}${SUFFIX}
+        app: ${APP_NAME}${SUFFIX}
+        app-group: ${APP_GROUP}
+    spec:
+      containers:
+        - name: ${NAME}${SUFFIX}
+          image: " "
+          ports:
+            - containerPort: ${HOST_PORT}
+              protocol: TCP
+          env:
+            - name: CONFIG_ROOT
+              value: ${CONFIG_ROOT}
+            - name: HOST_PORT
+              value: "${HOST_PORT}"
+            - name: ENVIRONMENT
+              value: ${ENVIRONMENT}
+            - name: AGENT_ADMIN_URL
+              value: http://${AGENT_SERVICE_NAME}${SUFFIX}:${AGENT_ADMIN_PORT}
+            - name: AGENT_ADMIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ${AGENT_SERVICE_NAME}${SUFFIX}
+                  key: admin-api-key
+            - name: TOB_AGENT_ADMIN_URL
+              valueFrom:
+                secretKeyRef:
+                  name: ${NAME}${SUFFIX}
+                  key: cr-agent-admin-api-url
+            - name: TOB_ADMIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ${NAME}${SUFFIX}
+                  key: cr-agent-admin-api-key
+            - name: TOB_CONNECTION_NAME
+              value: ${CR_CONNECTION_NAME}
+            - name: TOB_API_URL
+              value: ${CR_API_URL}
+            - name: TOB_APP_URL
+              value: ${CR_APP_URL}
+            - name: ISSUER_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ${NAME}${SUFFIX}
+                  key: issuer-secret-key
+            - name: WEB_CONCURRENCY
+              value: "${WEB_CONCURRENCY}"
+            - name: WORKER_THREADS
+              value: "${WORKER_THREADS}"
+            - name: MAX_CRED_RESPONSE_TIMEOUT
+              value: "${MAX_CRED_RESPONSE_TIMEOUT}"
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: ${HOST_PORT}
+              scheme: HTTP
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          livenessProbe:
+            failureThreshold: 3
+            timeoutSeconds: 30
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            successThreshold: 1
+            httpGet:
+              path: /health
+              port: ${HOST_PORT}
+              scheme: HTTP
+          resources:
+            requests:
+              cpu: ${CPU_REQUEST}
+              memory: ${MEMORY_REQUEST}
+            limits:
+              cpu: ${CPU_LIMIT}
+              memory: ${MEMORY_LIMIT}

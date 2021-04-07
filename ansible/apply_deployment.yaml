@@ -1,0 +1,8 @@
+---
+- name: "Apply deployment configs to OCP4"
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  # execute tasks in roles
+  roles:
+    - ocp4_mp_ic
