@@ -54,7 +54,7 @@ register_did() {
             sed -i'' '/'"$1"'=/c\'"$1"'='"${SEED}"'' $DEST_FILE
         else
             sed -i '/'"$1"'=/c\
-            ACAPY'"$1"'_SEED1='"${SEED}"'
+            '"$1"'='"${SEED}"'
             ' $DEST_FILE
         fi
     else
