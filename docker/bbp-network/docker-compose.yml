@@ -49,6 +49,7 @@ services:
         "-c",
         "sleep 1;
         aca-py start \
+        --auto-provision
         --arg-file acapy-static-args.yml \
         --inbound-transport http '0.0.0.0' ${ACAPY1_HTTP_PORT} \
         --webhook-url http://bpa1:${BPA1_PORT}/log \
