@@ -52,6 +52,3 @@ build
 docker/**/*.txn
 docker/bbp-network/von-network
 venv
-
-
-docker/bbp-network/von-network/
