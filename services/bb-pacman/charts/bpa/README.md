@@ -1,6 +1,6 @@
 # bpa
 
-These are abbreviated instructions used for deploying into OCP4, see [.README-upstream] for original README. 
+These are abbreviated instructions used for deploying into OCP4, see the [original](./README-upstream) README for broader k8s integration. 
 
 This chart will install a business partner agent (bpa-core & bpa-acapy) and Postgres.
 
@@ -8,7 +8,7 @@ It will also create the default ingress routes.
 
 ## TL;DR
 
-This will automatically generate the wallet_seed register the new agents on the specified Indy Hyperledger ([values](./values.yaml).ledgerURL and [values](./values.yaml).ledgerBrowser)
+This will automatically generate the wallet_seed register the new agents on the specified Indy Hyperledger ([values](./values.yaml).bpa.ledgerURL and [values](./values.yaml).bpa.ledgerBrowser)
 ```sh
 # login to kubuernetes cluster (we are using OCP4)
 # Select the target namespace
@@ -36,13 +36,6 @@ This chart bootstraps a business partner agent deployment on a Kubernetes cluste
   - DNS records pointing to your routes 
 
 
-Install the chart with the release name `mybpa`, in the namespace `mynamespace`.
-
-```sh
-helm upgrade \
-	--values values-mybpa.yaml \
-   	mybpa bpa/bpa -i -n mynamespace --devel 
-```
 #### Install multiple bpa instances
 
 > You could easily deploy a second business partner agent like this, e.g. for demo purpose.
@@ -54,15 +47,15 @@ helm upgrade \
 - If you want to define the seed, you can create the secret <.Release.Name>-acapy {seed: <SEED>}
 
 
-- If you need to register your DID manually prior to starting the BPA (required for Sovrin MainNet)? TODO:
-	(start app targetting a ledger that is free to write to, grab did/verkey and register those same values on the restricted ledger)
-	(start agent and call the acapy admin api's `wallet/did/public` to get the values, register them, and restart the app.)
+- If you need to register your DID manually prior to starting the BPA (required for Sovrin MainNet)
 
+  - start app targetting a ledger that is free to write to, grab did/verkey and register those same values on the restricted ledger
+  - start agent and call the acapy admin api's `wallet/did/public` to get the values, register them, and restart the app.
 
 
 ## Uninstalling the Chart
 
-**This also deletes the secret that holds the SEED used to create and register it's DID. if you run uninstall/delete on the helm chart, you will need to either, SAVE the seed in the secret somewhere else to re-use it in the following installation, OR, also delete the PVC**
+**This also deletes the secret that holds the SEED used to create and register it's DID. if you run uninstall/delete on the helm chart, you will need to either, SAVE the seed in the secret somewhere else to re-use it in the following installation, OR, also delete the PVC so both can be recreated.**
 
 
 To uninstall/delete the my-release deployment:
