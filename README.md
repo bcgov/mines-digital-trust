@@ -49,3 +49,4 @@ If you find this project helpful, please contribute back to the project. If you 
 
 # Business to Business Credential Manager
 Lorem ipsum
+Lorem ipsum
