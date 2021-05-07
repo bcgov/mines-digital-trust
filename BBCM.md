@@ -1,6 +1,9 @@
 # Business to Business Credential Manager
 
-The Business to Business Credential Manager is software run by an organization for issuing, holding, and verifying digital trust credentials. Supported by blockchain technology, organizations can share and receive proofs that are secure and verifiable.
+The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Supported by blockchain technology, organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? The videos below can help you learn more about it:
+
+- [BBCM Ep1 - Introduction](https://app.animaker.com/animo/6K3qDbzPA1DmDkAE/)
+- [BBCM Ep2 - Use Cases](https://app.animaker.com/animo/BwR72vxT4hwUntX5/)
 
 ## **Who can use it?**
 
@@ -34,31 +37,44 @@ Now let's see some generic use cases.
   3. The *Verifier* organization sends a proof request using the predefined proof request template to the *Holder* organization.
   4. The *Holder* organization receives the proof request and presents the proof by disclosing chosen verifiable credentials and/or chosen attribute values of the verifiable credentials it holds in its wallet to the *Verifier* organization.
 
-## Terms & Definitions in the UI
+## User Interface
 
-**Dashboard**:
+The UI mock-ups are under ongoing updates, you can use the following links to access the latest contents. The links are suggested to be opened in new tabs:
 
-**Profile**:
+- [UI Prototype - Generic Key Screens](https://xd.adobe.com/view/e2ac3e6e-113d-4d77-a71d-c2b19526e9cc-b7ff/?fullscreen)
+- [Mocked-up User Workflow - Send connection request](https://xd.adobe.com/view/a515d7d3-89c2-4f8a-a67a-6f75a432fc45-f046/?fullscreen)
+- [Mocked-up User Workflow - Generate QR code](https://xd.adobe.com/view/abf970f7-97b0-4730-8286-a7f52ade2496-feaa/?fullscreen)
+- [Mocked-up User Workflow - Import schema](https://xd.adobe.com/view/fa5ffe50-2adb-46a9-9896-df66fd5cf377-af0c/?fullscreen)
+- [Mocked-up User Workflow - Create schema](https://xd.adobe.com/view/9b9d7c70-dddd-480d-bc73-8e387b83f5e7-cece/?fullscreen)
+- [Mocked-up User Workflow - Issue credential](https://xd.adobe.com/view/f9886778-d782-4800-bd9d-1775278ee448-acdb/?fullscreen)
 
-**Wallet**:
+### Terms & Usage Descriptions in the UI
 
-- **Credentials**:
-- **Credential Attribute**:
+![image](https://user-images.githubusercontent.com/58751681/117503092-55a5f880-af35-11eb-995f-48b4ac11e8b4.png)
 
-**Credential Management**:
-
-- **Credential Schema**:
-- **Credential Definition**:
-
-**Proof Requests**:
-
-- **Proof Request Template**:
-
-**Connections**:
-
-- **Business Connection**:
-- **Network**:
-- **Connection Request**:
-- **Connection Invitation QR Code**:
-
-**Notifications**:
+- **Dashboard** - This is the page where you can find the Decentralized Identifier (DID) of your organization and view the statistics such as:
+  - **Number of Credentials You Hold** - This refers to the verifiable credentials issued to your organization by your business connections. Clicking on it will link you to the Wallet page.
+  - **Number of Credentials You Issued** - This refers to the verifiable credentials your organization issued to your business connections. Clicking on it will link you to the Credential Management page.
+  - **Number of Sent Proof Requests** - This refers to the proof requests your organization sent to your  business connections. Clicking on it will link you to the "Sent proof request" section on the Proof Requests page.
+  - **Number of Received Proof Requests** - This refers to the proof requests your organization received from your business connections. Clicking on it will link you to the "Received proof request" section on the Proof Requests page.
+  - **Number of Business Connections** - Organizations are required to be "connected" via their Business to Business Credential Managers before they can issue verifiable credential or send proof request to each other. Organizations which have established such connections are referred to as "business connections" with each other. Clicking on it will link you to the Connections page.
+  - **Number of New Notifications** - There are different types of notifications you can receive and act on. For example, New Connection Requests, New Credential Invitations, Credential Issuance Requests, Proof Requests, etc. Clicking on it will link you to the Notifications page.
+- **Profile**: This is the page where you can view the information of your organization which is set to be visible to your business partners. It includes:
+  - Administrative information (e.g. Name, Address, Email, etc.) of your organization which can be edited on the Settings page
+  - List of verifiable credentials your organization holds which are set to be visible to your business partners
+  - List of types of verifiable credentials your organization can issue to your business partners
+- **Wallet** - This is the page where you can view a list of verifiable credentials issued to your organization by your business connections and set the visibility of them on the Profile page. You can view detailed information of a certain verifiable credential including: issuer, issuance date, attribute names and values, etc. by clicking on it.
+- **Credential Management** - This is the page where you issue verifiable credentials to your business connections and track issued verifiable credentials.
+  - **Credential Schema** - 
+  - **Credential Definition** - 
+- **Proof Requests** - This is the page where you send proof requests to your business connections, and track sent proof requests; view received proof requests from your business connections, and present proofs in response to received proof requests.
+  - **Proof Request Template** - 
+- **Connections** - This is the page where you can view and manage a list of organizations and/or individuals which your organization has established business connections with. You can view the Profile page and additional information of a certain organization business connection by clicking on it. You can also send connection request to a certain organization via DID lookup or generate QR code as a connection invitation.
+  - **Network** - 
+  - **Connection Request** - 
+  - **Connection Invitation QR Code** - 
+- **Notifications** - This is the page where you can view and act on different types of notifications including:
+  - **New Connection Requests** - 
+  - **New Credential Invitations** - 
+  - **Credential Issuance Requests** - 
+  - **Proof Requests** - 
