@@ -1,6 +1,8 @@
 # Business to Business Credential Manager
 
-The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Supported by blockchain technology, organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? The videos below can help you learn more about it:
+A fork from the [Business Partner Agent](https://github.com/hyperledger-labs/business-partner-agent)
+
+The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Supported by blockchain technology, organizations can issue and receive proofs that are secure and verified. Want to become an early adopter? The videos below can help you learn more about it:
 
 - [BBCM Ep1 - Introduction](https://app.animaker.com/animo/6K3qDbzPA1DmDkAE/)
 - [BBCM Ep2 - Use Cases](https://app.animaker.com/animo/BwR72vxT4hwUntX5/)
@@ -17,7 +19,7 @@ To understand the big picture, let's start with the key concepts.
   - Is globally unique
   - Can identify any subject (e.g. an organization, person, credential, transaction, etc.)
   - Is associated with exactly one subject
-- **Verifiable Credential**: Similar to the driver's license you hold in your wallet, which you can use to prove your identity to a police officer, a company can be issued a registration credential from a trusted source like BC Registries. What makes a credential "verifiable"?
+- **Verifiable Credential**: Similar to the driver's license you hold in your wallet, which you can use to prove your identity to a police officer, a company can be issued a registration credential from a trusted source like BC Registries. The received credential is verified. What makes a credential "verifiable"? Others can request that you present a proof to them that your credential is verified. The proof that you present to them is verifiable by the verifier who can do the verification without having to go back a ask the credential issuer. The items that can be verified include the following:
   - Can validate the issuer and holder of a credential
   - Can confirm the credential is not revoked
   - Can prove the credential has not changed
