@@ -49,7 +49,7 @@ spec:
             - name: AGENT_NAME
               value: {{ .Values.bpa.agentName | quote }}
             - name: ACAPY_ENDPOINT
-              value: https://{{ (index .Values.acapy.ingress.hosts 0).host }}
+              value: http://{{ .Release.Name }}-{{ (index .Values.acapy.ingress.hosts 0).host }}
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -64,9 +64,8 @@ spec:
                 -Dbpa.pg.url=jdbc:postgresql://{{ include "global.postgresql.fullname" . }}/{{ .Values.postgresql.postgresqlUsername }}
                 -Dbpa.pg.username={{ .Values.postgresql.postgresqlUsername }}
                 -Dbpa.pg.password=$(POSTGRES_PASSWORD)
-                -Dbpa.host={{ (index .Values.bpa.ingress.hosts 0).host }}
-                -Dbpa.schemas.bank-account.id={{ .Values.bpa.schemas.bankaccount.id }}
-                -Dbpa.schemas.commercial-register.id={{ .Values.bpa.schemas.commercialregister.id }}
+                -Dbpa.host={{ .Release.Name }}-{{ (index .Values.bpa.ingress.hosts 0).host }}
+                -Dbpa.https={{.Values.bpa.https }}
           resources:
             {{- toYaml .Values.bpa.resources | nindent 12 }}
       {{- with .Values.bpa.nodeSelector }}

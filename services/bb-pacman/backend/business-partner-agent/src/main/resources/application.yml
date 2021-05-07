@@ -111,13 +111,4 @@ bpa:
   bootstrap:
     username: ${BPA_BOOTSTRAP_UN:admin}
     password: ${BPA_BOOTSTRAP_PW:changeme}
-  schemas:
-    #test ledger schemas, can be overwritten / extended when e.g. working with other ledger
-    bank-account:
-      id: ${BPA_SCHEMA_BANK_ID:`M6Mbe3qx7vB4wpZF4sBRjt:2:bank_account:1.0`}
-      label: "Bank Account"
-      defaultAttributeName: "iban"
-    commercial-register:
-      id: ${BPA_SCHEMA_COMREG_ID:`3gLVpb3i5jzvZqWYyesSB3:2:commercialregister:1.2`}
-      label: "Commercial Register"
-      defaultAttributeName: "companyName"
+

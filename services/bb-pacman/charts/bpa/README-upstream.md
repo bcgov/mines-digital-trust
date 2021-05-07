@@ -1,6 +1,8 @@
 # bpa
 
-These are abbreviated instructions used for deploying into OCP4, see the [original](./README-upstream) README for broader k8s integration. 
+The Business Partner Agent allows to manage and exchange master data between organizations.
+
+![Version: 0.1.0-alpha3](https://img.shields.io/badge/Version-0.1.0--alpha3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0-alpha3](https://img.shields.io/badge/AppVersion-0.1.0--alpha3-informational?style=flat-square)
 
 This chart will install a business partner agent (bpa-core & bpa-acapy) and Postgres.
 
@@ -8,16 +10,13 @@ It will also create the default ingress routes.
 
 ## TL;DR
 
-This will automatically generate the wallet_seed register the new agents on the specified Indy Hyperledger ([values](./values.yaml).bpa.ledgerURL and [values](./values.yaml).bpa.ledgerBrowser)
+
+
 ```sh
 # login to kubuernetes cluster (we are using OCP4)
 # Select the target namespace
-helm install bpa1 bpa
-```
-
-To update existing deployments, run this instead
-``` sh
-helm upgrade bpa1 bpa
+helm install bpa# bpa
+#this will automagically register the new agents on the specified Indy Hyperledger (values.ledgerURL and values.ledgerBrowser)
 ```
 
 ## Introduction
@@ -35,28 +34,90 @@ This chart bootstraps a business partner agent deployment on a Kubernetes cluste
   - Cert-manager
   - DNS records pointing to your routes 
 
+## Initial preparation
 
+The following steps have to be done only once.
+
+## Installing the chart
+
+To install the chart with the release name `bpa` and the seed `12345678901234567890123456789012` in the namespace `mynamespace`
+
+```sh
+helm repo add bpa https://hyperledger-labs.github.io/business-partner-agent/
+helm repo update
+helm upgrade \
+	--set bpa.acapy.agentSeed=12345678901234567890123456789012 \
+   	mybpa bpa/bpa -i -n mynamespace --devel
+```
+
+Get the application URL by running the commands returned by helm install, e.g.:
+```sh
+export POD_NAME=$(kubectl get pods --namespace md -l "app.kubernetes.io/name=bpa-bpacore,app.kubernetes.io/instance=mynamespace" -o jsonpath="{.items[0].metadata.name}")
+echo "Visit http://127.0.0.1:8080 to use your application"
+kubectl --namespace mynamespace port-forward $POD_NAME 8080:8080
+```
+
+This deploys BPA (bpa-core & bpa-acapy) and Postgres on the Kubernetes cluster in the default configuration. The [Values](#Values) section list the parameters that can be configured during installation.
+
+#### Install chart with values file
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart.
+Deploying the charts with configured ingress routes could be done e.g. as follows.
+
+Create a yaml file.
+```yaml
+cat <<EOT >> values-mybpa.yaml
+bpa:
+   ingress:
+     enabled: true
+     hosts:
+     - host: mybpa.example.com
+       paths:
+       - /
+acapy:
+   agentSeed: 12345678901234567890123456789012
+   ingress:
+     enabled: true
+     hosts:
+     - host: mybpa-acapy.example.com
+       paths:
+       - /
+EOT
+```
+
+Install the chart with the release name `mybpa`, in the namespace `mynamespace`.
+
+```sh
+helm upgrade \
+	--values values-mybpa.yaml \
+   	mybpa bpa/bpa -i -n mynamespace --devel 
+```
 #### Install multiple bpa instances
 
 > You could easily deploy a second business partner agent like this, e.g. for demo purpose.
-> Just use a different helm release name.
+> Just use a different helm release name, the seed of another DID and different ingress host names.
 
+#### Install in local development cluster
 
-## Registering Secret Prior to Startup
+No special handling, should work the same way as with a remote cluster.
+With minikube you would
 
-- If you want to define the seed, you can create the secret <.Release.Name>-acapy {seed: <SEED>}
+Install and run minikube (see also minikube [documentation](https://minikube.sigs.k8s.io/docs/start/))
+```sh
+ curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
+ minikube start --vm-driver=docker
 
+```
 
-- If you need to register your DID manually prior to starting the BPA (required for Sovrin MainNet)
-
-  - start app targetting a ledger that is free to write to, grab did/verkey and register those same values on the restricted ledger
-  - start agent and call the acapy admin api's `wallet/did/public` to get the values, register them, and restart the app.
-
+Install the chart
+```sh
+helm upgrade \
+	--values values-mybpa.yaml \
+   	mybpa bpa/bpa -i -n mynamespace --devel 
+```
 
 ## Uninstalling the Chart
-
-**This also deletes the secret that holds the SEED used to create and register it's DID. if you run uninstall/delete on the helm chart, you will need to either, SAVE the seed in the secret somewhere else to re-use it in the following installation, OR, also delete the PVC so both can be recreated.**
-
 
 To uninstall/delete the my-release deployment:
 
@@ -64,7 +125,8 @@ To uninstall/delete the my-release deployment:
 helm delete mybpa
 ```
 
-The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release. 
+The command removes all the Kubernetes components but PVC's associated with the chart and deletes the release.
+
 To delete the PVC's associated with my-release:
 
 ```sh
@@ -169,7 +231,6 @@ docker run --rm --volume "$(pwd):/helm-docs" -u $(id -u) jnorwood/helm-docs:late
 | Name | Email | Url |
 | ---- | ------ | --- |
 | Frank Bernhardt | Frank.Bernhardt@bosch.com |  |
-| Jason Syrotuck  | Jason.Syrotuck@nttdat.com |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.4.0](https://github.com/norwoodj/helm-docs/releases/v1.4.0)
