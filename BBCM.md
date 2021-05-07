@@ -6,6 +6,7 @@ The Business to Business Credential Manager (BBCM) is software run by an organiz
 
 - [BBCM Ep1 - Introduction](https://app.animaker.com/animo/6K3qDbzPA1DmDkAE/)
 - [BBCM Ep2 - Use Cases](https://app.animaker.com/animo/BwR72vxT4hwUntX5/)
+- Product Demos: [Youtube Playlist](https://www.youtube.com/playlist?list=PLGAON5KTnv0EAicXGX4V3q7zNkP9p1xYF)
 
 ## **Who can use it?**
 
