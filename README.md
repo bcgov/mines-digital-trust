@@ -13,7 +13,7 @@ Our team has build 2 common services by leveraging common components:
 
 ## Service I - Issuing Verifiable Credentials to OrgBook BC
 
-Verifiable credentials for Mines Act Permits and any related observable data metrics of a mine site can be issued to [OrgBook BC](https://www.orgbook.gov.bc.ca/en/home) via this common service. Learn more about issuing verifiable credentials to OrgBook BC [here](./ISSUER_AGENT.md) now.
+Verifiable credentials for Mines Act Permits and any related observable data metrics of a mine site can be issued to [OrgBook BC](https://www.orgbook.gov.bc.ca/en/home) via this common service. To learn more see: [Issuing Verifiable Credentials to OrgBook BC](./ISSUER_AGENT.md).
 
 ### Components:
 
@@ -26,7 +26,7 @@ Verifiable credentials for Mines Act Permits and any related observable data met
 
 ## Service II - Business to Business Credential Manager
 
-The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? Learn more about it [here](./BBCM.md) now.
+The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? To learn more see [Business to Business Credential Manager](./BBCM.md).
 
 ### Components:
 
@@ -41,7 +41,7 @@ The Business to Business Credential Manager (BBCM) is software run by an organiz
 
 # Getting Help or Reporting an Issue
 
-To report bugs/issues/feature requests, please file an issue [here](https://github.com/bcgov/mines-digital-trust/issues).
+To report bugs/issues/feature requests, please [file an issue](https://github.com/bcgov/mines-digital-trust/issues).
 
 # How to Contribute
 
