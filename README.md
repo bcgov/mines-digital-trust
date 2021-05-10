@@ -26,7 +26,7 @@ Verifiable credentials for Mines Act Permits and any related observable data met
 
 ## Service II - Business to Business Credential Manager
 
-The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? To learn more see [Business to Business Credential Manager](./BBCM.md).
+The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? To learn more see: [Business to Business Credential Manager](./BBCM.md).
 
 ### Components:
 
