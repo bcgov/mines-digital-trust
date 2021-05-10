@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1f62bd5e189348d05432/maintainability)](https://codeclimate.com/github/bcgov/mines-digital-trust/maintainability)
+
 # Highlight I - Aries Issuer/Controller for OrgBook BC
 
 In support of producers of consumer goods and purchasers of mineral resources who desire to prove the responsible sourcing of mineral resources, as well as internal government learning regarding the community effort to establish a better way to find, issue, store and share trustworthy data via Verifiable Credentials, the Mines Digital Trust POC of issuing verified credentials for Mines Act Permits and any related observable data metrics of the mine site was initiated. Learn more about issuing verifiable credentials to OrgBook BC [here](./ISSUER-AGENT.md) now.
