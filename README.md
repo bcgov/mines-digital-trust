@@ -2,13 +2,42 @@
 [![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1f62bd5e189348d05432/maintainability)](https://codeclimate.com/github/bcgov/mines-digital-trust/maintainability)
 
-# Highlight I - Aries Issuer/Controller for OrgBook BC
+# Introduction
 
-In support of producers of consumer goods and purchasers of mineral resources who desire to prove the responsible sourcing of mineral resources, as well as internal government learning regarding the community effort to establish a better way to find, issue, store and share trustworthy data via Verifiable Credentials, the Mines Digital Trust POC of issuing verified credentials for Mines Act Permits and any related observable data metrics of the mine site was initiated. Learn more about issuing verifiable credentials to OrgBook BC [here](./ISSUER_AGENT.md) now.
+The Mines Digital Trust POC was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support:
 
-# Highlight II - Business to Business Credential Manager
+- producers of consumer goods and purchasers of mineral resources in proving responsible sourcing;
+- government in exploring the community effort to establish a digital trust ecosystem for finding, issuing, storing, and sharing trustworthy data via verifiable credentials.
+
+Our team has build 2 common services by leveraging common components:
+
+## Service I - Issuing Verifiable Credentials to OrgBook BC
+
+Verifiable credentials for Mines Act Permits and any related observable data metrics of a mine site can be issued to [OrgBook BC](https://www.orgbook.gov.bc.ca/en/home) via this common service. Learn more about issuing verifiable credentials to OrgBook BC [here](./ISSUER_AGENT.md) now.
+
+### Components:
+
+- [Trust Over IP stack](https://github.com/hyperledger/aries-rfcs/tree/master/concepts/0289-toip-stack)
+  - Issuer Agent - handling all of the Aries agent type functions (e.g. messages, protocols, protocol state, agent storage, etc.)
+  - Issuer Controller - providing the business logic that gives the agent personality
+  - [Hyperledger Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python)
+  - Client API Wrapper
+- [Aries Verifiable Credentials Registry Instance (OrgBook BC)]( https://github.com/bcgov/aries-vcr)
+
+## Service II - Business to Business Credential Manager
 
 The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? Learn more about it [here](./BBCM.md) now.
+
+### Components:
+
+- [Business Partner Agent](https://github.com/hyperledger-labs/business-partner-agent)
+  - Connection Manager - For establishing connection between 2 Business Partner Agents
+  - Credential Manager - For tracking and managing credentials
+  - Proof Manager - For tracking and managing proof requests and presentations
+  - Attestation Manager
+  - Profile Manager - For managing organizational profiles
+- [Hyperledger Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python)
+- [Verifiable Credential Authentication with OpenID Connect](https://github.com/bcgov/vc-authn-oidc(edited))
 
 # Getting Help or Reporting an Issue
 
