@@ -18,8 +18,8 @@ Verifiable credentials for Mines Act Permits and any related observable data met
 ### Components:
 
 - [Trust Over IP stack](https://github.com/hyperledger/aries-rfcs/tree/master/concepts/0289-toip-stack)
-  - Issuer Agent
-  - Issuer Controller
+  - Issuer Agent - handling all of the Aries agent type functions (e.g. messages, protocols, protocol state, agent storage, etc.)
+  - Issuer Controller - providing the business logic that gives the agent personality
   - [Hyperledger Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python)
   - Client API Wrapper
 - [Aries Verifiable Credentials Registry Instance (OrgBook BC)]( https://github.com/bcgov/aries-vcr)
