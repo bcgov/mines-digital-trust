@@ -12,7 +12,7 @@ The Business to Business Credential Manager is software run by an organization f
 
 # Getting Help or Reporting an Issue
 
-To report bugs/issues/feature requests, please file an [issue](../../issues).
+To report bugs/issues/feature requests, please file an [issue](https://github.com/bcgov/mines-digital-trust/issues).
 
 # How to Contribute
 
