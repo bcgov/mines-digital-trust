@@ -4,16 +4,16 @@
 
 # Introduction
 
-The Mines Digital Trust POC was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support:
+The **Mines Digital Trust POC** was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support:
 
-- producers of consumer goods and purchasers of mineral resources in proving responsible sourcing;
-- government in exploring the community effort to establish a digital trust ecosystem for finding, issuing, storing, and sharing trustworthy data via verifiable credentials.
+- **producers of consumer goods and purchasers of mineral resources** in proving responsible sourcing;
+- **government** in exploring the community effort to establish a digital trust ecosystem for finding, issuing, storing, and sharing trustworthy data via verifiable credentials.
 
-Our team has build 2 common services by leveraging common components:
+For this effort, our team has built 2 open-source common services by leveraging common components:
 
 ## Service I - Issuing Verifiable Credentials to OrgBook BC
 
-Verifiable credentials for Mines Act Permits and any related observable data metrics of a mine site can be issued to [OrgBook BC](https://www.orgbook.gov.bc.ca/en/home) via this common service. To learn more see: [Issuing Verifiable Credentials to OrgBook BC](./ISSUER_AGENT.md).
+This common service enables the issuance of verifiable credentials to [OrgBook BC](https://www.orgbook.gov.bc.ca/en/home), starting from verifiable credentials for Mines Act Permits, and verifiable credentials for related observable data metrics such as Annual GHG Emissions of a mine site. To learn more, please see: [Issuing Verifiable Credentials to OrgBook BC](./ISSUER_AGENT.md).
 
 ### Components:
 
@@ -26,7 +26,7 @@ Verifiable credentials for Mines Act Permits and any related observable data met
 
 ## Service II - Business to Business Credential Manager
 
-The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? To learn more see: [Business to Business Credential Manager](./BBCM.md).
+The **Business to Business Credential Manager (BBCM)** is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by [Hyperledger](https://www.hyperledger.org/), with BBCM organizations can share and receive proofs that are secure and verifiable. Want to become an early adopter? To learn more, please see: [Business to Business Credential Manager](./BBCM.md).
 
 ### Components:
 
