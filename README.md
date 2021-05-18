@@ -1,8 +1,8 @@
+# Introduction
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1f62bd5e189348d05432/maintainability)](https://codeclimate.com/github/bcgov/mines-digital-trust/maintainability)
-
-# Introduction
 
 The **Mines Digital Trust POC** was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support:
 
