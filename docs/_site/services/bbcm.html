@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Mines Digital Trust</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/mines-digital-trust/assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+    <div class="banner">
+        <a href="/mines-digital-trust/" alt="British Columbia">
+          <img src="/mines-digital-trust/assets/images/BCID_H_rgb_rev.svg" alt="Go to the Government of British Columbia website" class="logo-banner"/>
+        </a>
+        <h1>Mines Digital Trust</h1>
+    </div>
+    <div class="other">
+    <!--
+      This place is for anything that needs to be right aligned
+      beside the logo.
+    -->
+      &nbsp;
+    </div>
+    </div>
+  </header>
+
+    
+
+
+
+<nav class="navigation-main" id="navbar">
+  <div class="container">
+    <ul>
+      <li class=""><a href='/mines-digital-trust/'>Overview</a></li>
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="compDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Services
+        </a>
+        <div class="dropdown-menu" aria-labelledby="compDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/services/bbcm.html">Business to Business Credential Manager</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/services/issuer-agent.html">OrgBook BC Issuer Agent</a>
+          
+        </div>
+      </li>
+      <li class="nav-item dropdown  ">
+        <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Onboard
+        </a>
+        <div class="dropdown-menu" aria-labelledby="onbDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+          
+        </div>
+      </li>
+      <li class=""><a href='/mines-digital-trust/team.html'>Connect with us</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <div class="content">
+      <main role="main">
+          <div class="page-header">
+  <h2 class="text-center">
+    Business to Business Credential Manager
+  </h2>
+  <div class="page-description">
+    <div class="container page-description-content">
+      The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by Hyperledger, with BBCM organizations can share and receive proofs that are secure and verifiable.
+    </div>
+  </div>
+</div>
+
+<div class="container service-content">
+  <h4 id="useful-links"><strong>Useful Links</strong></h4>
+
+<ul>
+  <li><a href="https://github.com/hyperledger-labs/business-partner-agent">Repo: Business Partner Agent</a></li>
+  <li><a href="https://github.com/bcgov/b2b-credential-manager">Repo: Business to Business Credential Manager</a></li>
+  <li><a href="https://app.animaker.com/animo/6K3qDbzPA1DmDkAE/">Video: BBCM Ep1 - Introduction</a></li>
+  <li><a href="https://app.animaker.com/animo/BwR72vxT4hwUntX5/">Video: BBCM Ep2 - Use Cases</a></li>
+  <li><a href="https://www.youtube.com/playlist?list=PLGAON5KTnv0EAicXGX4V3q7zNkP9p1xYF">Video: Product Demos</a></li>
+</ul>
+
+<h4 id="who-can-use-it"><strong>Who can use it?</strong></h4>
+
+<p>Any organization who wants to participate in the digital trust ecosystem by issuing, holding, and verifying digital trust credentials can use the Business to Business Credential Manager. For example, government, company, third-party, etc.</p>
+
+<h4 id="how-does-it-work"><strong>How does it work?</strong></h4>
+
+<p>To understand the big picture, let’s start with the key concepts.</p>
+
+<ul>
+  <li><strong>Decentralized Identifier (DID)</strong>: Defined by the <a href="https://www.w3.org/TR/did-core/">W3C DID specification</a>, a DID
+    <ul>
+      <li>Is globally unique</li>
+      <li>Can identify any subject (e.g. an organization, person, credential, transaction, etc.)</li>
+      <li>Is associated with exactly one subject</li>
+    </ul>
+  </li>
+  <li><strong>Verifiable Credential</strong>: Similar to the driver’s license you hold in your wallet, which you can use to prove your identity to a police officer, a company can be issued a registration credential from a trusted source like BC Registries. The received credential is verified. What makes a credential “verifiable”? Others can request that you present a proof to them that your credential is verified. The proof that you present to them is verifiable by the verifier who can do the verification without having to go back a ask the credential issuer. The items that can be verified include the following:
+    <ul>
+      <li>Can validate the issuer and holder of a credential</li>
+      <li>Can confirm the credential is not revoked</li>
+      <li>Can prove the credential has not changed</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Wallet</strong>: Verifiable credentials can be stored in a digital wallet. In many ways it is just like your physical one. This is where you store your organization’s information that you will use to prove to other organizations that you hold a certain credential.</p>
+  </li>
+  <li><strong>Proof Request</strong>: A proof request is the message sent by the relying party to the holder describing the verifiable attributes and appropriate conditions (e.g. predicates, issuer of attributes, schema of the credentials used, etc.) that the holder needs to satisfy.</li>
+</ul>
+
+<p>Now let’s see some generic use cases.</p>
+
+<ul>
+  <li><strong>Issuing and Holding a Verifiable Credential</strong>
+    <ol>
+      <li>The <em>Issuer</em> organization imports or creates  a schema for the type of verifiable credential it wants to issue.</li>
+      <li>The <em>Issuer</em> organization and <em>Holder</em> organization make a connection via their Business to Business Credential Managers.</li>
+      <li>The <em>Issuer</em> organization issues a verifiable credential following the credential definition created from the schema to the <em>Holder</em> organization.</li>
+      <li>The <em>Holder</em> organization receives the verifiable credential and stores it in its wallet.</li>
+    </ol>
+  </li>
+  <li><strong>Verifying Credentials</strong>
+    <ol>
+      <li>The <em>Verifier</em> organization imports or creates  a template for the proof request it wants to send.</li>
+      <li>The <em>Verifier</em> organization and <em>Holder</em> organization make a connection via their Business to Business Credential Managers.</li>
+      <li>The <em>Verifier</em> organization sends a proof request using the predefined proof request template to the <em>Holder</em> organization.</li>
+      <li>The <em>Holder</em> organization receives the proof request and presents the proof by disclosing chosen verifiable credentials and/or chosen attribute values of the verifiable credentials it holds in its wallet to the <em>Verifier</em> organization.</li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="why-use-it"><strong>Why use it?</strong></h4>
+<p>Please refer to the <a href="https://github.com/bcgov/mines-digital-trust/wiki/Features">Features</a> list to learn about existing features and offered value to users.</p>
+
+<h4 id="onboard-options"><strong>Onboard Options</strong></h4>
+<p>As of today, running your own copy of the <a href="https://github.com/hyperledger-labs/business-partner-agent">Business Partner Agent</a> is the only available option for starting to issue, hold, and/or verify verifiable credentials.</p>
+
+<p>In the near future, BC Government organizational units would run an instance of the Business to Business Credential Manager, our team has been working diligently towards enabling it.</p>
+
+<p>A self-service onboarding to the BC Government hosted Business to Business Credential Manager service has also been planned out. This would allow business owners to set up without any development team required.</p>
+
+</div>
+
+      </main>
+    </div>
+      <footer class="footer">
+    <div class="container">
+    <ul>
+      <li><a href="https://www.gov.bc.ca/">Home</a></li>
+      <li><a href="https://www.gov.bc.ca/">Disclaimer</a></li>
+      <li><a href="http://gov.bc.ca/privacy">Privacy</a></li>
+      <li><a href="http://gov.bc.ca/webaccessibility">Accessibility</a></li>
+      <li><a href="http://gov.bc.ca/copyright">Copyright</a></li>
+      <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
+    </ul>
+    </div>
+  </footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
