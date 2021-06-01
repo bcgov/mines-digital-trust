@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Mines Digital Trust</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/mines-digital-trust/assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+    <div class="banner">
+        <a href="/mines-digital-trust/" alt="British Columbia">
+          <img src="/mines-digital-trust/assets/images/BCID_H_rgb_rev.svg" alt="Go to the Government of British Columbia website" class="logo-banner"/>
+        </a>
+        <h1>Mines Digital Trust</h1>
+    </div>
+    <div class="other">
+    <!--
+      This place is for anything that needs to be right aligned
+      beside the logo.
+    -->
+      &nbsp;
+    </div>
+    </div>
+  </header>
+
+    
+
+
+
+<nav class="navigation-main" id="navbar">
+  <div class="container">
+    <ul>
+      <li class=""><a href='/mines-digital-trust/'>Overview</a></li>
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="compDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Services
+        </a>
+        <div class="dropdown-menu" aria-labelledby="compDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/services/bbcm.html">Business to Business Credential Manager</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/services/issuer-agent.html">OrgBook BC Issuer Agent</a>
+          
+        </div>
+      </li>
+      <li class="nav-item dropdown  active">
+        <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Onboard
+        </a>
+        <div class="dropdown-menu" aria-labelledby="onbDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+          
+        </div>
+      </li>
+      <li class=""><a href='/mines-digital-trust/team.html'>Connect with us</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <div class="content">
+      <main role="main">
+          
+
+<div class="page-header">
+  <h2 class="text-center">Choose from Various Onboard Options</h2>
+  <div class="page-description">
+    <div class="container page-description-content">
+      <!-- <h4 class="mb-3"><strong>Onboard Options</strong></h4> -->
+      <ul>
+        
+        <li class="active">
+          <a href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
+        </li>
+        
+        <li class="">
+          <a href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
+        </li>
+        
+        <li class="">
+          <a href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container onboarding-content">
+  <h4 id="step-by-step-overview"><strong>Step-by-Step Overview</strong></h4>
+<ul>
+  <li><strong>Step 1: Decide what data to issue</strong>
+    <ul>
+      <li>The surprising first step in becoming an issuer is that you may need to know your own organization, and specifically its business processes, even better. Starting questions are:
+        <ul>
+          <li>What data “should” be in OrgBook BC?</li>
+          <li>What specific changes to your data should cause an update to OrgBook BC?</li>
+        </ul>
+      </li>
+      <li>You’ll likely already have your data online, such as in a database. However, if it’s not online, that’s the first step you’ll need to take before becoming an issuer. It will not be practical (nor desirable) to manually enter and update the VCs.</li>
+      <li>Next, you’ll need to be more specific about what will be in OrgBook BC, and when it’s ready for OrgBook BC. For example:
+        <ul>
+          <li>When is a change to your data ready to show to the outside world?</li>
+          <li>Is it after certain approval processes?</li>
+          <li>Does some data need to be abstracted up or grouped in some way, in order to make it more “public friendly”?</li>
+          <li>What data could be added to OrgBook BC, but has little or no public value and could therefore be omitted?</li>
+          <li>Are there any privacy issues that must be resolved before some data can be used?</li>
+        </ul>
+      </li>
+      <li>Diagrams of data flows and approval processes within your organization may help you decide exactly how and when your OrgBook BC issuer agent should be processing data.</li>
+      <li>Once you know what data is to be shared, it will need to be very clearly specified. For example:
+        <ul>
+          <li>What is the size and type of each piece of data you wish to have in OrgBook BC?</li>
+          <li>Does it have limits?</li>
+          <li>Where exactly is it stored right now — how can the issuer agent get access to it?</li>
+        </ul>
+      </li>
+      <li><em>For Step 1, the credential issuer has an online database of permits issued to BC organizations. They decide that OrgBook BC should know: (a) whether a BC organization has been issued a permit, (b) the permit number, (c) the permit type, (d) the date it was issued, (e) the scope of the permit, and (b) the permit’s expiry date. They decide that an internal approval code for the permit adds little value to OrgBook BC, so will not include that data. They also decide that their credential issuer agent should watch its main database for when a new permit is approved, extended, or revoked, and update OrgBook BC accordingly.</em></li>
+    </ul>
+  </li>
+  <li><strong>Step 2: Get approval from BC Registries</strong>
+    <ul>
+      <li>BC Registries and Online Services, a branch within Service BC and part of the Ministry of Citizens’ Services, are the business owners of OrgBook BC. The core information in OrgBook BC is the company registration data, which is managed by BC Registries and Online Services. The registration data is what the various program VCs are issued against. BC Registries and Online Services will need to approve your project and onboarding plan before you can be an OrgBook BC issuer on the live system.</li>
+      <li>Please reach out to BC Registries and Online Services at BCRegistries@gov.bc.ca, and a discovery meeting will be coordinated with your program. In most cases, the onboarding process will be smooth and simple.</li>
+      <li><em>For Step 2, the credential issuer completes an intake process with BC Registries and Online Services where they present the data they wish to issue to OrgBook BC, and why, as well as their plans for keeping it up-to-date. BC Registries and Online Services gives permission to the credential issuer to issue their data onto the live system.</em></li>
+    </ul>
+  </li>
+  <li><strong>Step 3: Test the OrgBook BC issuer technology</strong>
+    <ul>
+      <li>This <a href="https://github.com/bcgov/aries-vcr-issuer-controller/blob/master/GettingStartedTutorial.md">Getting Started</a> tutorial will give your tech teams a starting point for the onboarding process. However, the general overview is:
+        <ul>
+          <li>Install and test the OrgBook BC “starter kit” issuer on a single computer</li>
+          <li>Use the starter kit to learn about creating and issuing VCs</li>
+          <li>Connect your issuer to your database that holds the information you wish to issue, and ensure the issuer gets the right data from it, at the right time</li>
+          <li>Connect your issuer to the OrgBook BC “dev environment”, and learn about the new processes and steps involved</li>
+          <li>Prepare a deployment to the OrgBook BC “test environment”, and liaise with the OrgBook BC team to ensure your issuer is submitting the right data</li>
+          <li>Do final checks before launch on the OrgBook BC “production environment”, the live service</li>
+        </ul>
+      </li>
+      <li><em>For Step 3, the credential issuer’s technical team download, install and test the OrgBook BC “starter kit” issuer, and learn about creating and issuing VCs. They identify some short online VC training courses for key team members to better understand the technology. After adapting the starter kit to their needs, they then contact the OrgBook BC team to let them know about their plans, and start testing how they publish and revoke credentials.</em></li>
+    </ul>
+  </li>
+  <li><strong>Step 4: Prepare for going live</strong>
+    <ul>
+      <li>You’ll need a few parts aligned to be ready for launch:
+        <ul>
+          <li>The OrgBook BC team will need to see that your issuer is issuing the right credentials on the test environment, at the right time, and in the right format, so they can approve your ability to issue to the live OrgBook BC system</li>
+          <li>BC Registries approval will need to have been received</li>
+          <li>Ideally, if you are using the API (a software service) to integrate OrgBook BC capabilities into your website or other service for launch, it should be tested and ready, although this can happen after launch.</li>
+        </ul>
+      </li>
+      <li>With all these components in place, and if all teams are happy, you are good to go!</li>
+      <li><em>For Step 4, the credential issuer has some back-and-forth with the OrgBook BC team as they resolve some issues with issuing to the dev environment. The credential issuer also runs some tests to ensure their issuer agent is getting the right information from their database, and that it’s triggering an update to OrgBook BC at the right time. With all this complete, the OrgBook BC team reviews the deployment to the test environment, and launch checks are made to ensure the process is working before a deployment to the live environment.</em></li>
+    </ul>
+  </li>
+  <li><strong>Step 5: Communicate your changes</strong>
+    <ul>
+      <li>Congratulations! Your VCs are now in OrgBook BC. What’s next?
+        <ul>
+          <li>Communicate the new approach to your teams and partners, so they know what’s happening, where they can access this new information source, and who to contact if they have questions</li>
+          <li>Update your website and other public materials so that citizens and other consumers of your information now use OrgBook BC to find your data</li>
+          <li>Integrate OrgBook BC into your business processes, so that (for example) you update your OrgBook BC agent if something changes with how and when you issue credentials</li>
+          <li>If you didn’t integrate OrgBook BC data into your website before, consider using the API to provide a search facility for the data on your website, simplifying how people can find the information they desire.</li>
+        </ul>
+      </li>
+      <li><em>For Step 5, the credential issuer holds a meeting with support teams to explain the new OrgBook BC process and website, and emails everyone the OrgBook BC link so they know where to direct most information requests from now on. An extra governance step is also added to the permit issuing processes, to ensure that the tech team is notified about any changes to permit issuing so they can reflect those changes in the OrgBook BC issuer agent.</em></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Please <a href="https://www.orgbook.gov.bc.ca/en/connect">connect with OrgBook BC</a> to start the process.</p>
+
+</div>
+
+      </main>
+    </div>
+      <footer class="footer">
+    <div class="container">
+    <ul>
+      <li><a href="https://www.gov.bc.ca/">Home</a></li>
+      <li><a href="https://www.gov.bc.ca/">Disclaimer</a></li>
+      <li><a href="http://gov.bc.ca/privacy">Privacy</a></li>
+      <li><a href="http://gov.bc.ca/webaccessibility">Accessibility</a></li>
+      <li><a href="http://gov.bc.ca/copyright">Copyright</a></li>
+      <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
+    </ul>
+    </div>
+  </footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
