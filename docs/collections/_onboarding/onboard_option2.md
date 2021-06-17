@@ -45,3 +45,8 @@ In the near future, your organization would run an instance of the [Business to 
   - *Corporate Registrar* issues **Business Registration credential** to *Business*.
   - *Business* receives and accepts the **Business Registration credential**.
   - *Business* has a verifiable credential in their wallet issued by *Corporate Registrar*.
+
+#### **Long Term Vision**
+- *Director* would come to *Corporate Registrar* with a personal id credential, *Corporate Registrar* would request proof of it after connection.
+- *Corporate Registrar* would have business logic that would automatically inspect the self-attested **Business Registration credential** presentation proposal and issue the credential if all is valid.
+- *Business* would have business logic to request proofs after connection. *Director* would have to present proof of **Business Relationship credential**, and would create the self-attested **Business Registration credential** automatically. Next would be to send the presentation proposal to *Corporate Registrar* to get their  **Business Registration credential**.
