@@ -3,13 +3,12 @@ layout: team
 name: ACCESS
 
 title: How to Access Your Business Partner Agent
-description: Currently there are 2 ways to log into your organization's Business Partner Agent (BPA). You can use your IDIR Username & Password if you work for the BC Government, or a personal Access Verifiable Credential (VC) issued by us.
+description: The Business Partner Agent (BPA) is software run by an organization for issuing, holding, and/or verifying digital trust credentials. Currently there are 2 ways to log into your organization's BPA. You can use your IDIR Username & Password if you work for the BC Government, or a personal Access Verifiable Credential (VC) issued by us.
 ---
+#### How to get the Access VC
 <div class="text-center mb-5">
     <img class="img-fluid" src="{{ site.baseurl }}/assets/images/access.png" alt="access" title="Access">
 </div>
-
-#### How to get the Access VC
 1. Download the Trinsic Wallet app from App Store or Google Play and set up the digital wallet on your mobile phone.
 - Learn more about [Trinsic Wallet](https://trinsic.id/trinsic-wallet/).
 2. Send an email titled "Request Access to BPA" to MinesDigitalTrust@gov.bc.ca providing:
