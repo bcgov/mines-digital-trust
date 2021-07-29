@@ -19,9 +19,9 @@ description: The Business Partner Agent (BPA) is software run by an organization
 - What credentials you want to issue or verify, and who grants you the authority
 - <a href="mailto:MinesDigitalTrust@gov.bc.ca?subject=Request Access to BPA">Email us now</a>
 
-**Step 3. We will perform a mannual identity check with the information you provide. Once it's completed, you will soon receive an email from us with:**
+**Step 3. We will perform a manual identity check with the information you provide. Once it's completed, you will soon receive an email from us with:**
 - A QR code invitation to connect your personal wallet with the Mines Digital Trust Team BPA (issuer of the Access VC)
-- An URL for you to log into your organization's BPA when you receive the Access AC
+- A URL for you to log into your organization's BPA when you receive the Access AC
 - What to expect next
 
 **Step 4. Scan the QR code from your personal wallet and accept the connection invitation.**
