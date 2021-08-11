@@ -1,8 +1,8 @@
 ---
-layout: team
-name: ACCESS
+layout: service
+name: GUIDE
 
-title: How to Access Your Business Partner Agent
+title: User Guide
 description: The Business Partner Agent (BPA) is software run by an organization for issuing, holding, and/or verifying digital trust credentials. Currently there are 2 ways to log into your organization's BPA. You can use your IDIR Username & Password if you work for the BC Government, or a personal Access Verifiable Credential (VC) issued by us.
 ---
 #### How to get the Access VC
