@@ -46,8 +46,8 @@ So now you have accessed to your organization's BPA (please check the [Get Acces
   - You can also generate a QR code as a connection invitation, and then send it externally (e.g. email, etc.) to the other organization.
 
 - How to **get prepared for issuing verifiable credentials**?
-- A credential schema and a credential definition are required for issuing verifiable credentials.
-- You can create them by navigating to the "Credential Management" page through the left vertical menu.
+  - A credential schema and a credential definition are required for issuing verifiable credentials.
+  - You can create them by navigating to the "Credential Management" page through the left vertical menu.
 
 - How to **issue a verifiable credential**?**
   - Once you have the credential schema and credential definition in place (please see the above question if not), you can start issuing the verifiable credential on either the "Credential Management" page or the "Business Partners" page.
@@ -55,7 +55,5 @@ So now you have accessed to your organization's BPA (please check the [Get Acces
   - If you go to the "Business Partners" page, select the business partner/connection you want to issue to first, then on its details page, issue the credential by selecting the credential schema, then fill in the attribute values.
 
 **How to get prepared for sending proof requests?**
-- {}
 
 **How to send a proof request?**
-- {}
