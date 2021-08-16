@@ -49,7 +49,7 @@
           
         </div>
       </li>
-      <li class="nav-item dropdown  active">
+      <li class="nav-item dropdown  ">
         <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Onboard
@@ -64,7 +64,7 @@
           
         </div>
       </li>
-      <li class="nav-item dropdown  ">
+      <li class="nav-item dropdown  active">
         <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Join the Beta
@@ -89,22 +89,22 @@
           
 
 <div class="page-header">
-  <h2 class="text-center">Choose from Various Onboard Options</h2>
+  <h2 class="text-center">Join the Beta</h2>
   <div class="page-description">
     <div class="container page-description-content">
       <!-- <h4 class="mb-3"><strong>Onboard Options</strong></h4> -->
       <ul>
         
         <li class="">
-          <a href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
+          <a href="/mines-digital-trust/beta/access.html">Get Access</a>
         </li>
         
         <li class="">
-          <a href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
+          <a href="/mines-digital-trust/beta/guide.html">User Guide</a>
         </li>
         
         <li class="active">
-          <a href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+          <a href="/mines-digital-trust/beta/knowledge.html">Knowledge Center</a>
         </li>
         
       </ul>
@@ -113,11 +113,40 @@
 </div>
 
 <div class="container onboarding-content">
-  <h4 id="for-whom"><strong>For whom</strong></h4>
-<p>If your organization is internal to the BC Government and needs to issue, hold, and/or verify credentials, this option is suitable for you.</p>
+  <p>Want to <a href="access.html">become an early adoptor</a> of the Business Partner Agent (BPA)? This page will equip you with necessary knowledge of <a href="guide.html">using</a> it.</p>
 
-<h4 id="coming-soon">Coming soon</h4>
-<p>A self-service onboarding to the BC Government hosted Business to Business Credential Manager service has been planned out. Once enabled, this would allow business owners to set up without any development team required.</p>
+<h4 id="what-is">What is…?</h4>
+<ul>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#dfn-decentralized-identifiers"><strong>Decentralized Identifier (DID)</strong></a>?
+    <ul>
+      <li>DIDs are a type of globally unique and persistent identifiers. They create a secure connection for data exchange between parties and their decentralized nature makes credentials always available for verification.</li>
+      <li>For example, each BPA has a DID representing the organization who runs it, which can be exchanged to connect with other organizations running BPAs.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#what-is-a-verifiable-credential"><strong>Verifiable Credential (VC)</strong></a>?
+    <ul>
+      <li>The physical credentials we use in our daily lives – like ID Card, Driver’s license, Health Insurance Card or even a University Diploma – rarely have a counterpart in the digital world. How could a digital credential, a digital asset, be as trustworthy as the physical ID Card that your Government issued to you?</li>
+      <li>Verifiable Credentials, in essence, allow for the digital watermarking of claims data through a combination of public key cryptography and privacy-preserving techniques to prevent correlation. Not only can physical credentials safely be turned digital, holders of such credentials can selectively disclose specific information from this credential without exposing the actual data (imagine proving you are above the age of 21 without having to show your ID card), where third-parties are instantly able to verify this data without having to call upon the issuer.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#data-schemas"><strong>Credential Schema</strong></a>?
+    <ul>
+      <li>Per the W3C, “The Credential Schema is a document that is used to guarantee the structure, and by extension the semantics, of the set of claims comprising a Verifiable Credential. A shared Credential Schema allows all parties to reference data in a known way.</li>
+      <li>To put it more simply, a Schema is a template, outlining the verified data you can issue or verify from your users.</li>
+      <li>For example, a Credential Schema for a University Diploma may include Name of Student, Degree Name, Date of Completion, Grade, etc. The University would use this schema to issue the Diploma Credential. A verifier, like an employer, would use the schema if they want to verify if the job candidate has a valid University diploma and what degree they did.</li>
+    </ul>
+  </li>
+  <li>What is a <strong>Credential Definition</strong>?
+    <ul>
+      <li>A Credential Definition is an instance of the schema on which it is based, plus the attribute-specific public verification keys that are bound to the private signing keys of the individual issuer.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures"><strong>Proof</strong></a>?
+    <ul>
+      <li>A Proof is data about the holder that allows others to verify the source of the data (i.e the issuer), check that the data belongs to the holder (and only the holder), that the data has not been tampered with, and finally, that the data has not been revoked by the issuer.</li>
+    </ul>
+  </li>
+</ul>
 
 </div>
 
