@@ -1,6 +1,7 @@
 {% assign current = page.url | downcase | split: '/' %}
 {% assign commonServices = site.services | sort: 'order' %}
 {% assign onboarding = site.onboarding | sort: 'order' %}
+{% assign beta = site.beta | sort: 'order' %}
 
 <nav class="navigation-main" id="navbar">
   <div class="container">
@@ -28,7 +29,17 @@
           {% endfor %}
         </div>
       </li>
-      <li class="{% if page.url == '/access.html' %}active{% endif %}"><a href='{{ site.baseurl }}/access.html'>Join the Beta</a></li>
+      <li class="nav-item dropdown  {% if page.url contains '/beta/' %}active{% endif %}">
+        <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Join the Beta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="onbDropdown">
+          {% for card in beta %}
+            <a class="dropdown-item" href="{{ site.baseurl }}{{ card.url }}.html">{{ card.title }}</a>
+          {% endfor %}
+        </div>
+      </li>
       <li class="{% if page.url == '/team.html' %}active{% endif %}"><a href='{{ site.baseurl }}/team.html'>Connect with us</a></li>
     </ul>
   </div>

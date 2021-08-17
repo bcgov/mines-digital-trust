@@ -3,7 +3,7 @@ layout: team
 name: TEAM
 
 title: Meet the Team
-description: We are a cross-functional Agile team including a Product Owner, a Scrum Master, 2 Policy Analysts, a User Experience Researcher/Designer, and 2 Developers. The team was formed to support producers of consumer goods and purchasers of mineral resources in proving responsible sourcing via verifiable credentials.
+description: We are a cross-functional Agile team including a Product Owner, a Policy Analyst, a Scrum Master, 2 Developers, and a User Experience Researcher/Designer. The team was formed to support producers of consumer goods and purchasers of mineral resources in proving responsible sourcing via verifiable credentials.
 ---
 <div class="text-center mb-5">
     <img class="img-fluid" src="{{ site.baseurl }}/assets/images/team.png" alt="team" title="Our Team">
