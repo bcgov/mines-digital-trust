@@ -1,0 +1,40 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: ../openshift/templates/backup/backup-deploy.json
+#=========================================================
+# NAME=backup
+# SUFFIX=-indy-cat
+# APP_NAME=Backup
+# APP_GROUP=indy-catalyst
+# SOURCE_IMAGE_NAME=backup
+# IMAGE_NAMESPACE=a3e512-tools
+TAG_NAME=test
+# DATABASE_DEPLOYMENT_NAME=db
+# WALLET_DB_HOST_NAME=wallet
+# DATABASE_USER_KEY_NAME=database-user
+# DATABASE_PASSWORD_KEY_NAME=database-password
+# BACKUP_STRATEGY=rolling
+# WEBHOOK_URL=
+ENVIRONMENT_FRIENDLY_NAME=Mines Digital Trust (test)
+ENVIRONMENT_NAME=a3e512-test
+# BACKUP_DIR=/backups/
+# DAILY_BACKUPS=2
+# WEEKLY_BACKUPS=1
+# MONTHLY_BACKUPS=0
+# DATABASE_SERVER_TIMEOUT=300
+# CONFIG_FILE_NAME=backup.conf
+# CONFIG_MAP_NAME=backup-conf
+# CONFIG_MOUNT_PATH=/
+BACKUP_VOLUME_NAME=ghg-emissions-wallet-backup-di49xkwa
+BACKUP_VOLUME_SIZE=1Gi
+BACKUP_VOLUME_CLASS=nfs-backup
+# VERIFICATION_VOLUME_NAME=backup-verification
+# This is not enough, need 50Gi for verification, but that puts the environment over quota.
+VERIFICATION_VOLUME_SIZE=1Gi
+VERIFICATION_VOLUME_CLASS=netapp-file-standard
+# VERIFICATION_VOLUME_MOUNT_PATH=/var/lib/pgsql/data
+# CPU_REQUEST=0
+# CPU_LIMIT=0
+# MEMORY_REQUEST=0Mi
+# MEMORY_LIMIT=0Mi
