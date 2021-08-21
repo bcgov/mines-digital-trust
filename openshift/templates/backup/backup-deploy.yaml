@@ -10,8 +10,10 @@ objects:
       labels:
         name: ${NAME}${SUFFIX}
         app: ${APP_NAME}${SUFFIX}
+        app.kubernetes.io/part-of: ${APP_NAME}${SUFFIX}
         app-group: ${APP_GROUP}
-        template: ${NAME}${SUFFIX}-template
+        role: ${ROLE}
+        env: ${TAG_NAME}
     spec:
       storageClassName: ${BACKUP_VOLUME_CLASS}
       accessModes:
@@ -26,8 +28,10 @@ objects:
       labels:
         name: ${NAME}${SUFFIX}
         app: ${APP_NAME}${SUFFIX}
+        app.kubernetes.io/part-of: ${APP_NAME}${SUFFIX}
         app-group: ${APP_GROUP}
-        template: ${NAME}${SUFFIX}-template
+        role: ${ROLE}
+        env: ${TAG_NAME}
     spec:
       storageClassName: ${VERIFICATION_VOLUME_CLASS}
       accessModes:
@@ -42,7 +46,10 @@ objects:
       labels:
         name: ${NAME}${SUFFIX}
         app: ${APP_NAME}${SUFFIX}
+        app.kubernetes.io/part-of: ${APP_NAME}${SUFFIX}
         app-group: ${APP_GROUP}
+        role: ${ROLE}
+        env: ${TAG_NAME}
     stringData:
       webhook-url: ${WEBHOOK_URL}
     type: Opaque
@@ -53,10 +60,15 @@ objects:
       labels:
         name: ${NAME}${SUFFIX}
         app: ${APP_NAME}${SUFFIX}
+        app.kubernetes.io/part-of: ${APP_NAME}${SUFFIX}
         app-group: ${APP_GROUP}
-        template: ${NAME}${SUFFIX}-template
+        role: ${ROLE}
+        env: ${TAG_NAME}
       annotations:
-        description: Defines how to deploy the ${NAME}${SUFFIX} server
+        description: Defines how to deploy the application server
+        app.openshift.io/connects-to: >-
+          [{"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"${MINES_PERMITTING_WALLET_HOST}${SUFFIX}"},
+          {"apiVersion":"apps.openshift.io/v1","kind":"DeploymentConfig","name":"${GHG_EMISSIONS_WALLET_HOST}${SUFFIX}"}]
     spec:
       strategy:
         type: Recreate
@@ -80,8 +92,10 @@ objects:
           labels:
             name: ${NAME}${SUFFIX}
             app: ${APP_NAME}${SUFFIX}
+            app.kubernetes.io/part-of: ${APP_NAME}${SUFFIX}
             app-group: ${APP_GROUP}
-            template: ${NAME}${SUFFIX}-template
+            role: ${ROLE}
+            env: ${TAG_NAME}
         spec:
           volumes:
             - name: ${BACKUP_VOLUME_NAME}
@@ -111,26 +125,28 @@ objects:
                   value: ${WEEKLY_BACKUPS}
                 - name: MONTHLY_BACKUPS
                   value: ${MONTHLY_BACKUPS}
-                - name: DB_INDY_CAT_USER
+
+                - name: GHG_EMISSIONS_WALLET_PRIMARY_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${DATABASE_DEPLOYMENT_NAME}${SUFFIX}
+                      name: ${GHG_EMISSIONS_WALLET_HOST}${SUFFIX}
                       key: ${DATABASE_USER_KEY_NAME}
-                - name: DB_INDY_CAT_PASSWORD
+                - name: GHG_EMISSIONS_WALLET_PRIMARY_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${DATABASE_DEPLOYMENT_NAME}${SUFFIX}
+                      name: ${GHG_EMISSIONS_WALLET_HOST}${SUFFIX}
                       key: ${DATABASE_PASSWORD_KEY_NAME}
-                - name: WALLET_INDY_CAT_USER
+                - name: MINES-PERMITTING-WALLET-PRIMARY_USER
                   valueFrom:
                     secretKeyRef:
-                      name: ${WALLET_DB_HOST_NAME}${SUFFIX}
+                      name: ${MINES_PERMITTING_WALLET_HOST}${SUFFIX}
                       key: ${DATABASE_USER_KEY_NAME}
-                - name: WALLET_INDY_CAT_PASSWORD
+                - name: MINES-PERMITTING-WALLET-PRIMARY_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: ${WALLET_DB_HOST_NAME}${SUFFIX}
+                      name: ${MINES_PERMITTING_WALLET_HOST}${SUFFIX}
                       key: ${DATABASE_PASSWORD_KEY_NAME}
+
                 - name: WEBHOOK_URL
                   valueFrom:
                     secretKeyRef:
@@ -163,11 +179,16 @@ parameters:
     description: The name assigned to all of the resources defined in this template.
     required: true
     value: backup
+  - name: ROLE
+    displayName: Role
+    description: Role
+    required: true
+    value: backup
   - name: SUFFIX
     displayName: Suffix
     description: A name suffix used for all objects
     required: false
-    value: -indy-cat
+    value: -primary
   - name: APP_NAME
     displayName: App Name
     description: Used to group components together in the OpenShift console.
@@ -177,7 +198,7 @@ parameters:
     displayName: App Group
     description: The name assigned to all of the deployments in this project.
     required: true
-    value: indy-catalyst
+    value: backup
   - name: SOURCE_IMAGE_NAME
     displayName: Source Image Name
     description: The name of the image to use for this resource.
@@ -187,22 +208,24 @@ parameters:
     displayName: Image Namespace
     description: The namespace of the OpenShift project containing the imagestream for the application.
     required: true
-    value: devex-von-tools
+    value: a3e512-tools
   - name: TAG_NAME
     displayName: Environment TAG name
     description: The TAG name for this environment, e.g., dev, test, prod
     required: true
     value: dev
-  - name: DATABASE_DEPLOYMENT_NAME
-    displayName: Database Deployment Name
-    description: The name associated to the database deployment resources.  In particular, this is used to wire up the credentials associated to the database.
+
+  - name: GHG_EMISSIONS_WALLET_HOST
+    displayName: GHG Emissions Wallet Hostname
+    description: The name associated to the wallet deployment resources.  In particular, this is used to wire up the credentials associated to the database.
     required: true
-    value: db
-  - name: WALLET_DB_HOST_NAME
-    displayName: Wallet Database Hostname
+    value: ghg-emissions-wallet
+  - name: MINES_PERMITTING_WALLET_HOST
+    displayName: Mines Permitting Wallet Hostname
     description: The name associated to the wallet database deployment resources.  In particular, this is used to wire up the credentials associated to the database.
     required: true
-    value: wallet
+    value: mines-permitting-wallet
+
   - name: DATABASE_USER_KEY_NAME
     displayName: Database User Key Name
     description: The datbase user key name stoed in database deployment resources specified by DATABASE_DEPLOYMENT_NAME.
@@ -242,22 +265,22 @@ parameters:
     displayName: Number of Daily Backups to Retain
     description: The number of daily backup files to be retained.  Used for the `rolling` backup strategy.
     required: false
-    value: "2"
+    value: 
   - name: WEEKLY_BACKUPS
     displayName: Number of Weekly Backups to Retain
     description: The number of weekly backup files to be retained.  Used for the `rolling` backup strategy.
     required: false
-    value: "1"
+    value: 
   - name: MONTHLY_BACKUPS
     displayName: Number of Monthly Backups to Retain
     description: The number of monthly backup files to be retained.  Used for the `rolling` backup strategy.
     required: false
-    value: "0"
+    value: 
   - name: DATABASE_SERVER_TIMEOUT
     displayName: Database Server Timeout
     description: The timeout, in seconds, to wait for the local database server to startup during a verification.
     required: true
-    value: "60"
+    value: "300"
   - name: CONFIG_FILE_NAME
     displayName: Config File Name
     description: The name of the configuration file.
@@ -275,32 +298,32 @@ parameters:
     value: /
   - name: BACKUP_VOLUME_NAME
     displayName: Backup Volume Name
-    description: The name of the persistent volume used to store the backups.  Please note, when using the recommended nfs-backup storage class the name of the pvc MUST be taken from the manually provisioned claim; nfs-backup storage MUST be provisioned manually.
+    description: The name of the persistent volume used to store the backups.
     required: true
     value: backup
   - name: BACKUP_VOLUME_SIZE
     displayName: Backup Volume Size
     description: The size of the persistent volume used to store the backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.  Refer to the container documentation for details.
     required: true
-    value: 30Gi
+    value: 25Gi
   - name: BACKUP_VOLUME_CLASS
     displayName: Backup Volume Class
-    description: The class of the persistent volume used to store the backups; gluster-file, gluster-block, gluster-file-db, netapp-file-standard, netapp-block-standard, nfs-backup.  Please note, nfs-backup storage is the recommended storage type for backups.  It MUST be provisioned manually through the OCP catalog via the 'BC Gov NFS Storage' template.  nfs-backup storage CANNOT be automatically provisioned by this template.
+    description: The class of the persistent volume used to store the backups; netapp-file-backup.
     required: true
-    value: nfs-backup
+    value: netapp-file-backup
   - name: VERIFICATION_VOLUME_NAME
     displayName: Verification Volume Name
-    description: The name for the verification volume, used for restoring and verifying backups.  When using the recommend nfs-backup storage class for backups, this volume MUST be one of gluster-file-db, gluster-block, netapp-file-standard, or netapp-block-standard storage; gluster-block or netapp-block-standard are recommended for LARGE databases (as they have far better performance).
+    description: The name for the verification volume, used for restoring and verifying backups.  When using the recommend netapp-file-backup storage class for backups, this volume MUST be one of netapp-file-standard, or netapp-block-standard storage; netapp-block-standard is recommended for LARGE databases (as they have far better performance).
     required: false
     value: backup-verification
   - name: VERIFICATION_VOLUME_SIZE
     displayName: Backup Volume Size
     description: The size of the persistent volume used for restoring and verifying backups, e.g. 512Mi, 1Gi, 2Gi.  Ensure this is sized correctly.  It should be large enough to contain your largest database.
     required: true
-    value: 20Gi
+    value: 5Gi
   - name: VERIFICATION_VOLUME_CLASS
     displayName: Backup Volume Class
-    description: The class of the persistent volume used for restoring and verifying backups; should be one of gluster-block, gluster-file-db, netapp-file-standard, or netapp-block-standard; gluster-block or netapp-block-standard are recommended for LARGE databases (as they have far better performance).
+    description: The class of the persistent volume used for restoring and verifying backups; should be one of netapp-file-standard, netapp-file-extended, netapp-block-standard, or netapp-block-extended; netapp-block-standard or netapp-block-extended are recommended for LARGE databases (as they have far better performance).
     required: true
     value: netapp-file-standard
   - name: VERIFICATION_VOLUME_MOUNT_PATH
