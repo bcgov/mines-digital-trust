@@ -1,3 +1,4 @@
+#! /bin/bash
 _includeFile=$(type -p overrides.inc)
 if [ ! -z ${_includeFile} ]; then
   . ${_includeFile}
@@ -10,7 +11,7 @@ fi
 # ------------------------------------------------------------------------
 # The generated config map is used to update the Backup configuration.
 # ========================================================================
-CONFIG_MAP_NAME=backup-conf-indy-cat
+CONFIG_MAP_NAME=backup-conf-primary
 SOURCE_FILE=$( dirname "$0" )/config/backup.conf
 
 OUTPUT_FORMAT=json

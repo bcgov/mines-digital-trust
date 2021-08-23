@@ -1,17 +1,18 @@
 #=========================================================
 # OpenShift template parameters for:
 # Component: .
-# Template File: ../openshift/templates/backup/backup-deploy.json
+# Template File: ../openshift/templates/backup/backup-deploy.yaml
 #=========================================================
 # NAME=backup
-# SUFFIX=-indy-cat
+# ROLE=backup
+# SUFFIX=-primary
 # APP_NAME=Backup
-# APP_GROUP=indy-catalyst
+# APP_GROUP=backup
 # SOURCE_IMAGE_NAME=backup
 # IMAGE_NAMESPACE=a3e512-tools
 TAG_NAME=dev
-# DATABASE_DEPLOYMENT_NAME=db
-# WALLET_DB_HOST_NAME=wallet
+# GHG_EMISSIONS_WALLET_HOST=ghg-emissions-wallet
+# MINES_PERMITTING_WALLET_HOST=mines-permitting-wallet
 # DATABASE_USER_KEY_NAME=database-user
 # DATABASE_PASSWORD_KEY_NAME=database-password
 # BACKUP_STRATEGY=rolling
@@ -19,19 +20,19 @@ TAG_NAME=dev
 ENVIRONMENT_FRIENDLY_NAME=Mines Digital Trust (dev)
 ENVIRONMENT_NAME=a3e512-dev
 # BACKUP_DIR=/backups/
-# DAILY_BACKUPS=2
-# WEEKLY_BACKUPS=1
-# MONTHLY_BACKUPS=0
+# DAILY_BACKUPS=
+# WEEKLY_BACKUPS=
+# MONTHLY_BACKUPS=
 # DATABASE_SERVER_TIMEOUT=300
 # CONFIG_FILE_NAME=backup.conf
 # CONFIG_MAP_NAME=backup-conf
 # CONFIG_MOUNT_PATH=/
 # BACKUP_VOLUME_NAME=backup
-BACKUP_VOLUME_SIZE=30Gi
-BACKUP_VOLUME_CLASS=gluster-file
+# BACKUP_VOLUME_SIZE=25Gi
+# BACKUP_VOLUME_CLASS=netapp-file-backup
 # VERIFICATION_VOLUME_NAME=backup-verification
-VERIFICATION_VOLUME_SIZE=10Gi
-VERIFICATION_VOLUME_CLASS=netapp-file-standard
+# VERIFICATION_VOLUME_SIZE=5Gi
+# VERIFICATION_VOLUME_CLASS=netapp-file-standard
 # VERIFICATION_VOLUME_MOUNT_PATH=/var/lib/pgsql/data
 # CPU_REQUEST=0
 # CPU_LIMIT=0
