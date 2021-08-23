@@ -22,7 +22,7 @@ Use the [Dockerfile](./Dockerfile) to run the openshift developer tools.  You wi
 This document assumes you are in a terminal at your cloned mines-digital-trust/openshift directory. The following will mount this directory at `/usr/src/app/openshift` and log you in there.
 
 ```sh
-docker build --tag os-dev-tools:1.0 .
+docker build --no-cache --tag os-dev-tools:1.0 .
 export w_dir=/usr/src/app/openshift
 docker run -it --rm --name odt -v $(pwd):$w_dir -w $w_dir os-dev-tools:1.0
 
