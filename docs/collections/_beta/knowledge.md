@@ -21,8 +21,15 @@ Want to [become an early adoptor](access.html) of the Business Partner Agent (BP
   - To put it more simply, a Schema is a template, outlining the verified data you can issue or verify from your users.
   - For example, a Credential Schema for a University Diploma may include Name of Student, Degree Name, Date of Completion, Grade, etc. The University would use this schema to issue the Diploma Credential. A verifier, like an employer, would use the schema if they want to verify if the job candidate has a valid University diploma and what degree they did.
 
+- What is a **Schema Attribute**?
+  - It is the data field to be issued or to be requested with a type of credential.
+
 - What is a **Credential Definition**?
   - A Credential Definition is an instance of the schema on which it is based, plus the attribute-specific public verification keys that are bound to the private signing keys of the individual issuer.
+  - In the BPA context, it enables your organization to use a schema for issuing credentials.
+
+- What is a **Trusted Issuer**?
+  - It is a acceptable credential issuing source identified by your organization.
   
 - What is a [**Proof**](https://www.w3.org/TR/vc-data-model/#proofs-signatures)?
   - A Proof is data about the holder that allows others to verify the source of the data (i.e the issuer), check that the data belongs to the holder (and only the holder), that the data has not been tampered with, and finally, that the data has not been revoked by the issuer.
