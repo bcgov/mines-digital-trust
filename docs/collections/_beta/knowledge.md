@@ -29,7 +29,8 @@ Want to [become an early adoptor](access.html) of the Business Partner Agent (BP
   - In the BPA context, it enables your organization to use a schema for issuing credentials.
 
 - What is a **Trusted Issuer**?
-  - It is a acceptable credential issuing source identified by your organization.
+  - It is an acceptable credential issuing source identified by your organization.
   
 - What is a [**Proof**](https://www.w3.org/TR/vc-data-model/#proofs-signatures)?
   - A Proof is data about the holder that allows others to verify the source of the data (i.e the issuer), check that the data belongs to the holder (and only the holder), that the data has not been tampered with, and finally, that the data has not been revoked by the issuer.
+  - Another way to say it is, a proof is data presented by the holder that can be trusted without needing to check back with the source of the data to confirm its validity, authenticity or integrity. 
