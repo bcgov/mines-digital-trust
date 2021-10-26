@@ -1,5 +1,5 @@
 - name: bcgov-mines-act-permit.bcgov-mines-permitting
-  version: 0.2.0
+  version: 0.2.1
   description: The bcgov-mines-act-permit credential issued by bcgov-mines-permitting
   attributes:
     registration_id:
