@@ -40,7 +40,7 @@ name: HOME
   </div>
 
   <div class="mb-3 mt-5 px-5">
-    <p>The <b>Mines Digital Trust Project</b> was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support: <i>producers of consumer goods</i> and <i>purchasers of mineral resources</i> in proving responsible sourcing, and <i>government</i> in exploring the community effort to establish a digital trust ecosystem for finding, issuing, storing, and sharing trustworthy data via <b>verifiable credentials</b>.</p>
+    <p>People want to know where things come from. Producers of mineral resources want to prove they are a responsible source. The purchasers of those mineral resources want to prove this to their customers. Establishing this provenance and related attribution is challenging. But, new technologies are available that enable this digital trust. It requires a community effort to improve how we exchange trustworthy data. <b>Verifiable Credentials</b> are one these technologies which will enable digital trust.</p>
     
     <div class="row">
       {% for card in iconCards %}
@@ -51,7 +51,7 @@ name: HOME
       {% endfor %}
     </div>
 
-    <p>For this effort, 2 <i>open-source common services</i> have been built by leveraging <i>common components</i>:</p>
+    <p>For this effort, 2 <i>open-source solutions</i> have been built by leveraging <i>common components</i>:</p>
   </div>
   <div class="checkerboard mb-5">
     {% for card in checkerboardCards %}

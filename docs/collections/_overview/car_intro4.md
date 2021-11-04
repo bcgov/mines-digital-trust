@@ -1,6 +1,6 @@
 ---
 name: INTRO4
-title: Business to Business Credential Manager
+title: Business Partner Agent
 type: carousel
 order: 4
 img:
