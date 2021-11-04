@@ -58,9 +58,7 @@
           
             <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
           
-            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
-          
-            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own enterprise digital wallet</a>
           
         </div>
       </li>
@@ -100,11 +98,7 @@
         </li>
         
         <li class="active">
-          <a href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
-        </li>
-        
-        <li class="">
-          <a href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+          <a href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own enterprise digital wallet</a>
         </li>
         
       </ul>
@@ -114,66 +108,9 @@
 
 <div class="container onboarding-content">
   <h4 id="for-whom"><strong>For whom</strong></h4>
-<p>If your organization is external to the BC Government and needs to issue, hold, and/or verify verifiable credentials, this option is suitable for you.</p>
+<p>If your organization needs to issue, hold, and/or verify verifiable credentials, this option is suitable for you.</p>
 
-<p>As of today, running your own copy of the <a href="https://github.com/hyperledger-labs/business-partner-agent">Business Partner Agent</a> is the only available option.</p>
-
-<p>In the near future, your organization would run an instance of the <a href="https://github.com/bcgov/b2b-credential-manager">Business to Business Credential Manager</a> instead, our team has been working diligently towards enabling it.</p>
-
-<h4 id="step-by-step-overview"><strong>Step-by-Step Overview</strong></h4>
-<ul>
-  <li><strong>Actors</strong>
-    <ul>
-      <li><em>Director</em> - Refers to a director of a business (company/organization) or the director’s personal digital wallet.</li>
-      <li><em>Business</em> - Refers to a business (company/organization) or its Business Partner Agent.</li>
-      <li><em>Corporate Registrar</em> - Refers to BC Corporate Registry and its Business Partner Agent.</li>
-    </ul>
-  </li>
-  <li><strong>Step 1: Director Issued Personal Credential from Corporate Registrar</strong>
-    <ul>
-      <li><em>Director</em> presents personal id and business documents to <em>Corporate Registrar</em> in person.</li>
-      <li><em>Corporate Registrar</em> inspects the personal id and the business documents, determines that the <em>Director</em> is who they say they are and indeed a director for the <em>Business</em>.</li>
-      <li><em>Corporate Registrar</em> creates invitation to <em>Director</em> (generates a QR code).</li>
-      <li><em>Director</em> opens their personal digital wallet, scans the QR code, and accepts invitation.</li>
-      <li><em>Corporate Registrar</em> makes the connection with <em>Director</em> active.</li>
-      <li><em>Corporate Registrar</em> and <em>Director</em> are now connected with each other. <em>Corporate Registrar</em> can issue credential to <em>Director</em>.</li>
-      <li><em>Corporate Registrar</em> issues <strong>Business Relationship credential</strong> to <em>Director</em>, indicating that they are a director of the <em>Business</em>. Included in that credential is a hashcode or key (could be the credential id) that <em>Corporate Registrar</em> tracks.</li>
-      <li><em>Director</em> receives and accepts the <strong>Business Relationship credential</strong>.</li>
-      <li><em>Director</em> has a verifiable credential issued by <em>Corporate Registrar</em> in their personal digital wallet relating them to the <em>Business</em>.</li>
-    </ul>
-  </li>
-  <li><strong>Step 2: Director sets up a Business Wallet</strong>
-    <ul>
-      <li><em>Director</em> sets up a <a href="https://github.com/hyperledger-labs/business-partner-agent">Business Partner Agent</a> for the <em>Business</em>, and registers it on the same ledger as <em>Corporate Registrar</em>.</li>
-      <li><em>Director</em> creates a self-attested <strong>Business Registration credential</strong>.</li>
-      <li><em>Business</em> creates invitation to <em>Director</em> (generates a QR code).</li>
-      <li><em>Director</em> opens their personal digital wallet, scans the QR code, and accepts invitation.</li>
-      <li><em>Business</em> makes the connection with <em>Director</em> active.</li>
-      <li><em>Business</em> requests proof of <strong>Business Relationship credential</strong> from <em>Director</em>.</li>
-      <li><em>Director</em> sees the proof request from <em>Business</em> in their personal digital wallet, selects their <strong>Business Relationship credential</strong>, and sends the proof which includes the hashcode/key/id that pairs the <em>Director</em> to the <em>Business</em> in <em>Corporate Registrar</em>.</li>
-      <li><em>Business</em> receives the proof and knows that <em>Director</em> is indeed a director for the <em>Business</em>, sets the partner state to active and tags partner as Individual and Director.</li>
-      <li><em>Business</em> updates their self-attested <strong>Business Registration credential</strong>.</li>
-    </ul>
-  </li>
-  <li><strong>Step 3: Business wants their Credential from Corporate Registrar</strong>
-    <ul>
-      <li><em>Business</em> initiates connection with <em>Corporate Registrar</em>.</li>
-      <li><em>Corporate Registrar</em> accepts invitation and makes the connection with <em>Business</em> active.</li>
-      <li><em>Business</em> sends a presentation proposal of their self-attested <strong>Business Registration credential</strong> which includes the hashcode/key/id from the <em>Director</em>’s proof of <strong>Business Relationship credential</strong> to <em>Corporate Registrar</em>.</li>
-      <li><em>Corporate Registrar</em> inspects the proposal, matches the hashcode/key/id from the <em>Business</em>’s self-attested <strong>Business Registration credential</strong> and the one they track.</li>
-      <li><em>Corporate Registrar</em> issues <strong>Business Registration credential</strong> to <em>Business</em>.</li>
-      <li><em>Business</em> receives and accepts the <strong>Business Registration credential</strong>.</li>
-      <li><em>Business</em> has a verifiable credential in their wallet issued by <em>Corporate Registrar</em>.</li>
-    </ul>
-  </li>
-</ul>
-
-<h4 id="long-term-vision"><strong>Long Term Vision</strong></h4>
-<ul>
-  <li><em>Director</em> would come to <em>Corporate Registrar</em> with a personal id credential, <em>Corporate Registrar</em> would request proof of it after connection.</li>
-  <li><em>Corporate Registrar</em> would have business logic that would automatically inspect the self-attested <strong>Business Registration credential</strong> presentation proposal and issue the credential if all is valid.</li>
-  <li><em>Business</em> would have business logic to request proofs after connection. <em>Director</em> would have to present proof of <strong>Business Relationship credential</strong>, and would create the self-attested <strong>Business Registration credential</strong> automatically. Next would be to send the presentation proposal to <em>Corporate Registrar</em> to get their  <strong>Business Registration credential</strong>.</li>
-</ul>
+<p>The <a href="https://github.com/hyperledger-labs/business-partner-agent">Business Partner Agent</a> has successfully proven the concept that a digital trust ecosystem can be established upon the foundations of interoperability and open-source technology. If your organization is interested in getting involved, please <a href="/mines-digital-trust/team.html">contact us</a>.</p>
 
 </div>
 
