@@ -1,7 +1,3 @@
-# Common-Service-Showcase [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) [![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
-
-Website for user documentation and marketing of the common services built by the Common Service Showcase Team.
-
 ## GitHub Pages
 
 We are using [GitHub Pages](https://pages.github.com) with [gh-pages branch](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source) publishing source.  We have set gh-pages as the default branch and we require that all changes are done via Pull Requests.  However, in order to review/preview the changes, one must run the site locally.
