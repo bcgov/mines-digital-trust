@@ -1,18 +1,16 @@
 ---
-layout: service
-name: BBCM
+layout: solutions
+name: PoC
 
-title: Business to Business Credential Manager
+title: Enterprise Wallet Proof of Concept
 order: 1
-description: The Business to Business Credential Manager (BBCM) is software run by an organization for issuing, holding, and verifying digital trust credentials. Powered by Hyperledger, with BBCM organizations can share and receive proofs that are secure and verifiable.
+description: The Enterprise Wallet Proof of Concept (PoC) is software run by an organization for issuing, holding, and verifying digital trust credentials. With the Enterprise Wallet PoC, which is Powered by the Hyperledger Labs Business Partner Agent project, organizations can share and receive proofs that are secure and verifiable.
 ---
 #### **Useful Links**
 
-- [Repo: Business Partner Agent](https://github.com/hyperledger-labs/business-partner-agent)
-- [Repo: Business to Business Credential Manager](https://github.com/bcgov/b2b-credential-manager)
-- [Video: BBCM Ep1 - Introduction](https://app.animaker.com/animo/6K3qDbzPA1DmDkAE/)
-- [Video: BBCM Ep2 - Use Cases](https://app.animaker.com/animo/BwR72vxT4hwUntX5/)
-- [Video: Product Demos](https://www.youtube.com/playlist?list=PLGAON5KTnv0EAicXGX4V3q7zNkP9p1xYF)
+- [Repo: Business Partner Agent (BPA)](https://github.com/hyperledger-labs/business-partner-agent)
+- [Repo: Enterprise Wallet Proof of Concept (PoC)](https://github.com/bcgov/b2b-credential-manager)
+- [Animated Introduction](https://www.youtube.com/watch?v=icFvG5pUwMA)
 
 #### **Who can use it?**
 
@@ -52,9 +50,7 @@ Now let's see some generic use cases.
 #### **Why use it?**
 Please refer to the [Features](https://github.com/bcgov/mines-digital-trust/wiki/Features) list to learn about existing features and offered value to users.
 
-#### **Onboard Options**
-As of today, running your own copy of the [Business Partner Agent](https://github.com/hyperledger-labs/business-partner-agent) is the only available option for starting to issue, hold, and/or verify verifiable credentials.
+#### **PoC Outcome**
+The Business Partner Agent has successfully proven the concept that a digital trust ecosystem can be established upon the foundations of interoperability and open-source technology.
 
-In the near future, BC Government organizational units would run an instance of the Business to Business Credential Manager, our team has been working diligently towards enabling it.
-
-A self-service onboarding to the BC Government hosted Business to Business Credential Manager service has also been planned out. This would allow business owners to set up without any development team required.
+In 2022, BC Government Digital Trust teams will work towards a multi-tenanted solution that can be run providing Enterprise Wallet capabilities for each organizational unit desiring to issue, hold, and/or verify credentials.

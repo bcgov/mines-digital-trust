@@ -5,7 +5,7 @@ name: HOME
 {% assign carouselCards = site.overview | where: "type", "carousel" | sort: 'order' %}
 {% assign iconCards = site.overview | where: "type", "icon" | sort: 'order' %}
 {% assign checkerboardCards = site.overview | where: "type", "checkerboard" | sort: 'order' %}
-{% assign commonServices = site.services | sort: 'order' %}
+{% assign solutions = site.solutions | sort: 'order' %}
 
 <div class="container">
   <div id="overviewCarousel" class="carousel slide" data-ride="carousel">
@@ -70,7 +70,7 @@ name: HOME
   </div>
   <div class="mb-5 service-card-list">
     <div class="row">
-      {% for card in commonServices %}
+      {% for card in solutions %}
       <div class="col-md-6">
         <a class="linked-card" href="{{ site.baseurl }}{{ card.url }}.html">
           <div class="card">
