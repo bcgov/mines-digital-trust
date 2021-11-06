@@ -5,7 +5,7 @@ name: HOME
 {% assign carouselCards = site.overview | where: "type", "carousel" | sort: 'order' %}
 {% assign iconCards = site.overview | where: "type", "icon" | sort: 'order' %}
 {% assign checkerboardCards = site.overview | where: "type", "checkerboard" | sort: 'order' %}
-{% assign commonServices = site.services | sort: 'order' %}
+{% assign solutions = site.solutions | sort: 'order' %}
 
 <div class="container">
   <div id="overviewCarousel" class="carousel slide" data-ride="carousel">
@@ -40,7 +40,7 @@ name: HOME
   </div>
 
   <div class="mb-3 mt-5 px-5">
-    <p>The <b>Mines Digital Trust Project</b> was initiated by the BC Ministry of Energy, Mines and Low Carbon Innovation to support: <i>producers of consumer goods</i> and <i>purchasers of mineral resources</i> in proving responsible sourcing, and <i>government</i> in exploring the community effort to establish a digital trust ecosystem for finding, issuing, storing, and sharing trustworthy data via <b>verifiable credentials</b>.</p>
+    <p>People want to know where things come from. Producers of mineral resources want to prove they are a responsible source. The purchasers of those mineral resources want to prove this to their customers. Establishing this provenance and related attribution is challenging. But, new technologies are available that enable this digital trust. It requires a community effort to improve how we exchange trustworthy data. <b>Verifiable Credentials</b> are one these technologies which will enable digital trust.</p>
     
     <div class="row">
       {% for card in iconCards %}
@@ -51,7 +51,7 @@ name: HOME
       {% endfor %}
     </div>
 
-    <p>For this effort, 2 <i>open-source common services</i> have been built by leveraging <i>common components</i>:</p>
+    <p>For this effort, 2 <i>open-source solutions</i> have been built by leveraging <i>common components</i>:</p>
   </div>
   <div class="checkerboard mb-5">
     {% for card in checkerboardCards %}
@@ -70,7 +70,7 @@ name: HOME
   </div>
   <div class="mb-5 service-card-list">
     <div class="row">
-      {% for card in commonServices %}
+      {% for card in solutions %}
       <div class="col-md-6">
         <a class="linked-card" href="{{ site.baseurl }}{{ card.url }}.html">
           <div class="card">

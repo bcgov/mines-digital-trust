@@ -1,5 +1,5 @@
 ---
-layout: service
+layout: solutions
 name: LEGACY
 
 title: OrgBook BC Issuer Agent
@@ -48,6 +48,6 @@ Any organization who holds or manage information of BC organizations that benefi
 
 #### **Onboard Options**
 
-While the OrgBook BC Issuer Agent remains an effective tool of issuing verifiable credentials to OrgBook BC, we recommend using the [Multitenanted Issuer Agent](https://github.com/bcgov/aries-vcr-issuer-agency) for such purpose in the future. Kindly note that extra steps are required to become an OrgBook BC issuer, for example, getting approval from BC Registries. Please [connect with OrgBook BC](https://www.orgbook.gov.bc.ca/en/connect) to start the process.
+While the OrgBook BC Issuer Agent remains an effective tool of issuing verifiable credentials to OrgBook BC, we recommend using the [Aries VCR Issuer Agency](https://github.com/bcgov/aries-vcr-issuer-agency) for such purpose in the future. Kindly note that extra steps are required to become an OrgBook BC issuer, for example, getting approval from BC Registries. Please [connect with OrgBook BC](https://www.orgbook.gov.bc.ca/en/connect) to start the process.
 
 Still want to issue verifiable credentials to OrgBook BC with the OrgBook BC Issuer Agent? Please refer to the [Getting Started](https://github.com/bcgov/mines-digital-trust/blob/develop/GettingStartedTutorial.md) and [Configuration Guide](https://github.com/bcgov/mines-digital-trust/blob/develop/services/ghg-orgbook-issuer-controller/config/README.md) documents.

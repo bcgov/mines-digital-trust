@@ -1,6 +1,6 @@
 ---
 name: INTRO5
-title: Business to Business Credential Manager
+title: Business Partner Agent
 type: carousel
 order: 5
 img:

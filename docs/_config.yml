@@ -22,14 +22,14 @@ title: Mines Digital Trust
 bannertitle: Mines Digital Trust
 email: MinesDigitalTrust@gov.bc.ca
 description: >- # this means to ignore newlines until "baseurl:"
-  Website for user documentation and marketing of the common services built by the Mines Digital Trust Team.
+  Website for documentation and marketing of the solutions built by the Mines Digital Trust Team.
 baseurl: "/mines-digital-trust" # the subpath of your site, e.g. /blog
 url: "https://bcgov.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 collections_dir: collections
 collections:
   overview:
-  services:
+  solutions:
     output: true
     permalink: /:collection/:name
   onboarding:

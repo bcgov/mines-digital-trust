@@ -39,13 +39,13 @@
       <li class="nav-item dropdown ">
         <a class="nav-link dropdown-toggle" href="#" id="compDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          Services
+          Solutions
         </a>
         <div class="dropdown-menu" aria-labelledby="compDropdown">
           
-            <a class="dropdown-item" href="/mines-digital-trust/services/bbcm.html">Business to Business Credential Manager</a>
+            <a class="dropdown-item" href="/mines-digital-trust/solutions/poc.html">Enterprise Wallet Proof of Concept</a>
           
-            <a class="dropdown-item" href="/mines-digital-trust/services/issuer-agent.html">OrgBook BC Issuer Agent</a>
+            <a class="dropdown-item" href="/mines-digital-trust/solutions/issuer-agent.html">OrgBook BC Issuer Agent</a>
           
         </div>
       </li>
@@ -58,9 +58,7 @@
           
             <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
           
-            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own Digital Wallet</a>
-          
-            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option3.html">Register with the hosted BCGov Digital Wallet service (coming soon)</a>
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own enterprise digital wallet</a>
           
         </div>
       </li>
@@ -136,14 +134,26 @@
       <li>For example, a Credential Schema for a University Diploma may include Name of Student, Degree Name, Date of Completion, Grade, etc. The University would use this schema to issue the Diploma Credential. A verifier, like an employer, would use the schema if they want to verify if the job candidate has a valid University diploma and what degree they did.</li>
     </ul>
   </li>
+  <li>What is a <strong>Schema Attribute</strong>?
+    <ul>
+      <li>It is the data field to be issued or to be requested with a type of credential.</li>
+    </ul>
+  </li>
   <li>What is a <strong>Credential Definition</strong>?
     <ul>
       <li>A Credential Definition is an instance of the schema on which it is based, plus the attribute-specific public verification keys that are bound to the private signing keys of the individual issuer.</li>
+      <li>In the BPA context, it enables your organization to use a schema for issuing credentials.</li>
+    </ul>
+  </li>
+  <li>What is a <strong>Trusted Issuer</strong>?
+    <ul>
+      <li>It is an acceptable credential issuing source identified by your organization.</li>
     </ul>
   </li>
   <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures"><strong>Proof</strong></a>?
     <ul>
       <li>A Proof is data about the holder that allows others to verify the source of the data (i.e the issuer), check that the data belongs to the holder (and only the holder), that the data has not been tampered with, and finally, that the data has not been revoked by the issuer.</li>
+      <li>Another way to say it is, a proof is data presented by the holder that can be trusted without needing to check back with the source of the data to confirm its validity, authenticity or integrity.</li>
     </ul>
   </li>
 </ul>

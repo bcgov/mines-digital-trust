@@ -9,6 +9,9 @@ description: We are a cross-functional Agile team including a Product Owner, a P
     <img class="img-fluid" src="{{ site.baseurl }}/assets/images/team.png" alt="team" title="Our Team">
 </div>
 
+#### Advisory Committee
+We have also created an advisory committee with members from government, industry and academia, which provides feedback on the value of using verifiable credentials to conduct business.
+
 #### Contact us
 
 **Having questions/suggestions/feedback?** We would love to hear from you!

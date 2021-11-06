@@ -5,16 +5,16 @@ name: Get Access
 title: Get Access
 order: 1
 ---
-The **Business Partner Agent (BPA)** is software run by an organization for issuing, holding, and/or verifying [digital trust credentials](knowledge.html). Currently there are 2 ways to log into your organization's BPA. You can use your *IDIR Username & Password* if you work for the BC government, or a personal *Access Verifiable Credential (VC)* issued by us.
+The **Business Partner Agent (BPA)** is software run by an organization for issuing, holding, and/or verifying [digital trust credentials](knowledge.html). Currently there are 2 ways to log into the **Enterprise Wallet Proof of Concept (PoC)**. You can use your *IDIR Username & Password* if you work for the BC government, or a personal *Access Verifiable Credential (VC)* issued by us. Email us to receive the link to the Enterprise Wallet PoC.
 
-#### How to get the Access VC
+#### How to get the personal Access VC
 <div class="text-center mb-5">
     <img class="img-fluid" src="{{ site.baseurl }}/assets/images/access.png" alt="access" title="Access">
 </div>
 
-**Step 1. Download the Trinsic Wallet app from App Store or Google Play and set up the digital wallet on your mobile phone.**
-- Learn more about [Trinsic Wallet](https://trinsic.id/trinsic-wallet/).
-- You can use any other personal wallet app (E.g. [esatus SSI Wallet](https://esatus.com/esatus-ssi-wallet-app-ab-sofort-fuer-ios-und-android-verfuegbar/?lang=en), etc.) that runs on Hyperledger Aries instead.
+**Step 1. Download the esatus SSI Wallet app from App Store or Google Play and set up the digital wallet on your mobile phone.**
+- Learn more about [esatus SSI Wallet](https://esatus.com/esatus-ssi-wallet-app-ab-sofort-fuer-ios-und-android-verfuegbar/?lang=en).
+- You can use any other personal wallet app that runs on Hyperledger Aries instead.
 
 **Step 2. Send an email titled "Request Access to BPA" to MinesDigitalTrust@gov.bc.ca providing:**
 - Your name and role in the BC Government or your organization

@@ -7,4 +7,4 @@ img:
   path: /assets/images/slide1.png
   alt: BBCM
 ---
-*Try using **Verifiable Credentials** to prove cryptographically that your organization has a valid permit, license, or certification.*
+*Try using **Verifiable Credentials** to prove cryptographically that your organization has a valid permit, license, or certification, etc.*
