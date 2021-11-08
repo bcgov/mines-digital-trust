@@ -19,15 +19,16 @@ See the `collections` key in the config.yaml
 
 GitHub Pages understands Jekyll and will build and deploy sites automatically, do **not** check in the *_site* directory.
 
-1. Fork the [Common Service Showcase repository](https://github.com/bcgov/common-service-showcase)
-1. Checkout gh-pages branch
-1. Create branch from gh-pages
-1. Add new collections (services), or other content
-1. Build with Jekyll
-1. Review your changes
-1. Commit and push your changes to your fork.
-1. Make a [Pull Request](https://github.com/bcgov/common-service-showcase/pulls) in Common Service Showcase repository.
-1. Ask for a review and approval of changes.
+1. Fork the [Mines Digital Trust repository](https://github.com/bcgov/mines-digital-trust)
+2. Cd docs directory
+3. Checkout gh-pages branch
+4. Create branch from gh-pages
+5. Add new collections (services), or other content
+6. Build with Jekyll
+7. Review your changes
+8. Commit and push your changes to your fork.
+9. Make a [Pull Request](https://github.com/bcgov/mines-digital-trust/pulls) in Mines Digital Trust repository.
+10. Ask for a review and approval of changes.
 
 ## Build with Jekyll
 
@@ -50,4 +51,4 @@ bundle exec jekyll build
 bundle exec jekyll serve
 ```
 
-1. Go to site: <http://localhost:4000/common-service-showcase/>
+1. Go to site: <http://localhost:4000/mines-digital-trust/>
