@@ -39,6 +39,12 @@ name: HOME
     </a>
   </div>
 
+  <div class="container" class="mb-3 mt-5" style="text-align:center;">
+    <iframe width="560" height="315" class="center-block" src="https://www.youtube.com/embed/q0Jml3isSh8" title="BC's Mines Digital Trust" frameborder="0" allow="accelerometer; autoplay" allowfullscreen></iframe>
+
+    <p><small><i>This video was played at the 2021 United Nations Climate Change Conference (COP26).</i></small></p>
+  </div>
+
   <div class="mb-3 mt-5 px-5">
     <p>People want to know where things come from. Producers of mineral resources want to prove they are a responsible source. The purchasers of those mineral resources want to prove this to their customers. Establishing this provenance and related attribution is challenging. But, new technologies are available that enable this digital trust. It requires a community effort to improve how we exchange trustworthy data. <b>Verifiable Credentials</b> are one these technologies which will enable digital trust.</p>
     
