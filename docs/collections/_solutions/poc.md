@@ -10,11 +10,11 @@ description: The Enterprise Wallet Proof of Concept (PoC) is software run by an 
 
 - [Repo: Business Partner Agent (BPA)](https://github.com/hyperledger-labs/business-partner-agent)
 - [Repo: Enterprise Wallet Proof of Concept (PoC)](https://github.com/bcgov/b2b-credential-manager)
-- [Animated Introduction](https://www.youtube.com/watch?v=icFvG5pUwMA)
+- [Playlist: Digital Trust Ecosystem](https://youtube.com/playlist?list=PL9CV_8JBQHiooHv05idOTrR2eBAJM89LX)
 
 #### **Who can use it?**
 
-Any organization who wants to participate in the digital trust ecosystem by issuing, holding, and verifying digital trust credentials can use the Business to Business Credential Manager. For example, government, company, third-party, etc.
+Any organization who wants to participate in the digital trust ecosystem by issuing, holding, and verifying digital trust credentials can use the Enterprise Wallet PoC. For example, government, company, third-party, etc.
 
 #### **How does it work?**
 
@@ -38,12 +38,12 @@ Now let's see some generic use cases.
 
 - **Issuing and Holding a Verifiable Credential**
   1. The *Issuer* organization imports or creates  a schema for the type of verifiable credential it wants to issue.
-  2. The *Issuer* organization and *Holder* organization make a connection via their Business to Business Credential Managers.
+  2. The *Issuer* organization and *Holder* organization make a connection via their enterprise wallets.
   3. The *Issuer* organization issues a verifiable credential following the credential definition created from the schema to the *Holder* organization.
   4. The *Holder* organization receives the verifiable credential and stores it in its wallet.
 - **Verifying Credentials**
   1. The *Verifier* organization imports or creates  a template for the proof request it wants to send.
-  2. The *Verifier* organization and *Holder* organization make a connection via their Business to Business Credential Managers.
+  2. The *Verifier* organization and *Holder* organization make a connection via their enterprise wallets.
   3. The *Verifier* organization sends a proof request using the predefined proof request template to the *Holder* organization.
   4. The *Holder* organization receives the proof request and presents the proof by disclosing chosen verifiable credentials and/or chosen attribute values of the verifiable credentials it holds in its wallet to the *Verifier* organization.
 
@@ -53,4 +53,4 @@ Please refer to the [Features](https://github.com/bcgov/mines-digital-trust/wiki
 #### **PoC Outcome**
 The Business Partner Agent has successfully proven the concept that a digital trust ecosystem can be established upon the foundations of interoperability and open-source technology.
 
-In 2022, BC Government Digital Trust teams will work towards a multi-tenanted solution that can be run providing Enterprise Wallet capabilities for each organizational unit desiring to issue, hold, and/or verify credentials.
+In 2022, BC Government Digital Trust teams will work towards a multi-tenanted solution that can be run providing enterprise wallet capabilities for each organizational unit desiring to issue, hold, and/or verify credentials.
