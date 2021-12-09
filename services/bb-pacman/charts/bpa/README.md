@@ -154,7 +154,7 @@ Note: Deleting the PVC's will delete postgresql data as well. Please be cautious
 | acapy.fullnameOverride | string | `""` |  |
 | acapy.image.pullPolicy | string | `"IfNotPresent"` |  |
 | acapy.image.repository | string | `"bcgovimages/aries-cloudagent"` |  |
-| acapy.image.tag | string | `"py36-1.15-0_0.5.6"` | Overrides the image tag whose default is the chart appVersion. |
+| acapy.image.tag | string | `"py36-1.16-1_0.7.0"` | Overrides the image tag whose default is the chart appVersion. |
 | acapy.imagePullSecrets | list | `[]` |  |
 | acapy.ingress.annotations | object | `{}` |  |
 | acapy.ingress.enabled | bool | `false` |  |
