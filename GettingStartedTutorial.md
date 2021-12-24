@@ -1,6 +1,6 @@
 # Permit Issuer Controller Getting Started Tutorial
 
-This Getting Started Guide is to get someone up and running with the Permit Issuer/Controller for Aries VCR.  If you are new to the Aries VCR Issuer Controller, please refer to [their getting started tutorial](https://github.com/bcgov/aries-vcr-issuer-controller/blob/master/GettingStartedTutorial.md). Here, we will assume that you have gone through that generic getting started and are familiar with the components.  We will discuss running locally in Docker.
+This Getting Started Guide is to get someone up and running with the Permit Issuer/Controller for Aries VCR.  If you are new to the Aries VCR Issuer Controller, please refer to [their getting started tutorial](https://github.com/bcgov/aries-vcr-issuer-controller/blob/main/GettingStartedTutorial.md). Here, we will assume that you have gone through that generic getting started and are familiar with the components.  We will discuss running locally in Docker.
 
 ## Table of Contents <!-- omit in toc -->
 
