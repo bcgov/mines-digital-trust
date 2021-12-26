@@ -68,7 +68,9 @@ Please review and adjust as necessary:
 The image we are building does not come from our repository; the parameter generator assumes we are.  Ensure that we are using the correct value for `GIT_REPO_URL` and `GIT_REF`.
 
 `GIT_REPO_URL=https://github.com/bcgov/aries-vcr.git`
-`GIT_REF=master`
+`GIT_REF=`
+
+- Leaving `GIT_REF` blank tells the build to use the repo's default branch.
 
 ##### mines-permitting-agent (deploy)
 
