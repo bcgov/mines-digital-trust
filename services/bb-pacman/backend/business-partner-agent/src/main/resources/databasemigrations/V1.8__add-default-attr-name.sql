@@ -1,1 +1,0 @@
-ALTER TABLE bpaschema ADD COLUMN default_attribute_name character varying(255);
