@@ -1,16 +1,11 @@
+# Issuer/Controller for Aries VCR  
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Lifecycle:Retired](https://img.shields.io/badge/Lifecycle-Retired-d45500)](<Redirect-URL>)
+[![img](https://img.shields.io/badge/Lifecycle-Experimental-339999)](https://github.com/bcgov/repomountie/blob/master/doc/lifecycle-badges.md)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1f62bd5e189348d05432/maintainability)](https://codeclimate.com/github/bcgov/mines-digital-trust/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1f62bd5e189348d05432/test_coverage)](https://codeclimate.com/github/bcgov/mines-digital-trust/test_coverage)
 
-# This project has been archived
-This repository no longer be maintained and has been replaced by [Traction](https://github.com/bcgov/traction).
-
-The GitHub Pages site hosted here has been replaced and aligned with the [CITZ Digital Trust site](https://digital.gov.bc.ca/digital-trust/tools/traction-accelerator-api/)
-
-# Mines-Digital-Trust, Permit Issuer/Controller for Aries VCR
-
-This repository is based on the [Aries VCR Issuer Controller template](https://github.com/bcgov/aries-vcr-issuer-controller) for creating an [Aries](https://www.hyperledger.org/use/ARIES) Verifiable Credential Registry (VCR) Issuer Agent. [Aries VCR](https://github.com/bcgov/aries-vcr) is the foundational technology upon which the Government of British Columbia's [OrgBookBC](https://orgbook.gov.bc.ca) was built. Aries VCR Issuer Controller is a starter kit for building an Aries agent that issues verifiable credentials to instances of an Aries VCR, such as OrgBookBC. This repo contains code for an issuer controller that works with [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACAPy) framework. The controller and an instance of ACA-Py can be deployed together to implement an Aries issuer agent.
+This repository is based on the [Aries VCR Issuer Controller template](https://github.com/bcgov/aries-vcr-issuer-controller) for creating an [Aries](https://www.hyperledger.org/use/ARIES) Verifiable Credential Registry (VCR) Issuer Agent. [Aries VCR](https://github.com/bcgov/aries-vcr) is the foundational technology upon which the Government of British Columbia's [OrgBookBC](https://orgabook.gov.bc.ca) was built. Aries VCR Issuer Controller is a starter kit for building an Aries agent that issues verifiable credentials to instances of an Aries VCR, such as OrgBookBC. This repo contains code for an issuer controller that works with [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACAPy) framework. The controller and an instance of ACA-Py can be deployed together to implement an Aries issuer agent.
 
 `aries-vcr-issuer-controller` was developed as part of the Verifiable Organizations Network (VON). For more information on VON, visit https://vonx.io.  Even better, join in with what we are doing and contribute to VON and the [Trust over IP](trustoverip.org) community.
 
@@ -46,8 +41,10 @@ Much of the work in configuring an the Permit Issuer Agent is in setting up the 
 
 ## Getting Help or Reporting an Issue
 
-To report bugs/issues/feature requests, please file an [issue](../../issues).
+To report bugs/issues/feature requests, please file an issue [here](https://github.com/bcgov/mines-digital-trust/issues).
 
-# How to Contribute
+## How to Contribute
 
-If you find this project helpful, please contribute back to the project. If you would like to contribute, please see our [CONTRIBUTING](./CONTRIBUTING.md) guidelines. Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Collaborations are highly appreciated, please follow the [guidelines](./CONTRIBUTING.md) if you are interested in contributing. (Please note that this project is released with a [Contributor Code of Conduct](./CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.)
+
+We would love to hear from you! Join us on [Rocket.chat](https://developer.gov.bc.ca/Steps-to-join-Rocket.Chat) now, we will be waiting for you at the [Mines Digital Trust](https://go.rocket.chat/invite?host=chat.developer.gov.bc.ca&path=invite%2FcS7ArW) channel. 👍

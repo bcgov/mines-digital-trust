@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Mines Digital Trust</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="/mines-digital-trust/assets/css/styles.css">
+  </head>
+  <body>
+    <header>
+    <div class="banner">
+        <a href="/mines-digital-trust/" alt="British Columbia">
+          <img src="/mines-digital-trust/assets/images/BCID_H_rgb_rev.svg" alt="Go to the Government of British Columbia website" class="logo-banner"/>
+        </a>
+        <h1>Mines Digital Trust</h1>
+    </div>
+    <div class="other">
+    <!--
+      This place is for anything that needs to be right aligned
+      beside the logo.
+    -->
+      &nbsp;
+    </div>
+    </div>
+  </header>
+
+    
+
+
+
+
+<nav class="navigation-main" id="navbar">
+  <div class="container">
+    <ul>
+      <li class=""><a href='/mines-digital-trust/'>Overview</a></li>
+      <li class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" id="compDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Solutions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="compDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/solutions/poc.html">Enterprise Wallet Proof of Concept</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/solutions/issuer-agent.html">OrgBook BC Issuer Agent</a>
+          
+        </div>
+      </li>
+      <li class="nav-item dropdown  ">
+        <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Onboard
+        </a>
+        <div class="dropdown-menu" aria-labelledby="onbDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option1.html">Issue credentials to OrgBook BC</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/onboarding/onboard-option2.html">Run your own enterprise digital wallet</a>
+          
+        </div>
+      </li>
+      <li class="nav-item dropdown  active">
+        <a class="nav-link dropdown-toggle" href="#" id="onbDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Join the Beta
+        </a>
+        <div class="dropdown-menu" aria-labelledby="onbDropdown">
+          
+            <a class="dropdown-item" href="/mines-digital-trust/beta/access.html">Get Access</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/beta/guide.html">User Guide</a>
+          
+            <a class="dropdown-item" href="/mines-digital-trust/beta/knowledge.html">Knowledge Center</a>
+          
+        </div>
+      </li>
+      <li class=""><a href='/mines-digital-trust/team.html'>Connect with us</a></li>
+    </ul>
+  </div>
+</nav>
+
+    <div class="content">
+      <main role="main">
+          
+
+<div class="page-header">
+  <h2 class="text-center">Join the Beta</h2>
+  <div class="page-description">
+    <div class="container page-description-content">
+      <!-- <h4 class="mb-3"><strong>Onboard Options</strong></h4> -->
+      <ul>
+        
+        <li class="">
+          <a href="/mines-digital-trust/beta/access.html">Get Access</a>
+        </li>
+        
+        <li class="">
+          <a href="/mines-digital-trust/beta/guide.html">User Guide</a>
+        </li>
+        
+        <li class="active">
+          <a href="/mines-digital-trust/beta/knowledge.html">Knowledge Center</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container onboarding-content">
+  <p>Want to <a href="access.html">become an early adoptor</a> of the Business Partner Agent (BPA)? This page will equip you with necessary knowledge of <a href="guide.html">using</a> it.</p>
+
+<h4 id="what-is">What is…?</h4>
+<ul>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#dfn-decentralized-identifiers"><strong>Decentralized Identifier (DID)</strong></a>?
+    <ul>
+      <li>DIDs are a type of globally unique and persistent identifiers. They create a secure connection for data exchange between parties and their decentralized nature makes credentials always available for verification.</li>
+      <li>For example, each BPA has a DID representing the organization who runs it, which can be exchanged to connect with other organizations running BPAs.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#what-is-a-verifiable-credential"><strong>Verifiable Credential (VC)</strong></a>?
+    <ul>
+      <li>The physical credentials we use in our daily lives – like ID Card, Driver’s license, Health Insurance Card or even a University Diploma – rarely have a counterpart in the digital world. How could a digital credential, a digital asset, be as trustworthy as the physical ID Card that your Government issued to you?</li>
+      <li>Verifiable Credentials, in essence, allow for the digital watermarking of claims data through a combination of public key cryptography and privacy-preserving techniques to prevent correlation. Not only can physical credentials safely be turned digital, holders of such credentials can selectively disclose specific information from this credential without exposing the actual data (imagine proving you are above the age of 21 without having to show your ID card), where third-parties are instantly able to verify this data without having to call upon the issuer.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#data-schemas"><strong>Credential Schema</strong></a>?
+    <ul>
+      <li>Per the W3C, “The Credential Schema is a document that is used to guarantee the structure, and by extension the semantics, of the set of claims comprising a Verifiable Credential. A shared Credential Schema allows all parties to reference data in a known way.</li>
+      <li>To put it more simply, a Schema is a template, outlining the verified data you can issue or verify from your users.</li>
+      <li>For example, a Credential Schema for a University Diploma may include Name of Student, Degree Name, Date of Completion, Grade, etc. The University would use this schema to issue the Diploma Credential. A verifier, like an employer, would use the schema if they want to verify if the job candidate has a valid University diploma and what degree they did.</li>
+    </ul>
+  </li>
+  <li>What is a <strong>Schema Attribute</strong>?
+    <ul>
+      <li>It is the data field to be issued or to be requested with a type of credential.</li>
+    </ul>
+  </li>
+  <li>What is a <strong>Credential Definition</strong>?
+    <ul>
+      <li>A Credential Definition is an instance of the schema on which it is based, plus the attribute-specific public verification keys that are bound to the private signing keys of the individual issuer.</li>
+      <li>In the BPA context, it enables your organization to use a schema for issuing credentials.</li>
+    </ul>
+  </li>
+  <li>What is a <strong>Trusted Issuer</strong>?
+    <ul>
+      <li>It is an acceptable credential issuing source identified by your organization.</li>
+    </ul>
+  </li>
+  <li>What is a <a href="https://www.w3.org/TR/vc-data-model/#proofs-signatures"><strong>Proof</strong></a>?
+    <ul>
+      <li>A Proof is data about the holder that allows others to verify the source of the data (i.e the issuer), check that the data belongs to the holder (and only the holder), that the data has not been tampered with, and finally, that the data has not been revoked by the issuer.</li>
+      <li>Another way to say it is, a proof is data presented by the holder that can be trusted without needing to check back with the source of the data to confirm its validity, authenticity or integrity.</li>
+    </ul>
+  </li>
+</ul>
+
+</div>
+
+      </main>
+    </div>
+      <footer class="footer">
+    <div class="container">
+    <ul>
+      <li><a href="https://www.gov.bc.ca/">Home</a></li>
+      <li><a href="https://www.gov.bc.ca/">Disclaimer</a></li>
+      <li><a href="http://gov.bc.ca/privacy">Privacy</a></li>
+      <li><a href="http://gov.bc.ca/webaccessibility">Accessibility</a></li>
+      <li><a href="http://gov.bc.ca/copyright">Copyright</a></li>
+      <li><a href="https://www2.gov.bc.ca/gov/content/home/contact-us">Contact Us</a></li>
+    </ul>
+    </div>
+  </footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
